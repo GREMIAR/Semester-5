@@ -1,0 +1,76 @@
+body{
+	background: #9e5b52;
+}
+
+header {
+	background: #F9ED69;
+	text-align:center;
+	padding: 28px;
+	font-size: 48px;
+	font-weight: bold;
+}
+
+.NavBar {
+	padding: 10px;
+	text-align: center;
+	background: #FFD5BC;
+	left: 0;
+	right: 0;
+}
+
+.NavBar li {
+	display: inline-block;
+}
+
+.NavBar li:after {
+	content: "|";
+	color: #9d999d;
+	vertical-align:top;
+	display: inline-block;
+}
+
+.NavBar li:last-child:after {
+	content: none;
+}
+
+.NavBar a {
+	font-weight: blod;
+	color: #A5592C;
+	position: relative;
+	text-decoration: none;
+	font-family: "Times New Roman", Times, serif; 
+	letter-spacing: 3px;
+	margin: 0px 30px;
+	font-size: 20px;
+	text-transform: uppercase;
+	display: inline-block;
+	transition: color .5s;
+}
+
+.NavBar a:hover{
+	color: #feb386;
+}
+
+.NavBar a:before,.NavBar a:after {
+	content: "";
+	background: #feb386;
+	position: absolute;
+	height: 5px;
+	bottom: -6px;
+	right: 50%;
+	left: 50%;
+	transition: .8s;
+}
+
+.NavBar a:hover:before {left: 0px;}
+.NavBar a:hover:after {right: 0px;}   
+
+.NavBar a.CurrentPlace:before,.NavBar a.CurrentPlace:after{
+	content: "";
+	background: #feb386;
+	position: absolute;
+	height: 5px;
+	bottom: -6px;
+	right: 0;
+	left: 0;
+}
