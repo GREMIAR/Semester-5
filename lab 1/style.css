@@ -10,6 +10,27 @@ header {
 	font-weight: bold;
 }
 
+article{
+	margin-top: 32px;
+	background: #fff;
+	margin-left: 180px;
+	margin-right: 180px;
+}
+
+.menu{
+	padding-top: 20px;
+	padding-bottom: 50px;
+	padding-left: 17px;
+	padding-right: 90px;
+	text-align: left;
+	background: #fff;
+	position: fixed;
+}
+.menu li {
+	display: block;
+}
+
+
 .NavBar {
 	padding: 10px;
 	text-align: center;
