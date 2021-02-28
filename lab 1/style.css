@@ -56,7 +56,7 @@ article{
 
 .NavBar a {
 	font-weight: blod;
-	color: #A5592C;
+	color: #a5592c;
 	position: relative;
 	text-decoration: none;
 	font-family: "Times New Roman", Times, serif; 
@@ -68,30 +68,33 @@ article{
 	transition: color .5s;
 }
 
+.NavBar a:before {
+	content: "";
+	border: solid 2px #feb386;
+	position: absolute;
+	right: 0px;
+	left: 0px;
+	bottom: 0px;
+	margin: -3px;
+	transform: scale(0);
+	transition: .8s;
+}
+
 .NavBar a:hover{
 	color: #feb386;
 }
 
-.NavBar a:before,.NavBar a:after {
+.NavBar a:hover:before {
+	transform: scale(1);
+}  
+
+.NavBar a.CurrentPlace:before{
 	content: "";
-	background: #feb386;
+	border: solid 2px #feb386;
 	position: absolute;
-	height: 5px;
-	bottom: -6px;
-	right: 50%;
-	left: 50%;
-	transition: .8s;
+	margin: -3px;
+	transform: scale(1);
 }
-
-.NavBar a:hover:before {left: 0px;}
-.NavBar a:hover:after {right: 0px;}   
-
-.NavBar a.CurrentPlace:before,.NavBar a.CurrentPlace:after{
-	content: "";
-	background: #feb386;
-	position: absolute;
-	height: 5px;
-	bottom: -6px;
-	right: 0;
-	left: 0;
+.NavBar a.CurrentPlace:hover{
+	color: #a5592c;
 }
