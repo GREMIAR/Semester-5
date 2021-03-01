@@ -3,32 +3,37 @@ body{
 }
 
 header {
+	color: #30d5c8;
 	background: #000;
 	text-align:center;
 	padding: 28px;
 	font-size: 48px;
 	font-weight: bold;
 	border: solid 4px white; 
-	color:#DC143C;
-
+	margin-bottom: 10px; 
 }
 
 article{
-	border: solid 4px white;
-	margin-top:18px;
+	margin-top:-95px;
+	border: solid 5px white;
 	background: #000;
 	margin-left: 240px;
-	color:#DC143C;
+	color:#30d5c8;
 }
 
 .menu{
-	border: solid 2px white;
+	position: sticky;
+	top: 68px;
+	margin:0px;
+	border-top: solid 4px white; 
+	border-top-left-radius: 20px;
+	border-left: solid 4px white;
 	padding: 5px;
 	text-align: left;
 	background: #000;
-	position: fixed;
 	transition: 1s;
 	padding-right: 20px;
+	display: inline-block; 
 }
 
 .menu li {
@@ -39,13 +44,13 @@ article{
 }
 .menu li:hover
 {
-	transform: translate(15px,0);
+	transform: translate(30px,0);
 }
 
 
 .menu a {
 	font-weight: blod;
-	color: #DC143C;
+	color: #30d5c8;
 	position: relative;
 	text-decoration: none;
 	font-family: "Times New Roman", Times, serif; 
@@ -56,14 +61,21 @@ article{
 	display: inline-block;
 	transition: .5s;
 }
+section{
+	border-top: solid 10px black;
+	border-bottom: solid 10px black;
+	position: sticky;
+	top: 0px;
+}
 
-
-.NavBar {
+.NavBar { 
 	padding: 10px;
 	text-align: center;
 	background: #000;
+	margin-top:0px;
 	margin-bottom: 0px;
-	border: solid 4px white;
+	border: solid 4px white; 
+	margin-bottom: 10px; 
 }
 
 .NavBar li {
@@ -72,7 +84,7 @@ article{
 
 .NavBar li:after {
 	content: "|";
-	color: #DC143C;
+	color: #30d5c8;
 	vertical-align:top;
 	display: inline-block;
 }
@@ -83,7 +95,7 @@ article{
 
 .NavBar a {
 	font-weight: blod;
-	color: #DC143C;
+	color: #30d5c8;
 	position: relative;
 	text-decoration: none;
 	font-family: "Times New Roman", Times, serif; 
@@ -116,14 +128,15 @@ article{
 }  
 
 .NavBar a.CurrentPlace:before{
+	color: #FF4364;
 	content: "";
-	border: solid 2px #DC143C;
+	border: solid 2px #30d5c8;
 	position: absolute;
 	margin: -3px;
 	transform: scale(1);
 }
 .NavBar a.CurrentPlace:hover{
-	color: #DC143C;
+	color: #FF4364;
 }
 
 footer{
@@ -132,20 +145,4 @@ footer{
 	border: solid 4px white; 
 	text-align:center;
 	padding: 20px;
-}
-.link{
-	
-	font-weight: bold;
-	color: #DC143C;
-	position: relative;
-	text-decoration: none;
-	font-family: "Times New Roman", Times, serif; 
-	letter-spacing: 3px;
-	font-size: 20px;
-	text-transform: uppercase;
-	display: inline-block;
-	transition: color .5s;
-}
-.link:hover{
-	color: #FF4364;
 }
