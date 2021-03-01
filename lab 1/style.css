@@ -1,42 +1,65 @@
 body{
-	background: #9e5b52;
+	background: #000;
 }
 
 header {
-	background: #F9ED69;
+	background: #000;
 	text-align:center;
 	padding: 28px;
 	font-size: 48px;
 	font-weight: bold;
+	border: solid 4px white; 
+	color:#DC143C;
+
 }
 
 article{
-	margin-top: 32px;
-	background: #fff;
-	margin-left: 180px;
-	margin-right: 180px;
+	border: solid 4px white;
+	margin-top:18px;
+	background: #000;
+	margin-left: 220px;
+	color:#DC143C;
 }
 
 .menu{
-	padding-top: 20px;
-	padding-bottom: 50px;
-	padding-left: 17px;
-	padding-right: 90px;
+	padding: 0px;
 	text-align: left;
-	background: #fff;
+	background: #000;
 	position: fixed;
 }
 .menu li {
 	display: block;
+	border: solid 2px white;
+	background: #000;
+	transition: 1s;
+}
+.menu li:hover
+{
+	transform: translate(15px,0);
+}
+
+
+.menu a {
+	font-weight: blod;
+	color: #DC143C;
+	position: relative;
+	text-decoration: none;
+	font-family: "Times New Roman", Times, serif; 
+	letter-spacing: 3px;
+	margin: 0px 30px;
+	font-size: 20px;
+	text-transform: uppercase;
+	display: inline-block;
+	transition: .5s;
 }
 
 
 .NavBar {
 	padding: 10px;
 	text-align: center;
-	background: #FFD5BC;
-	left: 0;
-	right: 0;
+	background: #000;
+	margin-bottom: 0px;
+	border: solid 4px white;
 }
 
 .NavBar li {
@@ -45,7 +68,7 @@ article{
 
 .NavBar li:after {
 	content: "|";
-	color: #9d999d;
+	color: #DC143C;
 	vertical-align:top;
 	display: inline-block;
 }
@@ -56,7 +79,7 @@ article{
 
 .NavBar a {
 	font-weight: blod;
-	color: #a5592c;
+	color: #DC143C;
 	position: relative;
 	text-decoration: none;
 	font-family: "Times New Roman", Times, serif; 
@@ -70,7 +93,7 @@ article{
 
 .NavBar a:before {
 	content: "";
-	border: solid 2px #feb386;
+	border: solid 2px #FF4364;
 	position: absolute;
 	right: 0px;
 	left: 0px;
@@ -81,7 +104,7 @@ article{
 }
 
 .NavBar a:hover{
-	color: #feb386;
+	color: #FF4364;
 }
 
 .NavBar a:hover:before {
@@ -90,11 +113,22 @@ article{
 
 .NavBar a.CurrentPlace:before{
 	content: "";
-	border: solid 2px #feb386;
+	border: solid 2px #DC143C;
 	position: absolute;
 	margin: -3px;
 	transform: scale(1);
 }
 .NavBar a.CurrentPlace:hover{
-	color: #a5592c;
+	color: #DC143C;
+}
+
+footer{
+	margin-top:10px; 
+	background: #000;
+	text-align:center;
+	padding: 28px;
+	font-size: 48px;
+	font-weight: bold;
+	border: solid 4px white; 
+	color:#DC143C;
 }
