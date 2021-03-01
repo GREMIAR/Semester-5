@@ -1,12 +1,15 @@
 *{
 	color: #8ecc99;
-	background:#11232d;
 	border-radius: 10px;
 	font-weight: bold;
 	font-family: "Times New Roman", Times, serif; 
 }
+body{
+	background:#11232d;
+}
 
 header {
+	background:#11232d;
 	color:#cc99cc;
 	text-align:center;
 	padding: 28px;
@@ -34,6 +37,7 @@ article p{
 }
 
 .menu{
+	background:#11232d;
 	margin:0px;
 	margin-top:20px; 
 	position: sticky;
@@ -47,6 +51,7 @@ article p{
 }
 
 .menu li {
+	background:#11232d;
 	text-align:center;
 	display: block;
 	border: solid 2px #f99157;
@@ -59,6 +64,7 @@ article p{
 }
 
 .menu a {
+	background:#11232d;
 	position: relative;
 	text-decoration: none;
 	letter-spacing: 3px;
@@ -69,12 +75,15 @@ article p{
 	transition: .5s;
 }
 section{
+	background:#11232d;
 	border-top: solid 10px #11232d;
+	border-radius: 0px;
 	position: sticky;
 	top: 0px;
 }
 
 .NavBar { 
+	background:#11232d;
 	border-bottom-right-radius: 0;
 	border-bottom-left-radius: 0;
 	padding: 15px;
@@ -164,6 +173,7 @@ section{
 }
 
 footer{
+	background: #11232d;
 	margin-top: 10px;
 	vertical-align: middle;
 	font-size:20px;
@@ -174,4 +184,11 @@ footer{
 footer img:hover{
 	background-color:#11111d;
 }
-
+.ButtonPress{
+	background:#11232d;
+	font-size: 22px;
+	transition: 1s;
+}
+.ButtonPress:hover{
+	background-color: #49423d;
+}
