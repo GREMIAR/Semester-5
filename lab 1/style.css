@@ -166,9 +166,12 @@ section{
 footer{
 	margin-top: 10px;
 	vertical-align: middle;
-	font-size:18px;
+	font-size:20px;
 	text-align:center; 
 	border: solid 4px #f99157; 
 	padding: 10px;
+}
+footer img:hover{
+	background-color:#11111d;
 }
 
