@@ -2,11 +2,15 @@ article{
 	margin-top:20px;
 	margin-left:0;
 	margin-bottom: 20px;
-	text-align:center; 
-	align-items: center; /* center the content vertically */
-	height: 540px;
+	text-align:center;
 }
 footer{
 	position: sticky;
 	bottom: 5px;
+}
+
+article p{
+	text-align: justify;
+	font-size: 20px;
+	padding-left: 38%;
 }
