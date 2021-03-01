@@ -17,16 +17,20 @@ article{
 	border: solid 4px white;
 	margin-top:18px;
 	background: #000;
-	margin-left: 220px;
+	margin-left: 240px;
 	color:#DC143C;
 }
 
 .menu{
-	padding: 0px;
+	border: solid 2px white;
+	padding: 5px;
 	text-align: left;
 	background: #000;
 	position: fixed;
+	transition: 1s;
+	padding-right: 20px;
 }
+
 .menu li {
 	display: block;
 	border: solid 2px white;
@@ -125,10 +129,23 @@ article{
 footer{
 	margin-top:10px; 
 	background: #000;
-	text-align:center;
-	padding: 28px;
-	font-size: 48px;
-	font-weight: bold;
 	border: solid 4px white; 
-	color:#DC143C;
+	text-align:center;
+	padding: 20px;
+}
+.link{
+	
+	font-weight: bold;
+	color: #DC143C;
+	position: relative;
+	text-decoration: none;
+	font-family: "Times New Roman", Times, serif; 
+	letter-spacing: 3px;
+	font-size: 20px;
+	text-transform: uppercase;
+	display: inline-block;
+	transition: color .5s;
+}
+.link:hover{
+	color: #FF4364;
 }
