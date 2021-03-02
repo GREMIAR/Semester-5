@@ -87,7 +87,8 @@ section{
 	background:#11232d;
 	border-bottom-right-radius: 0;
 	border-bottom-left-radius: 0;
-	padding: 15px;
+	padding-top: 15px;
+	padding-bottom: 15px;
 	text-align: center;
 	margin-top:0px;
 	margin-bottom: 0px;
@@ -113,9 +114,8 @@ section{
 	color: #8ecc99;
 	position: relative;
 	text-decoration: none;
-	font-family: "Times New Roman", Times, serif;
 	letter-spacing: 3px;
-	margin: 0px 30px;
+	margin: 0px 20px;
 	font-size: 20px;
 	text-transform: uppercase;
 	display: inline-block;
@@ -185,6 +185,7 @@ footer{
 	text-align:center;
 	border: solid 4px #f99157;
 	padding: 10px;
+	transition: .8s;
 }
 footer img:hover{
 	background-color:#11111d;
