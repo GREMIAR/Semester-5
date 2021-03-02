@@ -10,7 +10,14 @@ footer{
 }
 
 article p{
+	position: relative;
 	text-align: justify;
 	font-size: 20px;
 	padding-left: 38%;
+}
+
+
+article img{
+	border-radius: 22px;
+	margin-bottom: 2%;
 }
