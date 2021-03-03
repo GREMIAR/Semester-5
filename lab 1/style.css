@@ -25,16 +25,6 @@ article{
 	padding: 20px;
 }
 
-article a{
-	color: black;
-	background: #cccccc;
-}
-
-article p{
-	color: black;
-	background: #cccccc;
-}
-
 .menu{
 	background:#11232d;
 	margin:0px;
@@ -50,7 +40,6 @@ article p{
 }
 
 .menu li {
-	background:#11232d;
 	text-align:center;
 	display: block;
 	border: solid 2px #f99157;
@@ -65,7 +54,6 @@ article p{
 .menu a {
 	font-weight: bold;
 	color: #8ecc99;
-	background:#11232d;
 	position: relative;
 	text-decoration: none;
 	letter-spacing: 3px;
@@ -75,6 +63,7 @@ article p{
 	display: inline-block;
 	transition: .5s;
 }
+
 section{
 	background:#11232d;
 	border-top: solid 10px #11232d;
@@ -141,6 +130,7 @@ section{
 .NavBar a:hover:before {
 	transform: scale(1);
 }
+
 .NavBar a.CurrentPlace{
 	color: #8ecc99;
 }
@@ -187,39 +177,7 @@ footer{
 	padding: 10px;
 	transition: .8s;
 }
+
 footer img:hover{
 	background-color:#11111d;
-}
-.ButtonPress{
-	margin-top: 30px;
-	margin-bottom: 30px;
-	font-weight: bold;
-	color: #8ecc99;
-	background:#11232d;
-	font-size: 30px;
-	transition: 1s;
-	width: 500px;
-	height: 75px;
-}
-.ButtonPress:hover{
-	background-color: #49423d;
-}
-
-table {
-	width: 65%;
-	border-radius: 0; 
-  border: 2px solid grey;
-}
-th {
-	border-radius: 0; 
-  border: 1px solid grey;
-}
-td {
-	text-align:center;
-	border-radius: 0; 
-  border: 1px solid grey;
-}
-
-.RoulImg{
-	"vertical-align:middle;"
 }

@@ -4,20 +4,59 @@ article{
 	margin-bottom: 20px;
 	text-align:center;
 }
+
 footer{
 	position: sticky;
 	bottom: 5px;
 }
 
-article p{
+.Mainarticle p{
 	position: relative;
-	text-align: justify;
-	font-size: 20px;
 	padding-left: 38%;
+	font-size: 28px;
+	text-align: left;
+	padding-bottom: 20px;
 }
 
-
-article img{
+.Mainarticle img{
+	vertical-align:middle;
 	border-radius: 22px;
 	margin-bottom: 2%;
+}
+
+table {
+	width: 65%;
+	border-radius: 0; 
+	border: 2px solid grey;
+}
+
+th {
+	border-radius: 0; 
+	border: 1px solid grey;
+}
+
+td {
+	text-align:center;
+	border-radius: 0; 
+	border: 1px solid grey;
+}
+
+.ButtonPress{
+	margin-top: 30px;
+	margin-bottom: 30px;
+	font-weight: bold;
+	color: #8ecc99;
+	background:#11232d;
+	font-size: 30px;
+	transition: 1s;
+	width: 500px;
+	height: 75px;
+}
+
+.ButtonPress:hover{
+	background-color: #49423d;
+}
+
+.ButtonPress img{
+	vertical-align:middle;
 }
