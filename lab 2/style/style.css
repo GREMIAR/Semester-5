@@ -123,7 +123,9 @@ section{
 	content: none;
 }
 
-.NavBar a {
+.NavBar button {
+	background: #11232d;
+	border: 0;
 	font-weight: bold;
 	color: #8ecc99;
 	position: relative;
@@ -136,7 +138,7 @@ section{
 	transition: color .5s;
 }
 
-.NavBar a:before {
+.NavBar button:before {
 	content: "";
 	border: solid 2px #FF4364;
 	position: absolute;
@@ -148,19 +150,19 @@ section{
 	transition: .8s;
 }
 
-.NavBar a:hover{
+.NavBar button:hover{
 	color: #FF4364;
 }
 
-.NavBar a:hover:before {
+.NavBar button:hover:before {
 	transform: scale(1);
 }
 
-.NavBar a.CurrentPlace{
+.NavBar button.CurrentPlace{
 	color: #8ecc99;
 }
 
-.NavBar a.CurrentPlace:before{
+.NavBar button.CurrentPlace:before{
 	content: "";
 	border: solid 2px #8ecc99;
 	position: absolute;
@@ -169,11 +171,11 @@ section{
 	transition: .8s;
 }
 
-.NavBar a.CurrentPlace:hover{
+.NavBar button.CurrentPlace:hover{
 	color:#FF4364;
 }
 
-.NavBar a.CurrentPlace:after{
+.NavBar button.CurrentPlace:after{
 	content: "";
 	border: solid 2px #8ecc99;
 	position: absolute;
@@ -185,7 +187,7 @@ section{
 	transition: 1s;
 }
 
-.NavBar a.CurrentPlace:hover:after{
+.NavBar button.CurrentPlace:hover:after{
 	border-color: #FF4364;
 	transform: scale(1);
 }
