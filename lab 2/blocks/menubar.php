@@ -1,20 +1,20 @@
-<form method="POST">
+<form>
 	<section>
 		<menu class="NavBar">
 			<?php 
-			if(isset($_POST['AboutGame']) or empty($_POST))
+			if(isset($_GET['AboutGame']) or empty($_GET))
 			{
 				echo '<li><button name = "AboutGame" class="CurrentPlace">Об игре</button>
 				<li><button name="Counter">Обратный отсчёт</button>
 				<li><button name="Download">Скачать</button>';
 			}
-			else if(isset($_POST['Counter']))
+			else if(isset($_GET['Counter']))
 			{
 				echo '<li><button name = "AboutGame">Об игре</button>
 				<li><button name="Counter" class="CurrentPlace">Обратный отсчёт</button>
 				<li><button name="Download">Скачать</button>';
 			}
-			else if(isset($_POST['Download']))
+			else if(isset($_GET['Download']))
 			{
 				echo '<li><button name = "AboutGame">Об игре</button>
 				<li><button name="Counter">Обратный отсчёт</button>

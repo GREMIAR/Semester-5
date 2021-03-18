@@ -1,17 +1,17 @@
 <?php 
-if(isset($_POST['AboutGame']) or empty($_POST))
+if(isset($_GET['AboutGame']) or empty($_GET))
 {
 	echo '<article class="ArticleMain">
 	<p><br><center><img src="image/Pic1.jpg" alt="Привет пацаны"></center><br><div class = "text"><a class = "anchor" name="Mid"></a>NewGame — революция в жанре РПГ. Ваш персонаж — детектив с уникальными навыками, которому предстоит исследовать целый район. Допрашивайте незабываемых персонажей, расследуйте убийства или берите взятки. Кем вы станете: героем или неудачником?</div><br><center><img src="image/Pic2.jpg" alt="Иди покакай"></center><br><div class = "text"></p>
 </article>';
 }
-else if(isset($_POST['Counter']))
+else if(isset($_GET['Counter']))
 {
 	echo '<article class="Mainarticle">
 			<p><b>До момента выхода оcталось</b><br><center><img src="image/ListC.png" alt="Дней" width="200" height="200"><img src="image/ListC.png" alt="Часов" width="200" height="200"><img src="image/ListC.png" alt="Минут" width="200" height="200"><img src="image/ListC.png" alt="Секунд" width="200" height="200"></center></p>
   	</article>';
 }
-else if(isset($_POST['Download']))
+else if(isset($_GET['Download']))
 {
 	echo '<article>
 		<a href="https://github.com/GREBIAR-Git/NewGameDownload" target="_blank">

@@ -1,5 +1,5 @@
 <?php 
-if(isset($_POST['AboutGame']) or empty($_POST))
+if(isset($_GET['AboutGame']) or empty($_GET))
 {
 	echo '
 	<menu class="menu">
