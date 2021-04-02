@@ -1,2 +1,3 @@
-<a name="Start"></a>
-<header>NewGame</header>
+<?php 
+	echo $headerstr;
+ ?>

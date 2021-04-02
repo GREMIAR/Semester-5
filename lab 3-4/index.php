@@ -1,16 +1,26 @@
-
-
-
-<!DOCTYPE html>
-<html lang=ru>
-	<head>
-		<?php include ("blocks/head.php");?>
-	</head>
-	<body>
-		<?php include ("blocks/header.php");?>
-		<?php include ("blocks/menubar.php");?>
-		<?php include ("blocks/menu.php");?>
-		<?php include ("blocks/article.php");?>
-		<?php include ("blocks/footer.php");?>
-  	</body>
-</html>
+<?php 
+	require_once 'function/connect.php';
+	$headstr;
+	$headerstr;
+	$menustr;
+	$menubarstr;
+	$footerstr;
+	require_once 'function/function.php';
+	ReactToPressedButton();
+	echo '
+	<!DOCTYPE html>
+		<html lang=ru>
+			<head>';
+				require_once  ("blocks/head.php");
+			echo '
+			</head>
+			<body>';
+				require_once  ("blocks/header.php");
+			    require_once  ("blocks/menubar.php");
+			    require_once  ("blocks/menu.php");
+				require_once  ("blocks/article.php");
+				require_once  ("blocks/footer.php");
+  			echo '
+  			</body>
+		</html>';
+?>
