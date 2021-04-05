@@ -1,6 +1,4 @@
 <?php 
-	
-
 	function GetString($num,$rows)
 	{
 		global $result;
@@ -48,7 +46,6 @@
 		}
 	}
 
-
 	function SelectBD($nameTable)
 	{
 		global $link,$result;
@@ -69,12 +66,21 @@
 		global $menustr;
 		$menustr=SearchByElemente($idHead,"`пункт_навигации`",1);
 	}
-	function Header1($idIM)
+
+	function SiteHeader($idIM)
 	{
 		$idHead=SearchByMenuItem($idIM,"`header_footer_menu_item`");
 		global $headerstr;
 		$headerstr=SearchByElemente($idHead,"`header_footer`",1);
 	}
+
+	function Artical($idIM)
+	{
+		$idHead=SearchByMenuItem($idIM,"`статья_пункт_меню`");
+		global $articalstr;
+		$articalstr=SearchByElemente($idHead,"`article`",1);
+	}
+
 	function Footer($idIM)
 	{
 		$idHead=SearchByMenuItem($idIM,"`header_footer_menu_item`");
@@ -90,11 +96,12 @@
 		$rows = mysqli_num_rows($result); 
 	    $row = GetString($idIM,$rows);
 	    Head($row[0]);
-	    Header1($row[0]);
+	    SiteHeader($row[0]);
 	    Menu($row[0]);
+	    Artical($row[0]);
 	    Footer($row[0]);
 	    $itemMenu=$row[0];
-		$menubarstr = $row[1];
+		$menubarstr=$row[1];
 		mysqli_free_result($result);
 	}
 
@@ -116,7 +123,6 @@
 			SelectItemMenu(3);
 		}
 	}
-
- ?>
+?>
 
 

@@ -4,6 +4,7 @@
 	$headerstr;
 	$menustr;
 	$menubarstr;
+	$articalstr;
 	$footerstr;
 	require_once 'function/function.php';
 	ReactToPressedButton();
