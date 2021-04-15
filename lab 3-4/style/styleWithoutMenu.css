@@ -1,8 +1,9 @@
 article{
-	margin-top:20px;
-	margin-left:0;
-	margin-bottom: 20px;
-	text-align:center;
+	margin-top:-173px;
+	border-top-left-radius:0;
+	border-top-right-radius:0;
+	align-self: center;
+	text-align: center;
 }
 
 footer{
@@ -41,22 +42,43 @@ td {
 	border: 1px solid grey;
 }
 
-.ButtonPress{
-	margin-top: 30px;
-	margin-bottom: 30px;
+.ButtonDownload a{
+	margin:20px;
+	background: #11232d;
 	font-weight: bold;
 	color: #8ecc99;
-	background:#11232d;
-	font-size: 30px;
+	position: relative;
+	text-decoration: none;
+	letter-spacing: 3px;
+	font-size: 20px;
+	text-transform: uppercase;
+	padding: 20px;
+	display: inline-flex;
+	align-items: center;
 	transition: 1s;
-	width: 500px;
-	height: 75px;
 }
 
-.ButtonPress:hover{
-	background-color: #49423d;
+.ButtonDownload a:before {
+	content: "";
+	border: solid 2px #FF4364;
+	position: absolute;
+	right: 24px;
+	left: 70px;
+	bottom: 30px;
+	margin: -3px;
+	transform: scale(0);
+	transition: .8s;
+}
+.ButtonDownload:hover{
+	color: #FF4364;
 }
 
-.ButtonPress img{
-	vertical-align:middle;
+.ButtonDownload a:hover{
+	color: #FF4364;
+	background: #1d1e33;
+}
+
+.ButtonDownload a:hover:before {
+	color: #FF4364;
+	transform: scale(1);
 }

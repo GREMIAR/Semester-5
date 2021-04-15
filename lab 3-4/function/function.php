@@ -57,7 +57,12 @@
 	{
 		$idHead=SearchByMenuItem($idIM,"`head_пункт_меню`");
 		global $headstr;
-		$headstr=SearchByElemente($idHead,"`head`",1);
+		$headstr = "<meta charset=\"";
+		$headstr.=SearchByElemente($idHead,"`head`",1);
+		$headstr.="\"><title>";
+		$headstr.=SearchByElemente($idHead,"`head`",2);
+		$headstr.="</title>";
+		$headstr.=SearchByElemente($idHead,"`head`",3);
 	}
 
 	function Menu($idIM)

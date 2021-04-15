@@ -24,7 +24,7 @@ header {
 }
 article{
 	background: #cccccc;
-	margin-top:-100px;
+	margin-top:-300px;
 	border: solid 5px #f99157;
 	margin-left: 245px;
 }
@@ -208,4 +208,110 @@ footer{
 
 footer img:hover{
 	background-color:#11111d;
+}
+
+
+.clearfix{
+	margin: 0px;
+	top: 232px;
+	position: sticky;
+	display: flex-inline;
+	flex-direction: column;
+	flex-shrink:1;
+	border: solid 4px #f99157;
+	border-bottom-right-radius: 0;
+	border-top-right-radius: 0;
+	border-top-left-radius: 0;
+	width: 217px;
+	height: 100px;
+	border-top-width: 1px;
+
+
+}
+
+.clearfixup{
+margin: 0px;
+margin-top: 20px;
+padding: 0px;
+padding-bottom: 10px;
+top: 182px;
+position: sticky;
+display: flex-inline;
+border: solid 4px #f99157;
+border-radius:0;
+width: 241px;
+border-bottom-width: 1px;
+text-align: center;
+}
+
+.clearfixup button {
+	background: #11232d;
+	font-size: 16px;
+	border: 0;
+	color: #8ecc99;
+	position: relative;
+	display: inline-block;
+	transition: color .5s;
+}
+
+.clearfixup button.sign_up:before {
+	content: "";
+	border: solid 1px #f99157;
+	position: absolute;
+	right: 212px;
+	left: -13px;
+	bottom: 2px;
+	margin: -3px;
+	transition: .8s;
+}
+
+.clearfixup button.sign_up:hover{
+	color: #f99157;
+}
+
+.clearfixup button.sign_up:hover:before {
+	right: 5px;
+}
+
+.login{
+margin: 5px;
+margin-top: 10px;
+
+}
+.password{
+margin: 5px;
+margin-bottom: 0px;
+
+}
+.sumbmit{
+	margin: 40px;
+	margin-top:-50px;
+}
+
+.slash{
+	position: relative;
+	bottom: -4px;
+	color: #f99157;
+	font-size: 31px;
+	font-weight: bold;
+}
+
+
+.clearfixup button.sign_in:before {
+	content: "";
+	border: solid 1px #f99157;
+	position: absolute;
+	right: -5px;
+	left: 69px;
+	bottom: 2px;
+	margin: -3px;
+	transition: .8s;
+}
+
+.clearfixup button.sign_in:hover{
+	color: #f99157;
+}
+
+.clearfixup button.sign_in:hover:before {
+	left: 5px;
 }
