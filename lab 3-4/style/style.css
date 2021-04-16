@@ -213,7 +213,7 @@ footer img:hover{
 
 .clearfix{
 	margin: 0px;
-	top: 232px;
+	top: 230px;
 	position: sticky;
 	display: flex-inline;
 	flex-direction: column;
@@ -225,8 +225,6 @@ footer img:hover{
 	width: 217px;
 	height: 100px;
 	border-top-width: 1px;
-
-
 }
 
 .clearfixup{
@@ -234,14 +232,15 @@ margin: 0px;
 margin-top: 20px;
 padding: 0px;
 padding-bottom: 10px;
-top: 182px;
+top: 180px;
 position: sticky;
 display: flex-inline;
+flex-direction: row;
 border: solid 4px #f99157;
 border-radius:0;
 width: 241px;
 border-bottom-width: 1px;
-text-align: center;
+
 }
 
 .clearfixup button {
@@ -273,19 +272,57 @@ text-align: center;
 	right: 5px;
 }
 
-.login{
-margin: 5px;
-margin-top: 10px;
-
+.clearfix button {
+	background: #11232d;
+	font-size: 16px;
+	border: 0;
+	color: #8ecc99;
+	position: relative;
+	display: inline-block;
+	transition: color .5s;
 }
-.password{
-margin: 5px;
-margin-bottom: 0px;
 
+.login{
+	border: solid 3px #f99157;
+	margin: 5px;
+	margin-left: 0;
+	margin-top: 10px;
+	border-radius: 0;
+	background: #cccccc;
+	width:185px; 
+}
+
+.password{
+	border: solid 3px #f99157;
+	margin: 5px;
+	margin-left: 0;
+	margin-bottom: 0px;
+	border-radius: 0;
+	background: #cccccc;
+	width:185px; 
 }
 .sumbmit{
-	margin: 40px;
-	margin-top:-50px;
+	left:65px;
+}
+
+.clearfix button.sumbmit:before {
+	content: "";
+	border: solid 1px #f99157;
+	position: absolute;
+	right: 0px;
+	left: 0px;
+	bottom: 2px;
+	margin: -3px;
+	transition: .8s;
+	transform: scale(0);
+}
+
+.clearfix button.sumbmit:hover{
+	color: #f99157;
+}
+
+.clearfix button.sumbmit:hover:before {
+	transform: scale(1);
 }
 
 .slash{

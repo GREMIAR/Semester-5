@@ -30,7 +30,7 @@
 					<input class="login" type="text" value="Логин" onBlur="" onFocus="">
 					<input class="password" type="password" value="Пароль" onBlur="" onFocus="">
 					<p><button class="sumbmit" type="button" id="elem" onclick="alerted();">
-				Войти</button></p>
+				Далее</button></p>
 				</fieldset>';
 				require_once  ("blocks/article.php");
 				require_once  ("blocks/footer.php");
