@@ -1,40 +1,48 @@
-function getTimeRemaining(endtime) {
-  var t = Date.parse(endtime) - Date.parse(new Date());
-  var seconds = Math.floor((t / 1000) % 60);
-  var minutes = Math.floor((t / 1000 / 60) % 60);
-  var hours = Math.floor((t / (1000 * 60 * 60)) % 24);
-  var days = Math.floor(t / (1000 * 60 * 60 * 24));
-  return {
-    'total': t,
-    'days': days,
-    'hours': hours,
-    'minutes': minutes,
-    'seconds': seconds
-  };
-}
+function countdown(dateEnd) {
+  var timer, days, hours, minutes, seconds;
 
-function initializeClock(endtime) {
-  var daysSpan = document.getElementById('days');
-  var hoursSpan = document.getElementById('hours');
-  var minutesSpan = document.getElementById('minutes');
-  var secondsSpan = document.getElementById('seconds');
+  dateEnd = new Date(dateEnd);
+  dateEnd = dateEnd.getTime();
 
-  function updateClock() {
-    var t = getTimeRemaining(endtime);
+  if (isNaN(dateEnd)) {
+    return;
+  }
 
-    daysSpan.innerHTML = t.days;
-    hoursSpan.innerHTML = ('0' + t.hours).slice(-2);
-    minutesSpan.innerHTML = ('0' + t.minutes).slice(-2);
-    secondsSpan.innerHTML = ('0' + t.seconds).slice(-2);
+  timer = setInterval(calculate, 1000);
 
-    if (t.total <= 0) {
-      clearInterval(timeinterval);
+  function calculate() {
+    var dateStart = new Date();
+    var dateStart = new Date(dateStart.getUTCFullYear(),
+      dateStart.getUTCMonth(),
+      dateStart.getUTCDate(),
+      dateStart.getUTCHours(),
+      dateStart.getUTCMinutes(),
+      dateStart.getUTCSeconds());
+    var timeRemaining = parseInt((dateEnd - dateStart.getTime()) / 1000)
+
+    if (timeRemaining >= 0) {
+      days = parseInt(timeRemaining / 86400);
+      timeRemaining = (timeRemaining % 86400);
+      hours = parseInt(timeRemaining / 3600);
+      timeRemaining = (timeRemaining % 3600);
+      minutes = parseInt(timeRemaining / 60);
+      timeRemaining = (timeRemaining % 60);
+      seconds = parseInt(timeRemaining);
+
+
+      document.getElementById("days").innerHTML = parseInt(days, 10);
+      document.getElementById("hours").innerHTML = ("0" + hours).slice(-2);
+      document.getElementById("minutes").innerHTML = ("0" + minutes).slice(-2);
+      document.getElementById("seconds").innerHTML = ("0" + seconds).slice(-2);
+    } else {
+      return;
     }
   }
 
-  updateClock();
-  var timeinterval = setInterval(updateClock, 1000);
+  function display(days, hours, minutes, seconds) {}
 }
 
-var deadline = new Date(Date.parse(new Date()) + 15 * 24 * 60 * 60 * 1000); // for endless timer
-initializeClock(deadline);
+
+
+
+countdown ('06/01/2021 00:00:00 AM');
