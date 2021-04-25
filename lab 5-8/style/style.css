@@ -338,8 +338,57 @@ border-bottom-width: 1px;
 	position: relative;
     display: inline-block;
 }
-.imgblock span#days {
+.imgblock span {
     color: black;
-    left: -100px;
-    font-size: 40px;
+    display: inline ;
+    position: relative;
+    left: -133px;
+    top:10px;
+    font-size: 64px;
+}
+
+#Modal a{
+	margin:20px;
+	margin-top:0px;
+	font-weight: bold;
+	color: black;
+	position: relative;
+	text-decoration: none;
+	letter-spacing: 2px;
+	font-size: 32px;
+	padding: 0px;
+	align-items: center;
+	transition: 1s;
+}
+
+#Modal a:before {
+	content: "";
+	border: solid 2px #FF4364;
+	position: absolute;
+	right: 0;
+	left: 0;
+	top: 38px;
+	transform: scale(0);
+	transition: .8s;
+}
+
+#Modal a:hover{
+	color: #FF4364;
+}
+
+#Modal a:hover:before {
+	color: #FF4364;
+	transform: scale(1);
+}
+
+.ForCounter{
+	position: relative;
+	text-align: center;
+	padding: 0px;
+}
+
+.ForCounter img{
+	vertical-align:middle;
+	border-radius: 22px;
+	margin-bottom: 2%;
 }

@@ -9,8 +9,8 @@
 	else if(isset($_GET['Counter']))
 	{
 		echo '
-		<article class="Mainarticle">
-			<p><b>До момента выхода оcталось</b>
+		<article class="ForCounter">
+			<p><br><div id="Modal"><a href="#">До момента выхода оcталось</a></div></br>
 				<br><center class="imgblock">
 				<img src="image/ListC.png" alt="Дней" width="200" height="200">
 				<span id="days"></span>
