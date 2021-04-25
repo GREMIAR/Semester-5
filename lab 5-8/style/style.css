@@ -2,6 +2,7 @@
 	border-radius: 10px;
 	font-family: "Times New Roman", Times, serif;
 }
+
 body{
 	background:#11232d;
 }
@@ -22,12 +23,14 @@ header {
 	width: 85%;
 	height: 85%;
 }
+
 article{
 	background: #cccccc;
 	margin-top:-300px;
 	border: solid 5px #f99157;
 	margin-left: 245px;
 }
+
 .anchor{
 	display: block;
 	position: relative;
@@ -54,8 +57,8 @@ article{
 	padding: 5px;
 	display: inline-block;
 	transition: 1s;
-
 }
+
 .menu_btn a{
 	display: block;
 	position: relative;
@@ -136,7 +139,7 @@ section{
 	font-size: 20px;
 	text-transform: uppercase;
 	display: inline-block;
-	transition: color .5s;
+	transition: color .8s;
 }
 
 .NavBar button:before {
@@ -146,7 +149,7 @@ section{
 	right: 0px;
 	left: 0px;
 	bottom: 0px;
-	margin: -3px;
+	margin: -5px;
 	transform: scale(0);
 	transition: .8s;
 }
@@ -159,38 +162,16 @@ section{
 	transform: scale(1);
 }
 
-.NavBar button.CurrentPlace{
-	color: #8ecc99;
-}
-
 .NavBar button.CurrentPlace:before{
 	content: "";
-	border: solid 2px #8ecc99;
-	position: absolute;
-	margin: -3px;
+	border: solid 2px #FF4364;
+	margin: -5px;
 	transform: scale(1);
 	transition: .8s;
 }
 
 .NavBar button.CurrentPlace:hover{
-	color:#FF4364;
-}
-
-.NavBar button.CurrentPlace:after{
-	content: "";
-	border: solid 2px #8ecc99;
-	position: absolute;
-	right: 0px;
-	left: 0px;
-	bottom: 0px;
-	margin: -3px;
-	transform: scale(0);
-	transition: 1s;
-}
-
-.NavBar button.CurrentPlace:hover:after{
-	border-color: #FF4364;
-	transform: scale(1);
+	color: #FF4364;
 }
 
 footer{
@@ -240,7 +221,6 @@ border: solid 4px #f99157;
 border-radius:0;
 width: 241px;
 border-bottom-width: 1px;
-
 }
 
 .clearfixup button {
