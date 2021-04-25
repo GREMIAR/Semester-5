@@ -8,10 +8,32 @@
 	}
 	else if(isset($_GET['Counter']))
 	{
-		echo '
+		echo'
+		<article class="Mainarticle">
+			<h1 class="countdown-title">Countdown Clock</h1>
+			<div id="countdown" class="countdown">
+			  <div class="countdown-number">
+			    <span id="days"></span>
+			    <span class="countdown-text">Days</span>
+			  </div>
+			  <div class="countdown-number">
+			    <span id="hours"></span>
+			    <span class="countdown-text">Hours</span>
+			  </div>
+			  <div class="countdown-number">
+			    <span id="minutes"></span>
+			    <span class="countdown-text">Minutes</span>
+			  </div>
+			  <div class="countdown-number">
+			    <span id="seconds"></span>
+			    <span class="countdown-text">Seconds</span>
+			  </div>
+			</div>
+		</article>';
+		/*echo '
 		<article class="Mainarticle">
 			<p><b>До момента выхода оcталось</b><br><center><img src="image/ListC.png" alt="Дней" width="200" height="200"><img src="image/ListC.png" alt="Часов" width="200" height="200"><img src="image/ListC.png" alt="Минут" width="200" height="200"><img src="image/ListC.png" alt="Секунд" width="200" height="200"></center></p>
-	  	</article>';
+	  	</article>';*/
 	}
 	else if(isset($_GET['Download']))
 	{
