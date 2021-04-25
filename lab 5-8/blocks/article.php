@@ -1,5 +1,5 @@
 <?php 
-	if(isset($_GET['AboutGame']) or empty($_GET))
+	if(isset($_GET['News']) or empty($_GET))
 	{
 		echo '
 		<article class="ArticleMain">
