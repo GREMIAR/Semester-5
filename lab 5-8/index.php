@@ -5,6 +5,7 @@
 	</head>
 	<body>
 	  	<?php 
+
 	  	require_once  ("blocks/header.php");
 		require_once  ("blocks/menubar.php");
 		require_once  ("blocks/menu.php");

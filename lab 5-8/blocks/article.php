@@ -8,18 +8,21 @@
 	}
 	else if(isset($_GET['Counter']))
 	{
+		require_once  ("blocks/modal.php");
 		echo '
 		<article class="ForCounter">
-			<p><br><div id="Modal"><a href="#">До момента выхода оcталось</a></div></br>
+
+			<p>
+				<br><div id="Modal"><a href="#" onclick="ModalOn()">До момента выхода оcталось</a></div></br>
 				<br><center class="imgblock">
-				<img src="image/ListC.png" alt="Дней" width="200" height="200">
-				<span id="days"></span>
-				<img src="image/ListC.png" alt="Часов" width="200" height="200">
-				<span id="hours"></span>
-				<img src="image/ListC.png" alt="Минут" width="200" height="200">
-				<span id="minutes"></span>
-				<img src="image/ListC.png" alt="Секунд" width="200" height="200">
-				<span id="seconds"></span>
+					<img src="image/ListC.png" alt="Дней" width="200" height="200">
+					<span id="days"></span>
+					<img src="image/ListC.png" alt="Часов" width="200" height="200">
+					<span id="hours"></span>
+					<img src="image/ListC.png" alt="Минут" width="200" height="200">
+					<span id="minutes"></span>
+					<img src="image/ListC.png" alt="Секунд" width="200" height="200">
+					<span id="seconds"></span>
 				</center>
 			</p>
 	  	</article>';

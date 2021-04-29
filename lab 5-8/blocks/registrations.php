@@ -6,6 +6,6 @@
 	<input class="login" type="text" value="Логин" onBlur="" onFocus="">
 	<input class="password" type="password" value="Пароль" onBlur="" onFocus="">
 	<p>
-		<button class="sumbmit" type="button" id="elem" onclick="alerted();">Далее</button>
+		<button class="sumbmit" type="button" id="myBtn" >Далее</button>
 	</p>
 </fieldset>
