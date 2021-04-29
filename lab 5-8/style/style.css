@@ -210,18 +210,18 @@ footer img:hover{
 }
 
 .clearfixup{
-margin: 0px;
-margin-top: 20px;
-padding: 0px;
-padding-bottom: 10px;
-top: 180px;
-position: sticky;
-display: flex-inline;
-flex-direction: row;
-border: solid 4px #f99157;
-border-radius:0;
-width: 241px;
-border-bottom-width: 1px;
+	margin: 0px;
+	margin-top: 20px;
+	padding: 0px;
+	padding-bottom: 10px;
+	top: 180px;
+	position: sticky;
+	display: flex-inline;
+	flex-direction: row;
+	border: solid 4px #f99157;
+	border-radius:0;
+	width: 241px;
+	border-bottom-width: 1px;
 }
 
 .clearfixup button {

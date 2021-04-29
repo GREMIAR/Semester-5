@@ -3,16 +3,16 @@ if(!(isset($_GET['Add']) or isset($_GET['Edit']) or isset($_GET['Del'])))
 {
 	echo '
 	<fieldset class="clearfixup">
-	<button type="button" class="sign_in" onclick="sign_in();">Войти</button><a class="slash"> / </a>
-	<button type="button" class="sign_up" onclick="sign_up();">Зарегистрироваться</button>
-</fieldset>
-<fieldset class="clearfix">
-	<input class="login" type="text" value="Логин" onBlur="" onFocus="">
-	<input class="password" type="password" value="Пароль" onBlur="" onFocus="">
-	<p>
-		<button class="sumbmit" type="button">Далее</button>
-	</p>
-</fieldset>';
+		<button type="button" class="sign_in" id="sign_in1" onclick="sign_in();">Войти</button><a class="slash"> / </a>
+		<button type="button" class="sign_up" id="sign_up1" onclick="sign_up();">Зарегистрироваться</button>
+	</fieldset>
+	<fieldset class="clearfix">
+		<input class="login" type="text" value="" onBlur="" onFocus="" placeholder="Логин" maxlength="28" minlength="6"">
+		<input class="password" type="password" value="" onBlur="" onFocus="" placeholder="Пароль" maxlength="20" minlength="6">
+		<p>
+			<button class="sumbmit" type="sumbmit" onclick="Next();">Далее</button>
+		</p>
+	</fieldset>';
 }
 else
 {
