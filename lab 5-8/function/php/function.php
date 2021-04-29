@@ -1,4 +1,38 @@
-<?php 
+<?php
+	function NewArticle($articleName, $text, $numberOfImages, $imageURLs)
+	{
+		Connect();
+
+		Close();
+	}
+
+	function ShowAllArticles()
+	{
+		global $result;
+		Connect();
+		SelectBD("article");
+		$rows = mysqli_num_rows($result);
+		$articleWithStyle;
+		for ($i=0; $i < $rows; $i++)
+		{
+			$articleWithStyle = "<br><div class = 'articleName'>";
+			$row = mysqli_fetch_row($result);
+			$articleWithStyle.= $row[1];
+			$articleWithStyle.="</div><br>";
+			echo $articleWithStyle;
+			$articleWithStyle = "<div class = 'text'>";
+			$articleWithStyle.=$row[2];
+			$articleWithStyle.="</div><br>";
+			echo $articleWithStyle;
+			$articleWithStyle = "<img src='";
+			$articleWithStyle.=$row[3];
+			$articleWithStyle.="'>";
+			echo $articleWithStyle;
+		}
+		Close();
+	}
+
+
 	function GetString($num,$rows)
 	{
 		global $result;
@@ -16,7 +50,7 @@
 	{
 		Connect();
 		SelectBD($nameBD);
-		Close(); 
+		Close();
 		global $result;
 		$rows = mysqli_num_rows($result);
 		for($i=1;$i<=$rows;$i++)
@@ -33,7 +67,7 @@
 	{
 		Connect();
 		SelectBD($nameBD);
-		Close(); 
+		Close();
 		global $result;
 		$rows = mysqli_num_rows($result);
 		for($i=1;$i<=$rows;$i++)
@@ -49,9 +83,9 @@
 	function SelectBD($nameTable)
 	{
 		global $link,$result;
-		$query ="SELECT * FROM" . $nameTable;
-		$result = mysqli_query($link, $query) or die("Ошибка " . mysqli_error($link)); 
-	} 
+		$query ="SELECT * FROM " . $nameTable;
+		$result = mysqli_query($link, $query) or die("Ошибка " . mysqli_error($link));
+	}
 
 	function Head($idIM)
 	{
@@ -98,7 +132,7 @@
 		global $result;
 		global $itemMenu;
 		global $menubarstr;
-		$rows = mysqli_num_rows($result); 
+		$rows = mysqli_num_rows($result);
 	    $row = GetString($idIM,$rows);
 	    Head($row[0]);
 	    SiteHeader($row[0]);
@@ -114,7 +148,7 @@
 	{
 		Connect();
 		SelectBD("`menu item`");
-		Close(); 
+		Close();
 		if(isset($_GET['AboutGame']) or empty($_GET))
 		{
 			SelectItemMenu(1);
@@ -129,5 +163,3 @@
 		}
 	}
 ?>
-
-

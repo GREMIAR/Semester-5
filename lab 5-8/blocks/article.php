@@ -1,9 +1,10 @@
-<?php 
+<?php
 	if(isset($_GET['News']) or empty($_GET))
 	{
-		echo '
-		<article class="ArticleMain">
-			<p id="text_change"><br><center><img src="image/Pic1.jpg" alt="Привет пацаны"></center><br><div class = "text"><a class = "anchor" name="Mid"></a>NewGame — революция в жанре РПГ. Ваш персонаж — детектив с уникальными навыками, которому предстоит исследовать целый район. Допрашивайте незабываемых персонажей, расследуйте убийства или берите взятки. Кем вы станете: героем или неудачником?</div><br><center><img src="image/Pic2.jpg" alt="Иди покакай"></center><br><div class = "text"></p>
+		echo '<center>
+		<article class="ArticleMain">';
+		ShowAllArticles();
+		echo '</center>
 		</article>';
 	}
 	else if(isset($_GET['Counter']))
@@ -37,7 +38,7 @@
 				</a>
 			</div>
 			<center><table>
-				<caption><b style="font-size: 22px">Системные требования</b></caption> 
+				<caption><b style="font-size: 22px">Системные требования</b></caption>
 				<tr>
 					<th colspan="3">Минимальные</th>
 					<th colspan="3">Рекомендуемые</th>

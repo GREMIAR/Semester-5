@@ -1,11 +1,14 @@
 <!DOCTYPE html>
+<?php
+require_once 'function/php/connect.php';
+require_once 'function/php/function.php';
+?>
 <html lang=ru>
 	<head>
 		<?php require_once  ("blocks/head.php");?>
 	</head>
 	<body>
-	  	<?php 
-
+	  	<?php
 	  	require_once  ("blocks/header.php");
 		require_once  ("blocks/menubar.php");
 		require_once  ("blocks/menu.php");
