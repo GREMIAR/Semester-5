@@ -93,4 +93,11 @@
 			</center>
 	  	</article>';
 	}
+	else if(isset($_GET['Add']) or isset($_GET['Edit']) or isset($_GET['Del']))
+	{
+		echo '<input type="text" style = "width: 30%;">
+		<br><br><textarea style = "resize: none;width: 30%;height:80px;" cols="91"></textarea>
+		<br><br><input type="text" style = "width: 30%;">
+		<br><br><button name="News" >Добавить</button>';
+	}
 ?>

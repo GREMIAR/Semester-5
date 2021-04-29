@@ -1,4 +1,7 @@
-<fieldset class="clearfixup">
+<?php  
+if(!(isset($_GET['Add']) or isset($_GET['Edit']) or isset($_GET['Del'])))
+{
+	echo'<fieldset class="clearfixup">
 	<button type="button" class="sign_in" onclick="sign_in();">Войти</button><a class="slash"> / </a>
 	<button type="button" class="sign_up" onclick="sign_up();">Зарегистрироваться</button>
 </fieldset>
@@ -6,6 +9,12 @@
 	<input class="login" type="text" value="Логин" onBlur="" onFocus="">
 	<input class="password" type="password" value="Пароль" onBlur="" onFocus="">
 	<p>
-		<button class="sumbmit" type="button" id="myBtn" >Далее</button>
+		<button class="sumbmit" type="button">Далее</button>
 	</p>
-</fieldset>
+</fieldset>';
+}
+else
+{
+
+}
+?>

@@ -25,4 +25,11 @@
 		<link type="text/css" href="style/style.css" rel="stylesheet">
 		<link  type="text/css" href="style/styleWithoutMenu.css"rel="stylesheet">';
 	}
+	else if(isset($_GET['Add']) or isset($_GET['Edit']) or isset($_GET['Del']))
+	{
+		echo '
+		<meta charset="utf-8">
+		<title>Конструктор</title>
+		<link type="text/css" href="style/designer.css" rel="stylesheet">';
+	}
 ?>

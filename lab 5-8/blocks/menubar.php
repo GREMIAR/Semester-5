@@ -23,6 +23,10 @@
 				<li><button name="Counter">Обратный отсчёт</button>
 				<li><button name="Download" class="CurrentPlace">Скачать</button>';
 			}
+			else if(isset($_GET['Add']) or isset($_GET['Edit']) or isset($_GET['Del']))
+			{
+				
+			}
 			?>
 		</menu>
 	</section>		

@@ -28,6 +28,12 @@
 			$articleWithStyle.=$row[3];
 			$articleWithStyle.="'>";
 			echo $articleWithStyle;
+			echo "<form action='#'>
+			<br><button class='sumbmit' name = 'Add'>Добавить</button>
+			<br><button class='sumbmit' name = 'Edit'>Редактировать</button>
+			<br><button class='sumbmit' name = 'Del'>Удалить</button>
+			</from>";
+
 		}
 		Close();
 	}
