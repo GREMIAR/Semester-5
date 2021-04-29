@@ -95,21 +95,30 @@
 	}
 	else if(isset($_GET['Add']))
 	{
-		echo '<form action="#" class="navbar-form" role="search">
+		echo'<article>';
+
+		echo '<p>Заголовок</p><form action="#" class="navbar-form" role="search">
 		<input type="text" name="pomogite" style = "width: 30%;">
-		<br><br><textarea name="hilfe" style = "resize: none;width: 30%;height:80px;" cols="91"></textarea>
-		<br><br><input type="text" name="help" style = "width: 30%;">
+		<p>Текст</p>
+		<textarea name="hilfe" style = "resize: none;width: 30%;height:80px;" cols="91"></textarea>
+		<p>Картинка</p>
+		<input type="text" name="help" style = "width: 30%;">
 		<br><br><button name="News" >Добавить</button></form>';
+		echo'</article>';
 	}
 	else if (isset($_GET['Edit']))
 	{
+		echo'<article><p>Заголовок</p>';
 		$row = SearchArticle($_GET['Edit'],'`article`');
 		echo '<form action="#" class="navbar-form" role="search">
 		<input type = "hidden" name = "ID" value ="';echo $row[0];echo'" >
 		<input type="text" name="Heading" style = "width: 30%;" value="';echo $row[1];echo'" >
-		<br><br><textarea name="MainText" style = "resize: none;width: 30%;height:80px;" cols="91">';echo $row[2]; echo'</textarea>
-		<br><br><input type="text" name="UrlImg" style = "width: 30%;"value="';echo $row[3];echo'">
+		<p>Текст</p>
+		<textarea name="MainText" style = "resize: none;width: 30%;height:80px;" cols="91">';echo $row[2]; echo'</textarea>
+		<p>Картинка</p>
+		<input type="text" name="UrlImg" style = "width: 30%;"value="';echo $row[3];echo'">
 		<br><br><button name="News" >Редактировать</button></form>';
+		echo'</article>';
 	}
 
 ?>
