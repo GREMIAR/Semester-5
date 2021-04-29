@@ -2,6 +2,7 @@
 <?php
 require_once 'function/php/connect.php';
 require_once 'function/php/function.php';
+EditBD();
 ?>
 <html lang=ru>
 	<head>

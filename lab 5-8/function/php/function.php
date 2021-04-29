@@ -1,10 +1,64 @@
 <?php
-	function NewArticle($articleName, $text, $numberOfImages, $imageURLs)
+	function EditBD()
 	{
-		Connect();
-
-		Close();
+		if (isset($_GET['pomogite']) and isset($_GET['hilfe']) and isset($_GET['help']))
+		{
+			$articleName = htmlspecialchars($_GET["pomogite"]);
+			$textiq = htmlspecialchars($_GET["hilfe"]);
+			$imageURLs = htmlspecialchars($_GET["help"]);
+			$host = 'localhost';
+			$database = 'articles';
+			$user = 'root';
+			$password = '';
+			$conn = new mysqli($host, $user, $password, $database);
+			if ($conn->connect_error) {
+			  die("Connection failed: " . $conn->connect_error);
+			}
+			$sql = "INSERT INTO article (Nomen, Textiq, ImageURL) VALUES ('$articleName', '$textiq', '$imageURLs')";
+			if ($conn->query($sql) === TRUE) {
+			  echo "New record created successfully";
+			} else {
+			  echo "Error: " . $sql . "<br>" . $conn->error;
+			}
+			$conn->close();
+		}
+		elseif (isset($_GET['Del']))
+		{
+			$IDarticle = htmlspecialchars($_GET["Del"]);
+			$host = 'localhost';
+			$database = 'articles';
+			$user = 'root';
+			$password = '';
+			$conn = new mysqli($host, $user, $password, $database);
+			if ($conn->connect_error) {
+			  die("Connection failed: " . $conn->connect_error);
+			}
+			$sql = "DELETE FROM article WHERE IDarticle='$IDarticle'";
+			if ($conn->query($sql) === TRUE) {
+			  echo "Record deleted successfully";
+			} else {
+			  echo "Error deleting record: " . $conn->error;
+			}
+			$conn->close();
+			$url = strtok(GetURL(), '?');
+			header ('Location: '.$url);
+		}
 	}
+
+	function GetURL()
+	{
+	    if(isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on')
+	         $url = "https://";
+	    else
+	         $url = "http://";
+	    $url.= $_SERVER['HTTP_HOST'];
+	    $url.= $_SERVER['REQUEST_URI'];
+	    return $url;
+	}
+
+    function abc($name){
+        // Your code here
+    }
 
 	function ShowAllArticles()
 	{
@@ -13,7 +67,10 @@
 		SelectBD("article");
 		$rows = mysqli_num_rows($result);
 		$articleWithStyle;
-		for ($i=0; $i < $rows; $i++)
+		echo "<form action='#'>
+		<br><button class='sumbmit' name = 'Add'>Добавить</button>
+		</from>";
+		for ($i=$rows; $i > 0; $i--)
 		{
 			$articleWithStyle = "<br><div class = 'articleName'>";
 			$row = mysqli_fetch_row($result);
@@ -24,15 +81,19 @@
 			$articleWithStyle.=$row[2];
 			$articleWithStyle.="</div><br>";
 			echo $articleWithStyle;
-			$articleWithStyle = "<img src='";
-			$articleWithStyle.=$row[3];
-			$articleWithStyle.="'>";
-			echo $articleWithStyle;
+			if ($row[3]!=='')
+			{
+				$articleWithStyle = "<img src='";
+				$articleWithStyle.=$row[3];
+				$articleWithStyle.="'>";
+				echo $articleWithStyle;
+			}
 			echo "<form action='#'>
-			<br><button class='sumbmit' name = 'Add'>Добавить</button>
-			<br><button class='sumbmit' name = 'Edit'>Редактировать</button>
-			<br><button class='sumbmit' name = 'Del'>Удалить</button>
+
+			<br><button class='sumbmit' name = 'Edit' value = '$row[0]'>Редактировать</button></form><form action='#'>
+			<br><button class='sumbmit' name = 'Del' value = '$row[0]'><input type = 'hidden' name = 'News'>Удалить</button>
 			</from>";
+			echo "<br><br><br>";
 
 		}
 		Close();
