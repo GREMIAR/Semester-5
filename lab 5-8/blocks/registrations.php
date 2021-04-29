@@ -7,8 +7,8 @@ if(!(isset($_GET['Add']) or isset($_GET['Edit']) or isset($_GET['Del'])))
 		<button type="button" class="sign_up" id="sign_up1" onclick="sign_up();">Зарегистрироваться</button>
 	</fieldset>
 	<fieldset class="clearfix">
-		<input class="login" type="text" value="" onBlur="" onFocus="" placeholder="Логин" maxlength="28" minlength="6"">
-		<input class="password" type="password" value="" onBlur="" onFocus="" placeholder="Пароль" maxlength="20" minlength="6">
+		<input class="login" type="text" name="nm" onBlur="" onFocus="" placeholder="Логин" maxlength="28" minlength="6"">
+		<input class="password" type="password" name="pswrd" onBlur="" onFocus="" placeholder="Пароль" maxlength="20" minlength="6">
 		<p>
 			<button class="sumbmit" type="sumbmit" onclick="Next();">Далее</button>
 		</p>

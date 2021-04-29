@@ -1,6 +1,20 @@
 <?php
 	function EditBD()
 	{
+		if (htmlspecialchars($_GET["pswrd"])!='' and htmlspecialchars($_GET["nm"])!='')
+		{
+			$password = htmlspecialchars($_GET["pswrd"]);
+			$nomen = htmlspecialchars($_GET["nm"]);
+			Connect();
+			global $link;
+			$sql = "INSERT INTO accounts (Name, Password, Role) VALUES ('$nomen', '$password', 0)";
+			if ($link->query($sql) === TRUE) {
+			  echo "New record created successfully";
+			} else {
+			  echo "Error: " . $sql . "<br>" . $link->error;
+			}
+			Close();
+		}
 		if (isset($_GET['pomogite']) and isset($_GET['hilfe']) and isset($_GET['help']))
 		{
 			$articleName = htmlspecialchars($_GET["pomogite"]);
@@ -92,7 +106,7 @@
 			echo "<form action='#'>
 
 			<br><button class='sumbmit' name = 'Edit' value = '$row[0]'>Редактировать</button></form><form action='#'>
-			<br><button class='sumbmit' name = 'Del' value = '$row[0]'><input type = 'hidden' name = 'News'>Удалить</button>
+			<button class='sumbmit' name = 'Del' value = '$row[0]'><input type = 'hidden' name = 'News'>Удалить</button>
 			</from>";
 			echo "<br><br><br>";
 
