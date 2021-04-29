@@ -6,42 +6,47 @@
 			$articleName = htmlspecialchars($_GET["pomogite"]);
 			$textiq = htmlspecialchars($_GET["hilfe"]);
 			$imageURLs = htmlspecialchars($_GET["help"]);
-			$host = 'localhost';
-			$database = 'articles';
-			$user = 'root';
-			$password = '';
-			$conn = new mysqli($host, $user, $password, $database);
-			if ($conn->connect_error) {
-			  die("Connection failed: " . $conn->connect_error);
-			}
+			Connect();
+			global $link;
 			$sql = "INSERT INTO article (Nomen, Textiq, ImageURL) VALUES ('$articleName', '$textiq', '$imageURLs')";
-			if ($conn->query($sql) === TRUE) {
+			if ($link->query($sql) === TRUE) {
 			  echo "New record created successfully";
 			} else {
-			  echo "Error: " . $sql . "<br>" . $conn->error;
+			  echo "Error: " . $sql . "<br>" . $link->error;
 			}
-			$conn->close();
+			Close();
 		}
-		elseif (isset($_GET['Del']))
+		else if (isset($_GET['Del']))
 		{
 			$IDarticle = htmlspecialchars($_GET["Del"]);
-			$host = 'localhost';
-			$database = 'articles';
-			$user = 'root';
-			$password = '';
-			$conn = new mysqli($host, $user, $password, $database);
-			if ($conn->connect_error) {
-			  die("Connection failed: " . $conn->connect_error);
-			}
+			Connect();
+			global $link;
 			$sql = "DELETE FROM article WHERE IDarticle='$IDarticle'";
-			if ($conn->query($sql) === TRUE) {
+			if ($link->query($sql) === TRUE) {
 			  echo "Record deleted successfully";
 			} else {
-			  echo "Error deleting record: " . $conn->error;
+			  echo "Error deleting record: " . $link->error;
 			}
-			$conn->close();
+			Close();
 			$url = strtok(GetURL(), '?');
 			header ('Location: '.$url);
+		}
+		else if(isset($_GET['Heading']) and isset($_GET['MainText']) and isset($_GET['UrlImg']) and isset($_GET['ID']))
+		{
+			$articleName = htmlspecialchars($_GET["Heading"]);
+			$textiq = htmlspecialchars($_GET["MainText"]);
+			$imageURLs = htmlspecialchars($_GET["UrlImg"]);
+			$IDarticle = htmlspecialchars($_GET["ID"]);
+			Connect();
+			global $link;
+			$sql = "UPDATE article SET Nomen='$articleName',Textiq='$textiq',ImageURL='$imageURLs' WHERE IDarticle=$IDarticle";
+			if ($link->query($sql) === TRUE) {
+			  echo "New record created successfully";
+			} else {
+			  echo "Error: " . $sql . "<br>" . $link->error;
+			}
+
+			Close();
 		}
 	}
 
@@ -55,10 +60,6 @@
 	    $url.= $_SERVER['REQUEST_URI'];
 	    return $url;
 	}
-
-    function abc($name){
-        // Your code here
-    }
 
 	function ShowAllArticles()
 	{
@@ -97,6 +98,25 @@
 
 		}
 		Close();
+	}
+
+	function SearchArticle($IDarticle,$nameBD)
+	{
+		Connect();
+		global $link,$result;
+		$query ="SELECT * FROM" . $nameBD;
+		$result = mysqli_query($link, $query) or die("Ошибка " . mysqli_error($link));
+		Close();
+		global $result;
+		$rows = mysqli_num_rows($result);
+		for($i=1;$i<=$rows;$i++)
+		{
+			$row = mysqli_fetch_row($result);
+			if($row[0]==$IDarticle)
+			{
+				return $row;
+			}
+		}
 	}
 
 
@@ -150,7 +170,7 @@
 	function SelectBD($nameTable)
 	{
 		global $link,$result;
-		$query ="SELECT * FROM " . $nameTable;
+		$query ="SELECT * FROM " . $nameTable . " ORDER BY -IDarticle";
 		$result = mysqli_query($link, $query) or die("Ошибка " . mysqli_error($link));
 	}
 

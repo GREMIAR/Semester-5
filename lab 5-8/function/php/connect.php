@@ -9,7 +9,7 @@
 		$user = 'root';
 		$password = '';
 		$link = mysqli_connect($host, $user, $password, $database)
-		or die("Ошибка 1" . mysqli_error($link));
+		or die("Ошибка " . mysqli_error($link));
 		$link->set_charset("utf8");
 	}
 	function Close()

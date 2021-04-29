@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 29, 2021 at 01:53 PM
+-- Generation Time: Apr 29, 2021 at 06:54 PM
 -- Server version: 10.4.18-MariaDB
 -- PHP Version: 8.0.3
 
@@ -28,9 +28,9 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `article` (
-  `ID` int(11) NOT NULL,
-  `Name` text NOT NULL,
-  `Text` text NOT NULL,
+  `IDarticle` int(11) NOT NULL,
+  `Nomen` text NOT NULL,
+  `Textiq` text NOT NULL,
   `ImageURL` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -38,8 +38,9 @@ CREATE TABLE `article` (
 -- Dumping data for table `article`
 --
 
-INSERT INTO `article` (`ID`, `Name`, `Text`, `ImageURL`) VALUES
-(1, 'Об игре', 'NewGame — революция в жанре РПГ. Ваш персонаж — детектив с уникальными навыками, которому предстоит исследовать целый район. Допрашивайте незабываемых персонажей, расследуйте убийства или берите взятки. Кем вы станете: героем или неудачником?', 'image/Pic1.jpg');
+INSERT INTO `article` (`IDarticle`, `Nomen`, `Textiq`, `ImageURL`) VALUES
+(1, 'Об игре', 'NewGame — революция в жанре РПГ. Ваш персонаж — детектив с уникальными навыками, которому предстоит исследовать целый район. Допрашивайте незабываемых персонажей, расследуйте убийства или берите взятки. Кем вы станете: героем или неудачником?', 'image/Pic1.jpg'),
+(23, 'sasaaa', 'sassaasasa', 'https://sun9-4.userapi.com/impg/c858132/v858132523/111860/GdaPl0uxwjc.jpg?size=400x400&amp;quality=96&amp;sign=40a4df2a843d8bce432a5cb4e9f920f0&amp;type=album');
 
 --
 -- Indexes for dumped tables
@@ -49,7 +50,7 @@ INSERT INTO `article` (`ID`, `Name`, `Text`, `ImageURL`) VALUES
 -- Indexes for table `article`
 --
 ALTER TABLE `article`
-  ADD PRIMARY KEY (`ID`);
+  ADD PRIMARY KEY (`IDarticle`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -59,7 +60,7 @@ ALTER TABLE `article`
 -- AUTO_INCREMENT for table `article`
 --
 ALTER TABLE `article`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `IDarticle` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

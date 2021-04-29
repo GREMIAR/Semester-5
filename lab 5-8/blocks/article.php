@@ -93,12 +93,23 @@
 			</center>
 	  	</article>';
 	}
-	else if(isset($_GET['Add']) or isset($_GET['Edit']))
+	else if(isset($_GET['Add']))
 	{
-		echo '<form action="#" method="get" class="navbar-form" role="search">
+		echo '<form action="#" class="navbar-form" role="search">
 		<input type="text" name="pomogite" style = "width: 30%;">
 		<br><br><textarea name="hilfe" style = "resize: none;width: 30%;height:80px;" cols="91"></textarea>
 		<br><br><input type="text" name="help" style = "width: 30%;">
-		<br><br><button class = "TESTT" name="News" >Добавить</button></form>';
+		<br><br><button name="News" >Добавить</button></form>';
 	}
+	else if (isset($_GET['Edit']))
+	{
+		$row = SearchArticle($_GET['Edit'],'`article`');
+		echo '<form action="#" class="navbar-form" role="search">
+		<input type = "hidden" name = "ID" value ="';echo $row[0];echo'" >
+		<input type="text" name="Heading" style = "width: 30%;" value="';echo $row[1];echo'" >
+		<br><br><textarea name="MainText" style = "resize: none;width: 30%;height:80px;" cols="91">';echo $row[2]; echo'</textarea>
+		<br><br><input type="text" name="UrlImg" style = "width: 30%;"value="';echo $row[3];echo'">
+		<br><br><button name="News" >Редактировать</button></form>';
+	}
+
 ?>
