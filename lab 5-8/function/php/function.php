@@ -1,51 +1,7 @@
 <?php
 	function EditBD()
 	{
-		if (htmlspecialchars($_GET["pswrd"])!='' and htmlspecialchars($_GET["nm"])!='')
-		{
-			$password = htmlspecialchars($_GET["pswrd"]);
-			$nomen = htmlspecialchars($_GET["nm"]);
-			Connect();
-			global $link;
-			$sql = "INSERT INTO accounts (Name, Password, Role) VALUES ('$nomen', '$password', 0)";
-			if ($link->query($sql) === TRUE) {
-			  echo "New record created successfully";
-			} else {
-			  echo "Error: " . $sql . "<br>" . $link->error;
-			}
-			Close();
-		}
-		if (isset($_GET['pomogite']) and isset($_GET['hilfe']) and isset($_GET['help']))
-		{
-			$articleName = htmlspecialchars($_GET["pomogite"]);
-			$textiq = htmlspecialchars($_GET["hilfe"]);
-			$imageURLs = htmlspecialchars($_GET["help"]);
-			Connect();
-			global $link;
-			$sql = "INSERT INTO article (Nomen, Textiq, ImageURL) VALUES ('$articleName', '$textiq', '$imageURLs')";
-			if ($link->query($sql) === TRUE) {
-			  echo "New record created successfully";
-			} else {
-			  echo "Error: " . $sql . "<br>" . $link->error;
-			}
-			Close();
-		}
-		else if (isset($_GET['Del']))
-		{
-			$IDarticle = htmlspecialchars($_GET["Del"]);
-			Connect();
-			global $link;
-			$sql = "DELETE FROM article WHERE IDarticle='$IDarticle'";
-			if ($link->query($sql) === TRUE) {
-			  echo "Record deleted successfully";
-			} else {
-			  echo "Error deleting record: " . $link->error;
-			}
-			Close();
-			$url = strtok(GetURL(), '?');
-			header ('Location: '.$url);
-		}
-		else if(isset($_GET['Heading']) and isset($_GET['MainText']) and isset($_GET['UrlImg']) and isset($_GET['ID']))
+		if(isset($_GET['ID']))
 		{
 			$articleName = htmlspecialchars($_GET["Heading"]);
 			$textiq = htmlspecialchars($_GET["MainText"]);
@@ -54,14 +10,141 @@
 			Connect();
 			global $link;
 			$sql = "UPDATE article SET Nomen='$articleName',Textiq='$textiq',ImageURL='$imageURLs' WHERE IDarticle=$IDarticle";
-			if ($link->query($sql) === TRUE) {
-			  echo "New record created successfully";
-			} else {
-			  echo "Error: " . $sql . "<br>" . $link->error;
-			}
+			$link->query($sql);
+			Close();
+			OnlyIDPeople();
+		}
+		else if (isset($_GET['Del']))
+		{
+			$IDarticle = htmlspecialchars($_GET["Del"]);
+			Connect();
+			global $link;
+			$sql = "DELETE FROM article WHERE IDarticle='$IDarticle'";
+			$link->query($sql);
+			Close();
+			OnlyIDPeople();
+		}
+		else if(isset($_GET['Heading']) and isset($_GET['MainText']) and isset($_GET['UrlImg']))
+		{
+			$articleName = htmlspecialchars($_GET["Heading"]);
+			$textiq = htmlspecialchars($_GET["MainText"]);
+			$imageURLs = htmlspecialchars($_GET["UrlImg"]);
+			Connect();
+			global $link;
+			$sql = "INSERT INTO article (Nomen, Textiq, ImageURL) VALUES ('$articleName', '$textiq', '$imageURLs')";
+			$link->query($sql);
+			Close();
+			OnlyIDPeople();
+		}
+		if(isset($_GET['IDP']))
+		{ 
+			echo '
+			<input type="hidden" name="IDP"  style = "width: 30%;" value="';echo htmlspecialchars($_GET['IDP']);echo' >';
+		}
+		else if (isset($_GET['pswrd']) and isset($_GET['lg']) and htmlspecialchars($_GET["pswrd"])!='' and htmlspecialchars($_GET["lg"])!=''and isset($_GET['next']))
+		{
+			$lg = htmlspecialchars($_GET["lg"]);
+			$password = htmlspecialchars($_GET["pswrd"]);
+			Connect();
+			global $link;
 
+			$sql = "SELECT * FROM `accounts` WHERE `login` = '$lg'";
+			$result=$link->query($sql);
+			$row_count = mysqli_num_rows($result);
+			
+			if($row_count = 0)
+			{
+				$sql = "INSERT INTO accounts (role, login,password ) VALUES (0,'$lg', '$password')";
+				if ($link->query($sql) === TRUE) {
+				  echo "New record created successfully";
+				} else {
+				  echo "Error: " . $sql . "<br>" . $link->error;
+				}
+			}
+			$rows = mysqli_num_rows($result);
+			for($i=1;$i<=$rows;$i++)
+			{
+				$row = mysqli_fetch_row($result);
+				if($row[0]==$lg)
+				{
+					break;
+				}
+			}
+			$url = strtok(GetURL(), '?');
+			$url .='?IDP='.$row[0];
+			if(isset($_GET["News"]))
+			{
+				$url.='&News=5';
+			}
+			else if(isset($_GET["Counter"]))
+			{
+				$url.='&Counter=';
+			}
+			else if(isset($_GET["Download"]))
+			{
+				$url.='&Download=';
+			}
+			else if (isset($_GET["Edit"])) {
+				$url.='&Edit='.htmlspecialchars($_GET["Edit"]);
+			}
+			else if (isset($_GET["Add"])) {
+				$url.='&Add=';
+			}
+			else if (isset($_GET["Del"])) {
+				$url.='&Del='.htmlspecialchars($_GET["Del"]);
+			}
+			echo $url;
+			header ('Location: '.$url);
 			Close();
 		}
+	}
+
+	function OnlyIDPeople()
+	{
+		$url = strtok(GetURL(), '?');
+		if(isset($_GET["IDP"]))
+		{
+			$IDP = htmlspecialchars($_GET["IDP"]);
+			$url .='?IDP='.$IDP;
+			if(isset($_GET["News"]))
+			{
+				$url.='&News=3';
+			}
+			else if(isset($_GET["Counter"]))
+			{
+				$url.='&Counter=';
+			}
+			else if(isset($_GET["Download"]))
+			{
+				$url.='&Download=';
+			}
+			else if(isset($_GET["Del"]))
+			{
+				$url.='&News=4';
+			}
+		}
+		else
+		{
+			if(isset($_GET["News"]))
+			{
+				$url.='?News=1';
+			}
+			else if(isset($_GET["Counter"]))
+			{
+				$url.='?Counter=';
+			}
+			else if(isset($_GET["Download"]))
+			{
+				$url.='?Download=';
+			}
+			else if(isset($_GET["Del"]))
+			{
+				$url.='?News=2';
+			}
+		}
+		
+		
+		header ('Location: '.$url);
 	}
 
 	function GetURL()
@@ -105,8 +188,8 @@
 			}
 			echo "<form action='#'>
 
-			<br><button class='sumbmit' name = 'Edit' value = '$row[0]'>Редактировать</button></form><form action='#'>
-			<button class='sumbmit' name = 'Del' value = '$row[0]'><input type = 'hidden' name = 'News'>Удалить</button>
+			<br><button class='sumbmit' name = 'Edit' value = '$row[0]'>Редактировать</button>
+			<button class='sumbmit' name = 'Del' value = '$row[0]'>Удалить</button>
 			</from>";
 			echo "<br><br><br>";
 

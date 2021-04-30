@@ -6,7 +6,6 @@
 		<title>Новости</title>
 		<link type="text/css" href="style/style.css" rel="stylesheet">
 		<script type="text/javascript" src="function/js/script.js"></script>';
-
 	}
 	else if(isset($_GET['Counter']))
 	{

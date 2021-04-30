@@ -12,7 +12,6 @@
 		require_once  ("blocks/modal.php");
 		echo '
 		<article class="ForCounter">
-
 			<p>
 				<br><div id="Modal"><a href="#" onclick="ModalOn()">До момента выхода оcталось</a></div></br>
 				<br><center class="imgblock">
@@ -96,13 +95,13 @@
 	else if(isset($_GET['Add']))
 	{
 		echo'<article>';
-
 		echo '<p>Заголовок</p><form action="#" class="navbar-form" role="search">
-		<input type="text" name="pomogite" style = "width: 30%;">
+		<input type="hidden" name="IDP"  style = "width: 30%;" value="';if (isset($_GET['IDP'])) {echo htmlspecialchars($_GET['IDP']);}echo'" >
+		<input type="text" name="Heading" style = "width: 30%;">
 		<p>Текст</p>
-		<textarea name="hilfe" style = "resize: none;width: 30%;height:80px;" cols="91"></textarea>
+		<textarea name="MainText" style = "resize: none;width: 30%;height:80px;" cols="91"></textarea>
 		<p>Картинка</p>
-		<input type="text" name="help" style = "width: 30%;">
+		<input type="text" name="UrlImg" style = "width: 30%;">
 		<br><br><button name="News" >Добавить</button></form>';
 		echo'</article>';
 	}
@@ -111,6 +110,7 @@
 		echo'<article><p>Заголовок</p>';
 		$row = SearchArticle($_GET['Edit'],'`article`');
 		echo '<form action="#" class="navbar-form" role="search">
+		<input type="hidden" name="IDP"  style = "width: 30%;" value="';if (isset($_GET['IDP'])) echo htmlspecialchars($_GET['IDP']);echo'" >
 		<input type = "hidden" name = "ID" value ="';echo $row[0];echo'" >
 		<input type="text" name="Heading" style = "width: 30%;" value="';echo $row[1];echo'" >
 		<p>Текст</p>
@@ -120,5 +120,4 @@
 		<br><br><button name="News" >Редактировать</button></form>';
 		echo'</article>';
 	}
-
 ?>
