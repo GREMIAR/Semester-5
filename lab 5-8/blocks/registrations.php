@@ -1,8 +1,8 @@
 <?php
-if(!(isset($_GET['Add']) or isset($_GET['Edit']) or isset($_GET['Del'])))
+if(!(isset($_GET["Add"]) or isset($_GET["Edit"]) or isset($_GET["Del"])))
 {
 	echo '
-	<form action="#" class = "registration">
+	<form class = "registration">
 		<fieldset class="clearfixup">
 			<button type="button" class="sign_in" id="sign_in1" onclick="sign_in();">Войти</button><a class="slash"> / </a>
 			<button type="button" class="sign_up" id="sign_up1" onclick="sign_up();">Зарегистрироваться</button>

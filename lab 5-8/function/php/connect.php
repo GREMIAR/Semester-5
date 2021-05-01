@@ -4,10 +4,10 @@
 	function Connect()
 	{
 		global $link;
-		$host = 'localhost';
-		$database = 'articles';
-		$user = 'root';
-		$password = '';
+		$host = "localhost";
+		$database = "articles";
+		$user = "root";
+		$password = "";
 		$link = mysqli_connect($host, $user, $password, $database)
 		or die("Ошибка " . mysqli_error($link));
 		$link->set_charset("utf8");

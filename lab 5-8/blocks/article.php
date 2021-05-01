@@ -1,18 +1,20 @@
 <?php
-	if(isset($_GET['News']) or empty($_GET))
+	if(isset($_GET["News"]) or empty($_GET))
 	{
-		echo '<center>
-		<article class="ArticleMain">';
-		ShowAllArticles();
-		echo '</center>
+		echo '
+		<article class="ArticleMain">
+			<center>';
+			ShowAllArticles();
+			echo '
+			</center>
 		</article>';
 	}
-	else if(isset($_GET['Counter']))
+	else if(isset($_GET["Counter"]))
 	{
-		require_once  ("blocks/modal.php");
+		require_once ("blocks/modal.php");
 		echo '
 		<article class="ForCounter">
-			<br><div id="Modal"><a href="#" onclick="ModalOn()">До момента выхода оcталось</a></div></br>
+			<br><div id="Modal"><a onclick="ModalOn()">До момента выхода оcталось</a></div></br>
 			<br><center class="imgblock">
 				<img src="image/ListC.png" alt="Дней" width="200" height="200">
 				<span id="days"></span>
@@ -25,7 +27,7 @@
 			</center>
 	  	</article>';
 	}
-	else if(isset($_GET['Download']))
+	else if(isset($_GET["Download"]))
 	{
 		echo '
 		<article>
@@ -90,13 +92,13 @@
 			</center>
 	  	</article>';
 	}
-	else if(isset($_GET['Add']))
+	else if(isset($_GET["Add"]))
 	{
 		echo'
 		<article>
 			<p>Заголовок</p>
-			<form action="#">
-				<input type="hidden" name="IDP" value="';if (isset($_GET['IDP'])) {echo htmlspecialchars($_GET['IDP']);}echo'" >
+			<form>
+				<input type="hidden" name="IDP" value="';if (isset($_GET["IDP"])) {echo htmlspecialchars($_GET["IDP"]);}echo'" >
 				<input type="text" name="Heading" style = "width: 30%;">
 				<p>Текст</p>
 				<textarea name="MainText" style = "resize: none;width: 30%;height:80px;" cols="91"></textarea>
@@ -106,14 +108,14 @@
 			</form>
 		</article>';
 	}
-	else if (isset($_GET['Edit']))
+	else if (isset($_GET["Edit"]))
 	{
-		$row = SearchArticle($_GET['Edit'],'`article`');
+		$row = SearchArticle($_GET["Edit"],"`article`");
 		echo'
 		<article>
-			<form action="#">
+			<form>
 				<p>Заголовок</p>
-				<input type="hidden" name="IDP"  style = "width: 30%;" value="';if (isset($_GET['IDP'])) echo htmlspecialchars($_GET['IDP']);echo'" >
+				<input type="hidden" name="IDP"  style = "width: 30%;" value="';if (isset($_GET["IDP"])) echo htmlspecialchars($_GET["IDP"]);echo'" >
 				<input type = "hidden" name = "ID" value ="';echo $row[0];echo'" >
 				<input type="text" name="Heading" value="';echo $row[1];echo'" >
 				<p>Текст</p>

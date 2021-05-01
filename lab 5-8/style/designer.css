@@ -6,6 +6,7 @@
 body{
 	background:#11232d;
 }
+
 header {
 	background:#11232d;
 	font-weight: bold;
@@ -17,6 +18,7 @@ header {
 	border: solid 4px #f99157;
 	margin-bottom: 10px;
 }
+
 article{
 	margin-top:20px;
 	border-top-left-radius:0;
@@ -24,10 +26,11 @@ article{
 	align-self: center;
 	text-align: center;
 	background: #cccccc;
-	border: solid 5px #f99157;
-	padding: 40px;
-	padding-top:20px;
+	border: solid 4px #f99157;
+	padding: 30px;
+	padding-top:10px;
 }
+
 footer{
 	font-weight: bold;
 	color: #8ecc99;

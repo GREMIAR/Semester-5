@@ -1,7 +1,7 @@
 <?php
 	function EditBD()
 	{
-		if(isset($_GET['ID']))
+		if(isset($_GET["ID"]))
 		{
 			$articleName = htmlspecialchars($_GET["Heading"]);
 			$textiq = htmlspecialchars($_GET["MainText"]);
@@ -14,7 +14,7 @@
 			Close();
 			OnlyIDPeople();
 		}
-		else if (isset($_GET['Del']))
+		else if (isset($_GET["Del"]))
 		{
 			$IDarticle = htmlspecialchars($_GET["Del"]);
 			Connect();
@@ -24,7 +24,7 @@
 			Close();
 			OnlyIDPeople();
 		}
-		else if(isset($_GET['Heading']) and isset($_GET['MainText']) and isset($_GET['UrlImg']))
+		else if(isset($_GET["Heading"]) and isset($_GET["MainText"]) and isset($_GET["UrlImg"]))
 		{
 			$articleName = htmlspecialchars($_GET["Heading"]);
 			$textiq = htmlspecialchars($_GET["MainText"]);
@@ -36,12 +36,12 @@
 			Close();
 			OnlyIDPeople();
 		}
-		if(isset($_GET['IDP']))
+		if(isset($_GET["IDP"]))
 		{
 			echo '
-			<input type="hidden" name="IDP"  style = "width: 30%;" value="';echo htmlspecialchars($_GET['IDP']);echo' >';
+			<input type="hidden" name="IDP" value="';echo htmlspecialchars($_GET['IDP']);echo' >';
 		}
-		else if (isset($_GET['pswrd']) and isset($_GET['lg']) and htmlspecialchars($_GET["pswrd"])!='' and htmlspecialchars($_GET["lg"])!=''and isset($_GET['next']))
+		else if (isset($_GET["pswrd"]) and isset($_GET["lg"]) and htmlspecialchars($_GET["pswrd"])!='' and htmlspecialchars($_GET["lg"])!=''and isset($_GET["next"]))
 		{
 			global $link;
 			global $result;
@@ -108,7 +108,7 @@
 			$url .='?IDP='.$IDP;
 			if(isset($_GET["News"]))
 			{
-				$url.='&News=3';
+				$url.='&News=';
 			}
 			else if(isset($_GET["Counter"]))
 			{
@@ -120,14 +120,14 @@
 			}
 			else if(isset($_GET["Del"]))
 			{
-				$url.='&News=4';
+				$url.='&News=';
 			}
 		}
 		else
 		{
 			if(isset($_GET["News"]))
 			{
-				$url.='?News=1';
+				$url.='?News=';
 			}
 			else if(isset($_GET["Counter"]))
 			{
@@ -166,9 +166,9 @@
 		$rows = mysqli_num_rows($result);
 		$articleWithStyle;
 		echo "
-		<form action='#'>
-			<a name='Mid'></a>
-			<br><button class='sumbmit' name = 'Add'>Добавить</button>
+		<form>
+			<a name='Mid' class='anchor'></a>
+			<br><button class='buttonArticle' name = 'Add'>Добавить</button>
 		</form>
 		";
 		for ($i=$rows; $i > 0; $i--)
@@ -190,11 +190,11 @@
 				echo $articleWithStyle;
 			}
 			echo "
-			<form action='#'>
-				<br><button class='sumbmit' name = 'Edit' value = '$row[0]'>Редактировать</button>
-				<button class='sumbmit' name = 'Del' value = '$row[0]'>Удалить</button>
+			<form>
+				<br><button class='buttonArticle' name = 'Edit' value = '$row[0]'>Редактировать</button>
+				<button class='buttonArticle' name = 'Del' value = '$row[0]'>Удалить</button>
 			</form>";
-			echo "<br><br><br>";
+			echo "<br><br>";
 
 		}
 		Close();

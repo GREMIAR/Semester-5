@@ -1,5 +1,5 @@
 <?php
-	if(isset($_GET['News']) or empty($_GET))
+	if(isset($_GET["News"]) or empty($_GET))
 	{
 		echo '
 		<meta charset="utf-8">
@@ -7,7 +7,7 @@
 		<link type="text/css" href="style/style.css" rel="stylesheet">
 		<script type="text/javascript" src="function/js/script.js"></script>';
 	}
-	else if(isset($_GET['Counter']))
+	else if(isset($_GET["Counter"]))
 	{
 		echo '
 		<meta charset="utf-8">
@@ -16,7 +16,7 @@
 		<link  type="text/css" href="style/styleWithoutMenu.css"rel="stylesheet">
 		<script type="text/javascript" src="function/js/Counter.js"></script>';
 	}
-	else if(isset($_GET['Download']))
+	else if(isset($_GET["Download"]))
 	{
 		echo '
 		<meta charset="utf-8">
@@ -24,7 +24,7 @@
 		<link type="text/css" href="style/style.css" rel="stylesheet">
 		<link  type="text/css" href="style/styleWithoutMenu.css"rel="stylesheet">';
 	}
-	else if(isset($_GET['Add']) or isset($_GET['Edit']) or isset($_GET['Del']))
+	else if(isset($_GET["Add"]) or isset($_GET["Edit"]) or isset($_GET["Del"]))
 	{
 		echo '
 		<meta charset="utf-8">
