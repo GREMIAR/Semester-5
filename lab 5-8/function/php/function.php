@@ -37,21 +37,21 @@
 			OnlyIDPeople();
 		}
 		if(isset($_GET['IDP']))
-		{ 
+		{
 			echo '
 			<input type="hidden" name="IDP"  style = "width: 30%;" value="';echo htmlspecialchars($_GET['IDP']);echo' >';
 		}
 		else if (isset($_GET['pswrd']) and isset($_GET['lg']) and htmlspecialchars($_GET["pswrd"])!='' and htmlspecialchars($_GET["lg"])!=''and isset($_GET['next']))
 		{
+			global $link;
+			global $result;
 			$lg = htmlspecialchars($_GET["lg"]);
 			$password = htmlspecialchars($_GET["pswrd"]);
 			Connect();
-			global $link;
-
-			$sql = "SELECT * FROM `accounts` WHERE `login` = '$lg'";
-			$result=$link->query($sql);
+			$sql = "SELECT * FROM `accounts` WHERE `Name` = '$lg'";
+			$result = mysqli_query($link, $sql) or die("Ошибка " . mysqli_error($link));
 			$row_count = mysqli_num_rows($result);
-			
+
 			if($row_count = 0)
 			{
 				$sql = "INSERT INTO accounts (role, login,password ) VALUES (0,'$lg', '$password')";
@@ -142,8 +142,8 @@
 				$url.='?News=2';
 			}
 		}
-		
-		
+
+
 		header ('Location: '.$url);
 	}
 
