@@ -12,19 +12,17 @@
 		require_once  ("blocks/modal.php");
 		echo '
 		<article class="ForCounter">
-			<p>
-				<br><div id="Modal"><a href="#" onclick="ModalOn()">До момента выхода оcталось</a></div></br>
-				<br><center class="imgblock">
-					<img src="image/ListC.png" alt="Дней" width="200" height="200">
-					<span id="days"></span>
-					<img src="image/ListC.png" alt="Часов" width="200" height="200">
-					<span id="hours"></span>
-					<img src="image/ListC.png" alt="Минут" width="200" height="200">
-					<span id="minutes"></span>
-					<img src="image/ListC.png" alt="Секунд" width="200" height="200">
-					<span id="seconds"></span>
-				</center>
-			</p>
+			<br><div id="Modal"><a href="#" onclick="ModalOn()">До момента выхода оcталось</a></div></br>
+			<br><center class="imgblock">
+				<img src="image/ListC.png" alt="Дней" width="200" height="200">
+				<span id="days"></span>
+				<img src="image/ListC.png" alt="Часов" width="200" height="200">
+				<span id="hours"></span>
+				<img src="image/ListC.png" alt="Минут" width="200" height="200">
+				<span id="minutes"></span>
+				<img src="image/ListC.png" alt="Секунд" width="200" height="200">
+				<span id="seconds"></span>
+			</center>
 	  	</article>';
 	}
 	else if(isset($_GET['Download']))
@@ -94,30 +92,36 @@
 	}
 	else if(isset($_GET['Add']))
 	{
-		echo'<article>';
-		echo '<p>Заголовок</p><form action="#" class="navbar-form" role="search">
-		<input type="hidden" name="IDP"  style = "width: 30%;" value="';if (isset($_GET['IDP'])) {echo htmlspecialchars($_GET['IDP']);}echo'" >
-		<input type="text" name="Heading" style = "width: 30%;">
-		<p>Текст</p>
-		<textarea name="MainText" style = "resize: none;width: 30%;height:80px;" cols="91"></textarea>
-		<p>Картинка</p>
-		<input type="text" name="UrlImg" style = "width: 30%;">
-		<br><br><button name="News" >Добавить</button></form>';
-		echo'</article>';
+		echo'
+		<article>
+			<p>Заголовок</p>
+			<form action="#">
+				<input type="hidden" name="IDP" value="';if (isset($_GET['IDP'])) {echo htmlspecialchars($_GET['IDP']);}echo'" >
+				<input type="text" name="Heading" style = "width: 30%;">
+				<p>Текст</p>
+				<textarea name="MainText" style = "resize: none;width: 30%;height:80px;" cols="91"></textarea>
+				<p>Картинка</p>
+				<input type="text" name="UrlImg" style = "width: 30%;">
+				<br><br><button name="News" >Добавить</button>
+			</form>
+		</article>';
 	}
 	else if (isset($_GET['Edit']))
 	{
-		echo'<article><p>Заголовок</p>';
 		$row = SearchArticle($_GET['Edit'],'`article`');
-		echo '<form action="#" class="navbar-form" role="search">
-		<input type="hidden" name="IDP"  style = "width: 30%;" value="';if (isset($_GET['IDP'])) echo htmlspecialchars($_GET['IDP']);echo'" >
-		<input type = "hidden" name = "ID" value ="';echo $row[0];echo'" >
-		<input type="text" name="Heading" style = "width: 30%;" value="';echo $row[1];echo'" >
-		<p>Текст</p>
-		<textarea name="MainText" style = "resize: none;width: 30%;height:80px;" cols="91">';echo $row[2]; echo'</textarea>
-		<p>Картинка</p>
-		<input type="text" name="UrlImg" style = "width: 30%;"value="';echo $row[3];echo'">
-		<br><br><button name="News" >Редактировать</button></form>';
-		echo'</article>';
+		echo'
+		<article>
+			<form action="#">
+				<p>Заголовок</p>
+				<input type="hidden" name="IDP"  style = "width: 30%;" value="';if (isset($_GET['IDP'])) echo htmlspecialchars($_GET['IDP']);echo'" >
+				<input type = "hidden" name = "ID" value ="';echo $row[0];echo'" >
+				<input type="text" name="Heading" value="';echo $row[1];echo'" >
+				<p>Текст</p>
+				<textarea name="MainText" style = "resize: none;width: 30%;height:80px;" cols="91">';echo $row[2]; echo'</textarea>
+				<p>Картинка</p>
+				<input type="text" name="UrlImg" style = "width: 30%;"value="';echo $row[3];echo'">
+				<br><br><button name="News" >Редактировать</button>
+			</form>
+		</article>';
 	}
 ?>
