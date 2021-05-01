@@ -3,8 +3,8 @@
 	{
 		echo '
 		<menu class="menu">
-		<li><div class = "menu_btn"><a href="#Start">Шапка</a></div>
-		<li><div class = "menu_btn"><a href="#Mid">Середина</a></div>
+		<li><div class = "menu_btn"><a href="#Start">Меню</a></div>
+		<li><div class = "menu_btn"><a href="#Mid">Статьи</a></div>
 		<li><div class = "menu_btn"><a href="#End">Авторы</a></div>
 		</menu>';
 	}

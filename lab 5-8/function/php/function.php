@@ -165,9 +165,12 @@
 		SelectBD("article");
 		$rows = mysqli_num_rows($result);
 		$articleWithStyle;
-		echo "<form action='#'>
-		<br><button class='sumbmit' name = 'Add'>Добавить</button>
-		</from>";
+		echo "
+		<form action='#'>
+			<a name='Mid'></a>
+			<br><button class='sumbmit' name = 'Add'>Добавить</button>
+		</form>
+		";
 		for ($i=$rows; $i > 0; $i--)
 		{
 			$articleWithStyle = "<br><div class = 'articleName'>";
@@ -186,11 +189,11 @@
 				$articleWithStyle.="'>";
 				echo $articleWithStyle;
 			}
-			echo "<form action='#'>
-
-			<br><button class='sumbmit' name = 'Edit' value = '$row[0]'>Редактировать</button>
-			<button class='sumbmit' name = 'Del' value = '$row[0]'>Удалить</button>
-			</from>";
+			echo "
+			<form action='#'>
+				<br><button class='sumbmit' name = 'Edit' value = '$row[0]'>Редактировать</button>
+				<button class='sumbmit' name = 'Del' value = '$row[0]'>Удалить</button>
+			</form>";
 			echo "<br><br><br>";
 
 		}

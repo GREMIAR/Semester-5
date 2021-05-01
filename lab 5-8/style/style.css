@@ -26,7 +26,7 @@ header {
 
 article{
 	background: #cccccc;
-	margin-top:-315px;
+	margin-top:-320px;
 	border: solid 5px #f99157;
 	margin-left: 245px;
 }
@@ -213,8 +213,7 @@ footer img:hover{
 	margin: 0px;
 	margin-top: 20px;
 	padding: 0px;
-	padding-bottom: 10px;
-	top: 180px;
+	top: 170px;
 	position: sticky;
 	display: flex-inline;
 	flex-direction: row;
@@ -398,4 +397,11 @@ footer img:hover{
 	font-size: 25px;
 	text-align: center;
 	font-weight: bold;
+}
+
+.registration{
+	position: sticky;
+	top: 182px;
+	padding: 0px;
+	margin: 0px;
 }
