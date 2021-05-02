@@ -52,15 +52,15 @@ else if (isset($_GET["News"]) or isset($_GET["Counter"]) or isset($_GET["Downloa
 		<fieldset class="clearfix">';
 			if(isset($_GET["News"]))
 			{
-				echo '<button class="sumbmit" type="sumbmit" style="font-size:40px;" name="News">Выход</button>';
+				echo '<button class="sumbmit" type="sumbmit" id="Exit" name="News">Выход</button>';
 			}
 			else if(isset($_GET["Counter"]))
 			{
-				echo '<button class="sumbmit" type="sumbmit" style="font-size:40px;" name="Counter">Выход</button>';
+				echo '<button class="sumbmit" type="sumbmit" id="Exit" name="Counter">Выход</button>';
 			}
 			else if(isset($_GET["Download"]))
 			{
-				echo '<button class="sumbmit" type="sumbmit" style="font-size:40px;" name="Download">Выход</button>';
+				echo '<button class="sumbmit" type="sumbmit" id="Exit" name="Download">Выход</button>';
 			}
 		echo '</fieldset>
 	</form>';
