@@ -73,6 +73,10 @@
 			{
 				$url.='&Download=';
 			}
+			else
+			{
+				$url.='&News=';
+			}
 			header ('Location: '.$url);
 			Close();
 		}
