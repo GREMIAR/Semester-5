@@ -2,10 +2,10 @@
 -- version 5.1.0
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: May 01, 2021 at 10:06 PM
--- Server version: 10.4.18-MariaDB
--- PHP Version: 8.0.3
+-- Хост: 127.0.0.1
+-- Время создания: Май 02 2021 г., 05:50
+-- Версия сервера: 10.4.18-MariaDB
+-- Версия PHP: 8.0.3
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,26 +18,35 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `articles`
+-- База данных: `articles`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `accounts`
+-- Структура таблицы `accounts`
 --
 
 CREATE TABLE `accounts` (
-  `ID` int(11) NOT NULL,
+  `IDP` int(11) NOT NULL,
   `Role` int(11) NOT NULL,
-  `Name` text NOT NULL,
+  `Login` text NOT NULL,
   `Password` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Дамп данных таблицы `accounts`
+--
+
+INSERT INTO `accounts` (`IDP`, `Role`, `Login`, `Password`) VALUES
+(1, 3, 'Admin!', '123456'),
+(2, 2, 'Journalist', '123456'),
+(12, 1, 'Tester', '123456');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `article`
+-- Структура таблицы `article`
 --
 
 CREATE TABLE `article` (
@@ -48,43 +57,43 @@ CREATE TABLE `article` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `article`
+-- Дамп данных таблицы `article`
 --
 
 INSERT INTO `article` (`IDarticle`, `Nomen`, `Textiq`, `ImageURL`) VALUES
 (1, 'Об игре', 'NewGame — революция в жанре РПГ. Ваш персонаж — детектив с уникальными навыками, которому предстоит исследовать целый район. Допрашивайте незабываемых персонажей, расследуйте убийства или берите взятки. Кем вы станете: героем или неудачником?', 'image/Pic1.jpg');
 
 --
--- Indexes for dumped tables
+-- Индексы сохранённых таблиц
 --
 
 --
--- Indexes for table `accounts`
+-- Индексы таблицы `accounts`
 --
 ALTER TABLE `accounts`
-  ADD PRIMARY KEY (`ID`);
+  ADD PRIMARY KEY (`IDP`);
 
 --
--- Indexes for table `article`
+-- Индексы таблицы `article`
 --
 ALTER TABLE `article`
   ADD PRIMARY KEY (`IDarticle`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT для сохранённых таблиц
 --
 
 --
--- AUTO_INCREMENT for table `accounts`
+-- AUTO_INCREMENT для таблицы `accounts`
 --
 ALTER TABLE `accounts`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `IDP` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
--- AUTO_INCREMENT for table `article`
+-- AUTO_INCREMENT для таблицы `article`
 --
 ALTER TABLE `article`
-  MODIFY `IDarticle` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+  MODIFY `IDarticle` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
