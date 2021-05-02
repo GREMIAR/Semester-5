@@ -1,6 +1,7 @@
 <?php
 	$link;
 	$result;
+	
 	function Connect()
 	{
 		global $link;
@@ -12,6 +13,7 @@
 		or die("Ошибка " . mysqli_error($link));
 		$link->set_charset("utf8");
 	}
+
 	function Close()
 	{
 		global $link;

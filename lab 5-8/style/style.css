@@ -340,9 +340,6 @@ footer img:hover{
 	transition: .8s;
 }
 
-#Modal a:hover{
-}
-
 #Modal a:hover:before {
 	color: #FF4364;
 	transform: scale(1);
