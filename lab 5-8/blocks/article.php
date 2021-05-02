@@ -30,12 +30,22 @@
 	else if(isset($_GET["Download"]))
 	{
 		echo '
-		<article>
-			<div class="ButtonDownload">
-				<a href="https://github.com/GREBIAR-Git/NewGameSetup" target="_blank">
-					<img src="image/download.png" alt="Скачать" width="50" height="50">Скачать для Windows
-				</a>
-			</div>
+		<article>';
+			if (isset($_GET["IDP"]))
+			{
+				echo '
+				<div class="ButtonDownload">
+					<a href="https://github.com/GREBIAR-Git/NewGameSetup" target="_blank">
+						<img src="image/download.png" alt="Скачать" width="50" height="50">Скачать для Windows
+					</a>
+				</div>';
+			}
+			else
+			{
+				echo '
+				<p>Чтобы скачать зарегестируетесь</p>';
+			}
+			echo '
 			<center><table>
 				<caption><b style="font-size: 22px">Системные требования</b></caption>
 				<tr>

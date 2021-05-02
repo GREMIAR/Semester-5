@@ -2,6 +2,10 @@
 	<menu class="NavBar">
 		<form action="#">
 		<?php 
+		if (isset($_GET["IDP"]))
+		{
+			echo '<input type="hidden" name="IDP" value="'; echo htmlspecialchars($_GET["IDP"]); echo'">';
+		}
 		if(isset($_GET["News"]) or empty($_GET))
 		{
 			echo '

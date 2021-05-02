@@ -36,32 +36,21 @@
 			Close();
 			OnlyIDPeople();
 		}
-		if(isset($_GET["IDP"]))
+		if (isset($_GET["pswrd"]) and isset($_GET["lg"]) and isset($_GET["next"]) and $_GET["sign"]==="in")
 		{
-			echo '
-			<input type="hidden" name="IDP" value="';echo htmlspecialchars($_GET['IDP']);echo' >';
-		}
-		else if (isset($_GET["pswrd"]) and isset($_GET["lg"]) and htmlspecialchars($_GET["pswrd"])!='' and htmlspecialchars($_GET["lg"])!=''and isset($_GET["next"]))
-		{
-			global $link;
-			global $result;
 			$lg = htmlspecialchars($_GET["lg"]);
 			$password = htmlspecialchars($_GET["pswrd"]);
 			Connect();
-			$sql = "SELECT * FROM `accounts` WHERE `Name` = '$lg'";
+			global $link;
+			global $result;
+			$sql = "SELECT * FROM `accounts` WHERE `Login` = '$lg' AND `Password` = '$password'";
 			$result = mysqli_query($link, $sql) or die("Ошибка " . mysqli_error($link));
-			$row_count = mysqli_num_rows($result);
-
-			if($row_count = 0)
-			{
-				$sql = "INSERT INTO accounts (role, login,password ) VALUES (0,'$lg', '$password')";
-				if ($link->query($sql) === TRUE) {
-				  echo "New record created successfully";
-				} else {
-				  echo "Error: " . $sql . "<br>" . $link->error;
-				}
-			}
 			$rows = mysqli_num_rows($result);
+			if($rows === 0)
+			{
+				OnlyIDPeople();
+				return;
+			}
 			for($i=1;$i<=$rows;$i++)
 			{
 				$row = mysqli_fetch_row($result);
@@ -84,17 +73,24 @@
 			{
 				$url.='&Download=';
 			}
-			else if (isset($_GET["Edit"])) {
-				$url.='&Edit='.htmlspecialchars($_GET["Edit"]);
-			}
-			else if (isset($_GET["Add"])) {
-				$url.='&Add=';
-			}
-			else if (isset($_GET["Del"])) {
-				$url.='&Del='.htmlspecialchars($_GET["Del"]);
-			}
-			echo $url;
 			header ('Location: '.$url);
+			Close();
+		}
+		else if(isset($_GET["pswrd"]) and isset($_GET["lg"]) and isset($_GET["next"]) and $_GET["sign"]==="up")
+		{
+			$lg = htmlspecialchars($_GET["lg"]);
+			$password = htmlspecialchars($_GET["pswrd"]);
+			Connect();
+			global $link;
+			global $result;
+			$sql = "SELECT * FROM `accounts` WHERE `Login` = '$lg'";
+			$result = mysqli_query($link, $sql) or die("Ошибка " . mysqli_error($link));
+			$row_count = mysqli_num_rows($result);
+			if($row_count === 0)
+			{
+				$sql = "INSERT INTO accounts (Role, Login,Password ) VALUES (1,'$lg', '$password')";
+				$result = mysqli_query($link, $sql) or die("Ошибка " . mysqli_error($link));
+			}
 			Close();
 		}
 	}
@@ -160,17 +156,29 @@
 
 	function ShowAllArticles()
 	{
+		if (isset($_GET["IDP"]))
+		{
+			$role = Role();
+		}
 		global $result;
 		Connect();
 		SelectBD("article");
 		$rows = mysqli_num_rows($result);
 		$articleWithStyle;
-		echo "
+		echo '
 		<form>
-			<a name='Mid' class='anchor'></a>
-			<br><button class='buttonArticle' name = 'Add'>Добавить</button>
-		</form>
-		";
+			<a name="Mid" class="anchor"></a>';
+
+			if (isset($_GET["IDP"]))
+			{
+				echo '<input type="hidden" name="IDP" value="'; echo htmlspecialchars($_GET["IDP"]); echo'">';
+				if($role == 3)
+				{
+					echo '<br><button class="buttonArticle" name = "Add">Добавить</button>';
+				}
+			}
+			echo'
+		</form>';
 		for ($i=$rows; $i > 0; $i--)
 		{
 			$articleWithStyle = "<br><div class = 'articleName'>";
@@ -184,20 +192,28 @@
 			echo $articleWithStyle;
 			if ($row[3]!=='')
 			{
-				$articleWithStyle = "<img src='";
+				$articleWithStyle = "<img src=";
 				$articleWithStyle.=$row[3];
-				$articleWithStyle.="'>";
+				$articleWithStyle.=">";
 				echo $articleWithStyle;
 			}
-			echo "
-			<form>
-				<br><button class='buttonArticle' name = 'Edit' value = '$row[0]'>Редактировать</button>
-				<button class='buttonArticle' name = 'Del' value = '$row[0]'>Удалить</button>
-			</form>";
-			echo "<br><br>";
+			echo '
+			<form>';
+				if (isset($_GET["IDP"]))
+				{
+					echo '<input type="hidden" name="IDP" value="'; echo htmlspecialchars($_GET["IDP"]); echo'">';
+					if($role == 3 or $role == 2)
+					{
+						echo '
+						<br><button class="buttonArticle" name = "Edit" value = "';echo $row[0];echo'">Редактировать</button>
+						<button class="buttonArticle" name = "Del" value = "';echo $row[0];echo '">Удалить</button>';
+					}
+				}
+				echo '
+			</form>
+			<br><br>';
 
 		}
-		Close();
 	}
 
 	function SearchArticle($IDarticle,$nameBD)
@@ -224,5 +240,19 @@
 		global $link,$result;
 		$query ="SELECT * FROM " . $nameTable . " ORDER BY -IDarticle";
 		$result = mysqli_query($link, $query) or die("Ошибка " . mysqli_error($link));
+	}
+
+	function Role()
+	{
+		Connect();
+		global $link;
+		global $result;
+		$IDP = htmlspecialchars($_GET["IDP"]);
+		$sql = "SELECT * FROM `accounts` WHERE `IDP` = '$IDP'";
+		$result = mysqli_query($link, $sql) or die("Ошибка " . mysqli_error($link));
+		$rows = mysqli_num_rows($result);
+		$row = mysqli_fetch_row($result);
+		Close();
+		return $row[1];
 	}
 ?>
