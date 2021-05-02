@@ -12,8 +12,20 @@ if(!isset($_GET["IDP"]))
 		<fieldset class="clearfix">
 			<input class="login" type="text" name="lg" onBlur="" required onFocus="" placeholder="Логин" maxlength="28" minlength="6">
 			<input class="password" type="password" name="pswrd" required onBlur="" onFocus="" placeholder="Пароль" maxlength="20" minlength="6">
-			<p>
-				<input type="hidden" name="News">
+			<p>';
+			if(isset($_GET["News"]))
+			{
+				echo '<input type="hidden" name="News">';
+			}
+			else if(isset($_GET["Counter"]))
+			{
+				echo '<input type="hidden" name="Counter">';
+			}
+			else if(isset($_GET["Download"]))
+			{
+				echo '<input type="hidden" name="Download">';
+			}
+			echo '
 				<button class="sumbmit" type="sumbmit" name="next" onclick="Next();">Далее</button>
 			</p>
 		</fieldset>
