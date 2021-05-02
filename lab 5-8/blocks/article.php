@@ -25,7 +25,8 @@
 				<img src="image/ListC.png" alt="Секунд" width="200" height="200">
 				<span id="seconds"></span>
 			</center>
-	  	</article>';
+	  	</article>
+	  	<script type="text/javascript" src="function/js/Counter.js"></script>';
 	}
 	else if(isset($_GET["Download"]))
 	{

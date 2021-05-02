@@ -1,45 +1,34 @@
-function countdown(dateEnd) 
-{
-    var timer, days, hours, minutes, seconds;
-    dateEnd = new Date(dateEnd);
-    dateEnd = dateEnd.getTime();
-    if (isNaN(dateEnd)) 
-    {
-        return;
-    }
-    timer = setInterval(calculate, 1000);
-    function calculate()    
-    {
-        var dateStart = new Date();
-        var dateStart = new Date(dateStart.getUTCFullYear(),
-        dateStart.getUTCMonth(),
-        dateStart.getUTCDate(),
-        dateStart.getUTCHours(),
-        dateStart.getUTCMinutes(),
-        dateStart.getUTCSeconds());
-        var timeRemaining = parseInt((dateEnd - dateStart.getTime()) / 1000)
+function getTimeRemaining(endtime) {
+    var t = Date.parse(endtime) - Date.parse(new Date());
+    var seconds = Math.floor((t / 1000) % 60);
+    var minutes = Math.floor((t / 1000 / 60) % 60);
+    var hours = Math.floor((t / (1000 * 60 * 60)) % 24);
+    var days = Math.floor(t / (1000 * 60 * 60 * 24));
+    return {'total': t,'days': days,'hours': hours,'minutes': minutes,'seconds': seconds};
+}
 
-        if (timeRemaining >= 0) 
+function countdown() {
+    endtime = '6/1/2021';
+    var days = document.getElementById("days");
+    var hours = document.getElementById("hours");
+    var minutes = document.getElementById("minutes");
+    var seconds = document.getElementById("seconds");
+    function updateClock() {
+        var t = getTimeRemaining(endtime);
+        days.innerHTML = t.days;
+        hours.innerHTML = ('0' + t.hours).slice(-2);
+        minutes.innerHTML = ('0' + t.minutes).slice(-2);
+        seconds.innerHTML = ('0' + t.seconds).slice(-2);
+        if (t.total <= 0) 
         {
-            days = parseInt(timeRemaining / 86400);
-            timeRemaining = (timeRemaining % 86400);
-            hours = parseInt(timeRemaining / 3600);
-            timeRemaining = (timeRemaining % 3600);
-            minutes = parseInt(timeRemaining / 60);
-            timeRemaining = (timeRemaining % 60);
-            seconds = parseInt(timeRemaining);
-            document.getElementById("days").innerHTML = parseInt(days, 10);
-            document.getElementById("hours").innerHTML = ("0" + hours).slice(-2);
-            document.getElementById("minutes").innerHTML = ("0" + minutes).slice(-2);
-            document.getElementById("seconds").innerHTML = ("0" + seconds).slice(-2);
-        } 
-        else 
-        {
-            return;
+          clearInterval(timeinterval);
         }
     }
+    updateClock();
+    var timeinterval = setInterval(updateClock, 1000);
 }
-countdown ('06/01/2021 00:00:00 AM');
+
+countdown();
 
 function ModalOn(){
     var modal = document.getElementById('myModal');

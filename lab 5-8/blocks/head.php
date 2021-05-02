@@ -13,8 +13,7 @@
 		<meta charset="utf-8">
 		<title>Обратный отсчёт</title>
 		<link type="text/css" href="style/style.css" rel="stylesheet">
-		<link  type="text/css" href="style/styleWithoutMenu.css"rel="stylesheet">
-		<script type="text/javascript" src="function/js/Counter.js"></script>';
+		<link  type="text/css" href="style/styleWithoutMenu.css"rel="stylesheet">';
 	}
 	else if(isset($_GET["Download"]))
 	{
