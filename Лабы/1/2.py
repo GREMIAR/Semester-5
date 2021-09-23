@@ -50,6 +50,8 @@ def MenuItem(menuItem, mainList):
 		DifferenceOfSets(mainList)
 	elif(menuItem == "8"):
 		ShowOddNumbers(mainList)
+	else:
+		print("Нет такого пукнта")
 	
 def ShowTheList(mainList):
 	print(mainList)	
