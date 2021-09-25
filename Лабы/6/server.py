@@ -62,6 +62,8 @@ def Morze(data):
                 str1+="Е"
             elif(letter=="-"):
                 str1+="Т"
+            else:
+            	str1+=str(letter)
         except KeyError:
             str1+=str(letter)
     return(str1)
