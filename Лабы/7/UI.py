@@ -1,29 +1,33 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 import pymysql
-'''con = pymysql.connect(host='localhost',
+con = pymysql.connect(host='localhost',
     user='root',
     password='1234',
     database='films',
-    charset='utf8mb4')'''
+    charset='utf8mb4')
+
+countryDict = {"Россия":"1", "США":"2", "Великобритания":"3", "Канада":"4"}
+cur = con.cursor()
 countries=list()
+id_film = 1
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(232, 505)
+        MainWindow.resize(230, 505)
         MainWindow.setMaximumSize(QtCore.QSize(16777210, 16777215))
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
-        self.lineEdit_2 = QtWidgets.QLineEdit(self.centralwidget)
-        self.lineEdit_2.setEnabled(False)
-        self.lineEdit_2.setGeometry(QtCore.QRect(10, 10, 211, 160))
-        self.lineEdit_2.setObjectName("lineEdit_2")
         self.groupBoxAddFil = QtWidgets.QGroupBox(self.centralwidget)
         self.groupBoxAddFil.setGeometry(QtCore.QRect(10, 220, 211, 280))
         self.groupBoxAddFil.setTitle("")
         self.groupBoxAddFil.setObjectName("groupBoxAddFil")
-        self.lineEdit = QtWidgets.QLineEdit(self.groupBoxAddFil)
-        self.lineEdit.setGeometry(QtCore.QRect(0, 20, 211, 31))
-        self.lineEdit.setObjectName("lineEdit")
+        self.textEditFilms = QtWidgets.QTextEdit(self.centralwidget)
+        self.textEditFilms.setEnabled(False)
+        self.textEditFilms.setGeometry(QtCore.QRect(10, 10, 211, 160))
+        self.textEditFilms.setObjectName("textEditFilms")
+        self.lineEditName = QtWidgets.QLineEdit(self.groupBoxAddFil)
+        self.lineEditName.setGeometry(QtCore.QRect(0, 20, 211, 31))
+        self.lineEditName.setObjectName("lineEditName")
         self.dateEdit = QtWidgets.QDateEdit(self.groupBoxAddFil)
         self.dateEdit.setGeometry(QtCore.QRect(0, 70, 211, 31))
         self.dateEdit.setObjectName("dateEdit")
@@ -31,43 +35,45 @@ class Ui_MainWindow(object):
         self.pushButtonAddCountry.setGeometry(QtCore.QRect(0, 170, 31, 31))
         self.pushButtonAddCountry.setObjectName("pushButtonAddCountry")
         self.pushButtonAddCountry.clicked.connect(self.OnClickAddCountry)
-        self.lineEdit_3 = QtWidgets.QLineEdit(self.groupBoxAddFil)
-        self.lineEdit_3.setGeometry(QtCore.QRect(0, 210, 211, 21))
-        self.lineEdit_3.setObjectName("lineEdit_3")
-        self.lineEdit_3.setEnabled(False)
+        self.lineEditCountry = QtWidgets.QLineEdit(self.groupBoxAddFil)
+        self.lineEditCountry.setGeometry(QtCore.QRect(0, 210, 211, 21))
+        self.lineEditCountry.setObjectName("lineEditCountry")
+        self.lineEditCountry.setEnabled(False)
         self.pushButtonDelCountry = QtWidgets.QPushButton(self.groupBoxAddFil)
         self.pushButtonDelCountry.setGeometry(QtCore.QRect(180, 170, 31, 31))
         self.pushButtonDelCountry.setObjectName("pushButtonDelCountry")
         self.pushButtonDelCountry.clicked.connect(self.OnClickDelCountry)
         self.label = QtWidgets.QLabel(self.groupBoxAddFil)
-        self.label.setGeometry(QtCore.QRect(70, 0, 71, 21))
+        self.label.setGeometry(QtCore.QRect(0, 0, 211, 21))
         self.label.setAlignment(QtCore.Qt.AlignCenter)
         self.label.setObjectName("label")
         self.label_2 = QtWidgets.QLabel(self.groupBoxAddFil)
-        self.label_2.setGeometry(QtCore.QRect(70, 50, 71, 21))
+        self.label_2.setGeometry(QtCore.QRect(0, 50, 211, 21))
         self.label_2.setAlignment(QtCore.Qt.AlignCenter)
         self.label_2.setObjectName("label_2")
         self.pushButtonAddFilm = QtWidgets.QPushButton(self.groupBoxAddFil)
         self.pushButtonAddFilm.setGeometry(QtCore.QRect(40, 240, 131, 31))
         self.pushButtonAddFilm.setObjectName("pushButtonAddFilm")
         self.label_4 = QtWidgets.QLabel(self.groupBoxAddFil)
-        self.label_4.setGeometry(QtCore.QRect(70, 100, 71, 21))
+        self.label_4.setGeometry(QtCore.QRect(0, 100, 211, 21))
         self.label_4.setAlignment(QtCore.Qt.AlignCenter)
         self.label_4.setObjectName("label_4")
         self.comboBoxDirector = QtWidgets.QComboBox(self.groupBoxAddFil)
         self.comboBoxDirector.setGeometry(QtCore.QRect(0, 120, 211, 31))
         self.comboBoxDirector.setObjectName("comboBoxDirector")
-        '''cur.execute("SELECT firstname,lastname FROM director")
+        cur.execute("SELECT firstname,lastname FROM director")
         rows = cur.fetchall()
-        ''for row in rows:
-            self.comboBoxDirector.addItems([row[0]+" "+row[1]])'''
-        self.comboBoxDirector.addItems(["Андрей Тарковский", "Кристофер Нолан","Квентин Тарантино", "Уэс Андерсон", "Дени Вильнёв"])
+        for row in rows:
+            self.comboBoxDirector.addItems([row[0]+" "+row[1]])
         self.comboBoxCountry = QtWidgets.QComboBox(self.groupBoxAddFil)
         self.comboBoxCountry.setGeometry(QtCore.QRect(40, 170, 131, 31))
         self.comboBoxCountry.setObjectName("comboBoxCountry")
-        self.comboBoxCountry.addItems(["Россия","США","Великобритания","Канада"])
+        cur.execute("SELECT name FROM country")
+        rows = cur.fetchall()
+        for row in rows:
+            self.comboBoxCountry.addItems([row[0]])
         self.label_3 = QtWidgets.QLabel(self.groupBoxAddFil)
-        self.label_3.setGeometry(QtCore.QRect(70, 150, 71, 21))
+        self.label_3.setGeometry(QtCore.QRect(0, 150, 211, 21))
         self.label_3.setAlignment(QtCore.Qt.AlignCenter)
         self.label_3.setObjectName("label_3")
         self.comboBoxFilm = QtWidgets.QComboBox(self.centralwidget)
@@ -96,9 +102,27 @@ class Ui_MainWindow(object):
         self.pushButtonDelFilm.setText(_translate("MainWindow", "-"))
 
     def OnClickAddFilm(self):
-        #cur = con.cursor()
-        print("INSERT INTO film(name,director_id) VALUES ('"+self.lineEdit.text()+"','"+str(self.comboBoxDirector.currentIndex()+1)+"')")
-        #cur.execute("INSERT INTO film(name,director_id) VALUES ('"+self.lineEdit.text()+"','"+str(self.comboBoxDirector.currentIndex()+1)+"')");
+        global id_film
+        cur.execute("INSERT INTO film(film_id,name,director_id) VALUES ('"+str(id_film)+"','"+self.lineEditName.text()+"','"+str(self.comboBoxDirector.currentIndex()+1)+"')");
+        for country in countries:
+            cur.execute("INSERT INTO film_country(film_id,country_id) VALUES ('"+str(id_film)+"','"+ countryDict[country] +"')");
+        cur.execute("SELECT film_id,f.name,release_date,firstname,lastname,c.name FROM film f JOIN director d USING(director_id) JOIN country c USING(country_id)")
+        rows = cur.fetchall()
+        for row in rows:
+            cur.execute("SELECT c.name FROM film_country fc JOIN film f USING(film_id) JOIN country c USING(country_id) WHERE f.film_id="+str(row[0]))
+            rows1 = cur.fetchall()
+            str1=""
+            for row1 in rows1:
+                for r in row1:
+                    str1+=str(r)+";"
+            self.textEditFilms.setText(self.textEditFilms.toPlainText()+"Название: "+row[1]+"; Дата выхода: "+str(row[2])+"; Режиссёр: "+ row[3]+" "+row[4] +" из " + row[5] + "; Страны которые участвоаали в создании: " +str1)
+            print("Название: "+row[1]+"; Дата выхода: "+str(row[2])+"; Режиссёр: "+ row[3]+" "+row[4] +" из " + row[5] + "; Страны которые участвоаали в создании: " +str1)
+        id_film+=1
+        cur.execute("SELECT name FROM film")
+        rows = cur.fetchall()
+        for row in rows:
+            self.comboBoxFilm.addItems([row[0]])
+
 
     def OnClickDelFilm(self):
         print("DELETE ")
@@ -110,27 +134,16 @@ class Ui_MainWindow(object):
                 if(textInComboBoxCountry==country):
                     return
             countries.append(textInComboBoxCountry)
-            self.lineEdit_3.setText(self.lineEdit_3.text()+textInComboBoxCountry+";") 
+            self.lineEditCountry.setText(self.lineEditCountry.text()+textInComboBoxCountry+";") 
         else:
             countries.append(textInComboBoxCountry)
-            self.lineEdit_3.setText(self.lineEdit_3.text()+textInComboBoxCountry+";") 
+            self.lineEditCountry.setText(self.lineEditCountry.text()+textInComboBoxCountry+";") 
 
     def OnClickDelCountry(self):
         textInComboBoxCountry = self.comboBoxCountry.currentText()
-        self.lineEdit_3.setText("")
-        print("!")
-        for country in countries:
-            print(country)
-        print("!")
+        self.lineEditCountry.setText("")
         for country in countries:
             if(textInComboBoxCountry==country):
                 countries.remove(country)
         for country in countries:
-            self.lineEdit_3.setText(self.lineEdit_3.text()+country+";")
-
-
-
-'''
-cur = con.cursor()
-    
-    cur.execute("INSERT INTO country(name) VALUES ('Россия')");'''
+            self.lineEditCountry.setText(self.lineEditCountry.text()+country+";")
