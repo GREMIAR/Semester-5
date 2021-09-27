@@ -128,7 +128,7 @@ def DifferenceOfSets(mainList):
 	set1 = {1,2,4,5}
 	set2 = set()
 	for n in mainList:
-		if (isinstance(n, type(list))):
+		if(isinstance(n, list)):
 			n=str(n)
 		set2.add(n)
 	print(set1)
