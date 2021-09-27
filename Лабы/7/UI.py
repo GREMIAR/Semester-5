@@ -9,8 +9,9 @@ con = pymysql.connect(host='localhost',
 countryDict = {"Россия":"1", "США":"2", "Великобритания":"3", "Канада":"4"}
 cur = con.cursor()
 countries=list()
-id_film = 1
+
 class Ui_MainWindow(object):
+    id_film = 1
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(230, 505)
@@ -102,12 +103,11 @@ class Ui_MainWindow(object):
         self.pushButtonDelFilm.setText(_translate("MainWindow", "-"))
 
     def OnClickAddFilm(self):
-        global id_film
-        cur.execute("INSERT INTO film(film_id,name,director_id) VALUES ('"+str(id_film)+"','"+self.lineEditName.text()+"','"+str(self.comboBoxDirector.currentIndex()+1)+"')");
+        cur.execute("INSERT INTO film(film_id,name,release_date,director_id) VALUES ('"+str(self.id_film)+"','"+self.lineEditName.text()+"','"+self.dateEdit.dateTime().toString('yyyy-MM-dd') +"','"+str(self.comboBoxDirector.currentIndex()+1)+"')");
         for country in countries:
-            cur.execute("INSERT INTO film_country(film_id,country_id) VALUES ('"+str(id_film)+"','"+ countryDict[country] +"')");
+            cur.execute("INSERT INTO film_country(film_id,country_id) VALUES ('"+str(self.id_film)+"','"+ countryDict[country] +"')");
         self.ShowFilms()
-        id_film+=1
+        self.id_film+=1
 
     def ShowFilms(self):
         cur.execute("SELECT film_id,f.name,release_date,firstname,lastname,c.name FROM film f JOIN director d USING(director_id) JOIN country c USING(country_id)")
@@ -133,11 +133,10 @@ class Ui_MainWindow(object):
 
 
     def OnClickDelFilm(self):
-        global id_film
         print("DELETE FROM film_country WHERE film_id=(SELECT film_id FROM film WHERE name='"+self.comboBoxFilm.currentText()+"' LIMIT 1);")
         cur.execute("DELETE FROM film_country WHERE film_id=(SELECT film_id FROM film WHERE name='"+self.comboBoxFilm.currentText()+"' LIMIT 1);")
         cur.execute("DELETE FROM film WHERE name='"+self.comboBoxFilm.currentText()+"';")
-        id_film-=1
+        self.id_film-=1
         self.ShowFilms()
 
     def OnClickAddCountry(self):
