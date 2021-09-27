@@ -22,9 +22,9 @@ class Ui_MainWindow(object):
         self.groupBoxAddFil.setTitle("")
         self.groupBoxAddFil.setObjectName("groupBoxAddFil")
         self.textEditFilms = QtWidgets.QTextEdit(self.centralwidget)
-        self.textEditFilms.setEnabled(False)
         self.textEditFilms.setGeometry(QtCore.QRect(10, 10, 211, 160))
         self.textEditFilms.setObjectName("textEditFilms")
+        self.textEditFilms.setLineWrapMode(QtWidgets.QTextEdit.NoWrap)
         self.lineEditName = QtWidgets.QLineEdit(self.groupBoxAddFil)
         self.lineEditName.setGeometry(QtCore.QRect(0, 20, 211, 31))
         self.lineEditName.setObjectName("lineEditName")
@@ -106,8 +106,13 @@ class Ui_MainWindow(object):
         cur.execute("INSERT INTO film(film_id,name,director_id) VALUES ('"+str(id_film)+"','"+self.lineEditName.text()+"','"+str(self.comboBoxDirector.currentIndex()+1)+"')");
         for country in countries:
             cur.execute("INSERT INTO film_country(film_id,country_id) VALUES ('"+str(id_film)+"','"+ countryDict[country] +"')");
+        self.ShowFilms()
+        id_film+=1
+
+    def ShowFilms(self):
         cur.execute("SELECT film_id,f.name,release_date,firstname,lastname,c.name FROM film f JOIN director d USING(director_id) JOIN country c USING(country_id)")
         rows = cur.fetchall()
+        self.textEditFilms.setText("")
         for row in rows:
             cur.execute("SELECT c.name FROM film_country fc JOIN film f USING(film_id) JOIN country c USING(country_id) WHERE f.film_id="+str(row[0]))
             rows1 = cur.fetchall()
@@ -115,17 +120,25 @@ class Ui_MainWindow(object):
             for row1 in rows1:
                 for r in row1:
                     str1+=str(r)+";"
-            self.textEditFilms.setText(self.textEditFilms.toPlainText()+"Название: "+row[1]+"; Дата выхода: "+str(row[2])+"; Режиссёр: "+ row[3]+" "+row[4] +" из " + row[5] + "; Страны которые участвоаали в создании: " +str1)
+            self.textEditFilms.setText(self.textEditFilms.toPlainText()+"Название: "+row[1]+"; Дата выхода: "+str(row[2])+"; Режиссёр: "+ row[3]+" "+row[4] +" из " + row[5] + "; Страны которые участвоаали в создании: " +str1+"\n")
             print("Название: "+row[1]+"; Дата выхода: "+str(row[2])+"; Режиссёр: "+ row[3]+" "+row[4] +" из " + row[5] + "; Страны которые участвоаали в создании: " +str1)
-        id_film+=1
         cur.execute("SELECT name FROM film")
         rows = cur.fetchall()
+        self.comboBoxFilm.clear()
         for row in rows:
             self.comboBoxFilm.addItems([row[0]])
+        self.lineEditCountry.setText("")
+        self.lineEditName.setText("")
+        countries.clear()
 
 
     def OnClickDelFilm(self):
-        print("DELETE ")
+        global id_film
+        print("DELETE FROM film_country WHERE film_id=(SELECT film_id FROM film WHERE name='"+self.comboBoxFilm.currentText()+"' LIMIT 1);")
+        cur.execute("DELETE FROM film_country WHERE film_id=(SELECT film_id FROM film WHERE name='"+self.comboBoxFilm.currentText()+"' LIMIT 1);")
+        cur.execute("DELETE FROM film WHERE name='"+self.comboBoxFilm.currentText()+"';")
+        id_film-=1
+        self.ShowFilms()
 
     def OnClickAddCountry(self):
         textInComboBoxCountry = self.comboBoxCountry.currentText()
