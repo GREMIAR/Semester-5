@@ -101,13 +101,17 @@ class Ui_MainWindow(object):
         self.label_4.setText(_translate("MainWindow", "Режиссёр"))
         self.label_3.setText(_translate("MainWindow", "Страны"))
         self.pushButtonDelFilm.setText(_translate("MainWindow", "-"))
+        self.ShowFilms()
 
     def OnClickAddFilm(self):
-        cur.execute("INSERT INTO film(film_id,name,release_date,director_id) VALUES ('"+str(self.id_film)+"','"+self.lineEditName.text()+"','"+self.dateEdit.dateTime().toString('yyyy-MM-dd') +"','"+str(self.comboBoxDirector.currentIndex()+1)+"')");
+        cur.execute("INSERT INTO film(name,release_date,director_id) VALUES ('"+self.lineEditName.text()+"','"+self.dateEdit.dateTime().toString('yyyy-MM-dd') +"','"+str(self.comboBoxDirector.currentIndex()+1)+"')");
+        cur.execute("SELECT film_id FROM film ORDER BY film_id DESC LIMIT 1")
+        rows = cur.fetchall()
+        print(rows)
         for country in countries:
-            cur.execute("INSERT INTO film_country(film_id,country_id) VALUES ('"+str(self.id_film)+"','"+ countryDict[country] +"')");
+            cur.execute("INSERT INTO film_country(film_id,country_id) VALUES ('"+str(rows[0][0])+"','"+ countryDict[country] +"')");
         self.ShowFilms()
-        self.id_film+=1
+        con.commit()
 
     def ShowFilms(self):
         cur.execute("SELECT film_id,f.name,release_date,firstname,lastname,c.name FROM film f JOIN director d USING(director_id) JOIN country c USING(country_id)")
@@ -130,14 +134,15 @@ class Ui_MainWindow(object):
         self.lineEditCountry.setText("")
         self.lineEditName.setText("")
         countries.clear()
+        con.commit()
 
 
     def OnClickDelFilm(self):
         print("DELETE FROM film_country WHERE film_id=(SELECT film_id FROM film WHERE name='"+self.comboBoxFilm.currentText()+"' LIMIT 1);")
         cur.execute("DELETE FROM film_country WHERE film_id=(SELECT film_id FROM film WHERE name='"+self.comboBoxFilm.currentText()+"' LIMIT 1);")
         cur.execute("DELETE FROM film WHERE name='"+self.comboBoxFilm.currentText()+"';")
-        self.id_film-=1
         self.ShowFilms()
+        con.commit()
 
     def OnClickAddCountry(self):
         textInComboBoxCountry = self.comboBoxCountry.currentText()
@@ -159,3 +164,4 @@ class Ui_MainWindow(object):
                 countries.remove(country)
         for country in countries:
             self.lineEditCountry.setText(self.lineEditCountry.text()+country+";")
+

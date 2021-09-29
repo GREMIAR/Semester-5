@@ -24,13 +24,21 @@ def InputInt(str=""):
 		except :
 			print("Что-то пошло не так, повторите пожалуйста")
 
+
+def InputFloat(str=""):
+	while True:
+		try:
+			return float(Input(str))
+		except :
+			print("Что-то пошло не так, повторите пожалуйста")
+
 def MenuItem(menuItem, mainList):
 	if(menuItem == "exit"):
 		raise SystemExit
 	elif(menuItem == "1"):
 		ShowTheList(mainList)
 	elif(menuItem == "2"):
-		AddToEndOfList(mainList, Input(" элемента для добавления"))
+		AddToEndOfList(mainList)
 	elif(menuItem == "3"):
 		ShowTheList(mainList)
 		answer = Input(", по индексу - 1, по значению - 2")
@@ -56,8 +64,15 @@ def MenuItem(menuItem, mainList):
 def ShowTheList(mainList):
 	print(mainList)	
 
-def AddToEndOfList(mainList, item):
-	mainList.append(item)
+def AddToEndOfList(mainList):
+	print("1-INT;2-STR;3-FLOAT")
+	rt = InputInt()
+	if(rt==1):
+		mainList.append(InputInt())
+	elif(rt==2):
+		mainList.append(Input())
+	elif(rt==3):
+		mainList.append(InputFloat())
 
 def DelByIndexList(mainList, index):
 	try:
@@ -125,7 +140,8 @@ def FindSubstring(string,substring,count):
 	return count
 
 def DifferenceOfSets(mainList):
-	set1 = {1,2,4,5}
+	print("Введите множество")
+	set1 = {Input(),Input(),Input(),Input()}
 	set2 = set()
 	for n in mainList:
 		if(isinstance(n, list)):
