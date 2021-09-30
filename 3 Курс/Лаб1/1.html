@@ -1,0 +1,20 @@
+<html> 
+	<body> 
+		<table> 
+			<script language="JavaScript"> 
+				for (i = 1; i < 10; i++) 
+				{ 
+					for (j = 1; j < 10; j++) 
+					{
+						rHex = Math.round(Math.random()*255);
+						gHex = Math.round(Math.random()*255);
+						bHex = Math.round(Math.random()*255);
+						color = rHex*Math.pow(16,0)+gHex*Math.pow(16,2)+bHex*Math.pow(16,4);
+						document.write("<td bgcolor='"+(color.toString(16))+"'>" +"rgb("+bHex.toString(16) + gHex.toString(16)+rHex.toString(16)+ ")&nbsp;</td>"); 
+					} 
+					document.write("</tr>"); 
+				} 
+			</script>
+	 	</table> 
+	</body> 
+</html>
