@@ -18,47 +18,17 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
-    int idx = 0;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        CheckInternetConnection connection = new CheckInternetConnection(this);
-        connection.execute();
-        InsertRowIntoTable("1", "2", this);
-    }
-
-    void InsertRowIntoTable(String singer, String song, MainActivity context)
-    {
         TableLayout tableLayout = (TableLayout) findViewById(R.id.table);
-        TableRow row = new TableRow(this);
-        row.setId(idx);
-        idx++;
-        row.setBackgroundColor(Color.GRAY);
-        row.setLayoutParams(new TableLayout.LayoutParams(
-                TableLayout.LayoutParams.MATCH_PARENT,
-                TableLayout.LayoutParams.WRAP_CONTENT));
-        InsertElementIntoTableRow(singer, context, row);
-        InsertElementIntoTableRow(song, context, row);
-        Date date = Calendar.getInstance().getTime();
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-        InsertElementIntoTableRow(dateFormat.format(date), context, row);
-        tableLayout.addView(row, new TableLayout.LayoutParams(
-                TableLayout.LayoutParams.MATCH_PARENT,
-                TableLayout.LayoutParams.WRAP_CONTENT));
+        CheckInternetConnection connection = new CheckInternetConnection(this,tableLayout);
+        connection.execute();
     }
 
-    void InsertElementIntoTableRow(String name, MainActivity context, TableRow tr_head)
+    public void ff()
     {
-        TextView label = new TextView(context);
-        label.setId(idx);
-        label.setText(name);
-        label.setTextColor(Color.WHITE);
-        label.setPadding(5, 5, 5, 5);
-        tr_head.addView(label);
-        idx++;
+
     }
-
-
 }
