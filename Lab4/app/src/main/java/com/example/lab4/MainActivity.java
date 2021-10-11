@@ -6,7 +6,6 @@ import java.util.Date;
 import java.util.Calendar;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.widget.TableLayout;
