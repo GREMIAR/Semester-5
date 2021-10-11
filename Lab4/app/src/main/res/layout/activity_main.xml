@@ -5,7 +5,12 @@
     android:id="@+id/table"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fadeScrollbars="true"
+    android:scrollbarAlwaysDrawHorizontalTrack="true"
+    android:scrollbarAlwaysDrawVerticalTrack="true"
+    android:scrollbars="horizontal|vertical"
     android:stretchColumns="*"
+    android:verticalScrollbarPosition="left"
     tools:context=".MainActivity">
 
     <TableRow

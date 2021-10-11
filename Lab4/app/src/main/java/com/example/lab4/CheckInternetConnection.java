@@ -77,14 +77,8 @@ public class CheckInternetConnection extends AsyncTask<String, Integer, Void> {
     public CheckInternetConnection(Context c, TableLayout tableLayout)
     {
         context = c;
-
         this.tableLayout=tableLayout;
     }
-
-    public void setContext(Context c){
-        context = c;
-    }
-
     public String[] SplitResult(String result)
     {
         if(result!="")
@@ -101,17 +95,13 @@ public class CheckInternetConnection extends AsyncTask<String, Integer, Void> {
         return null;
     }
 
-    public String GetData(String type,Cursor cursor)
-    {
-        return cursor.getString(cursor.getColumnIndexOrThrow(type));
-    }
-
     @Override
     protected Void doInBackground(String... strings) {
+        publishProgress(1);
         while(true)
         {
             if (!HasConnection(context)) {
-                publishProgress();
+                publishProgress(2);
             }
             else
             {
@@ -134,12 +124,17 @@ public class CheckInternetConnection extends AsyncTask<String, Integer, Void> {
                     if(cursor.getCount()==1)
                     {
                         cursor.moveToFirst();
-                        if(data[0] != GetData(SongContract.FeedEntry.Singer,cursor)&&
-                                data[1] !=  GetData(SongContract.FeedEntry.Song,cursor))
+                        if( !GetData(SongContract.FeedEntry.Singer,cursor).equals(data[0])||
+                                !GetData(SongContract.FeedEntry.Song,cursor).equals(data[1]))
                         {
                             InsertInto(data[1], data[0], db);
                             publishProgress(1);
                         }
+                    }
+                    else
+                    {
+                        InsertInto(data[1], data[0], db);
+                        publishProgress(1);
                     }
                 }
             }
@@ -151,12 +146,13 @@ public class CheckInternetConnection extends AsyncTask<String, Integer, Void> {
         }
     }
 
-
     @Override
     protected void onProgressUpdate(Integer... values) {
      super.onProgressUpdate(values);
      if(values!=null &&values[0]==1)
      {
+         tableLayout.removeAllViews();
+         InsertRowIntoTable("Исполнитель","Композиция","Дата добавления", (MainActivity) context);
          SongDB dbHelper = new SongDB(context);
          SQLiteDatabase db = dbHelper.getWritableDatabase();
          Cursor cursor = db.query(
@@ -175,6 +171,7 @@ public class CheckInternetConnection extends AsyncTask<String, Integer, Void> {
                  String song = GetData(SongContract.FeedEntry.Song,cursor);
                  String dateRecording = GetData(SongContract.FeedEntry.DateRecording,cursor);
                  InsertRowIntoTable(singer, song, dateRecording, (MainActivity) context);
+                 cursor.moveToNext();
              }
          }
          cursor.close();
@@ -185,6 +182,11 @@ public class CheckInternetConnection extends AsyncTask<String, Integer, Void> {
                  "Нет подключения к интернету!", Toast.LENGTH_SHORT);
          toast.show();
      }
+    }
+
+    public String GetData(String type,Cursor cursor)
+    {
+        return cursor.getString(cursor.getColumnIndexOrThrow(type));
     }
 
     public void InsertRowIntoTable(String singer, String song,String date, MainActivity context)

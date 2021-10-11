@@ -26,9 +26,4 @@ public class MainActivity extends AppCompatActivity {
         CheckInternetConnection connection = new CheckInternetConnection(this,tableLayout);
         connection.execute();
     }
-
-    public void ff()
-    {
-
-    }
 }
