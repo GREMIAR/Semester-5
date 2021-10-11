@@ -6,11 +6,15 @@ import java.util.Date;
 import java.util.Calendar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.graphics.Color;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -20,6 +24,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        CheckInternetConnection connection = new CheckInternetConnection(this);
+        connection.execute();
         InsertRowIntoTable("1", "2", this);
     }
 
@@ -53,4 +59,6 @@ public class MainActivity extends AppCompatActivity {
         tr_head.addView(label);
         idx++;
     }
+
+
 }
