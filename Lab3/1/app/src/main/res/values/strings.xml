@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Lab3</string>
+    <string name="nameBt1">Конопка 1</string>
+    <string name="nameBt2">Конопка 2</string>
+    <string name="nameBt3">Конопка 3</string>
+    <string name="nameBt4">Конопка 4</string>
+
+</resources>
