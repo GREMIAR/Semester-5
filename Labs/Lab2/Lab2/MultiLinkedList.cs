@@ -49,7 +49,7 @@ namespace Lab2
             Node redDiploma = this.redDiploma;
             Node housing = this.housing;
             Node needHousing = this.needHousing;
-            while(head.next != null)
+            while(currentNode.next != null)
             {
                 if(currentNode.next.student.id == id)
                 {
@@ -88,6 +88,7 @@ namespace Lab2
                 {
                     housing = currentNode.Housing;
                 }
+                currentNode = currentNode.next;
             }
         }
 

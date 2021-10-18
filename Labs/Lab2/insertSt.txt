@@ -3,3 +3,12 @@ m.Insert(new Student(2,"Фам",91,90,49,false,"Мценск",false));
 m.Insert(new Student(3,"Фам3",92,90,49,false,"Брянск",true));
 m.Insert(new Student(4,"Фам4",90,93,49,true,"Орёл",false));
 m.Insert(new Student(5,"Фам5",90,94,49,true,"Орёл",true));
+
+id
+Lastname
+Exam1
+Exam2
+Exam3
+RedDiploma
+livesFarAway
+needsApartment
