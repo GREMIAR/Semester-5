@@ -16,5 +16,20 @@ namespace Lab2
         {
             InitializeComponent();
         }
+
+        private void PushForward_Click(Object sender, EventArgs e)
+        {
+
+        }
+
+        private void Remove_CLick(Object sender, EventArgs e)
+        {
+
+        }
+
+        private void RefreshTable()
+        {
+
+        }
     }
 }
