@@ -53,15 +53,7 @@ namespace Lab2
             Node curNode = ml_List.head;
             while(curNode!=null)
             {
-                dataGridView1.Rows.Add();
-                dataGridView1.Rows[dataGridView1.RowCount - 1].Cells[1].Value = curNode.student.id;
-                dataGridView1.Rows[dataGridView1.RowCount - 1].Cells[2].Value = curNode.student.lastName;
-                dataGridView1.Rows[dataGridView1.RowCount - 1].Cells[3].Value = curNode.student.examFirst;
-                dataGridView1.Rows[dataGridView1.RowCount - 1].Cells[4].Value = curNode.student.examSecond;
-                dataGridView1.Rows[dataGridView1.RowCount - 1].Cells[5].Value = curNode.student.examThird;
-                dataGridView1.Rows[dataGridView1.RowCount - 1].Cells[6].Value = curNode.student.redDiploma;
-                dataGridView1.Rows[dataGridView1.RowCount - 1].Cells[7].Value = curNode.student.city;
-                dataGridView1.Rows[dataGridView1.RowCount - 1].Cells[8].Value = curNode.student.needHousing;
+                AddRow(curNode);
                 curNode = curNode.next;
             }
         }
@@ -121,15 +113,7 @@ namespace Lab2
             {
                 if (curNode.student.examFirst >= 80 && curNode.student.examSecond >= 80 && curNode.student.examThird >= 80)
                 {
-                    dataGridView1.Rows.Add();
-                    dataGridView1.Rows[dataGridView1.RowCount - 1].Cells[1].Value = curNode.student.id;
-                    dataGridView1.Rows[dataGridView1.RowCount - 1].Cells[2].Value = curNode.student.lastName;
-                    dataGridView1.Rows[dataGridView1.RowCount - 1].Cells[3].Value = curNode.student.examFirst;
-                    dataGridView1.Rows[dataGridView1.RowCount - 1].Cells[4].Value = curNode.student.examSecond;
-                    dataGridView1.Rows[dataGridView1.RowCount - 1].Cells[5].Value = curNode.student.examThird;
-                    dataGridView1.Rows[dataGridView1.RowCount - 1].Cells[6].Value = curNode.student.redDiploma;
-                    dataGridView1.Rows[dataGridView1.RowCount - 1].Cells[7].Value = curNode.student.city;
-                    dataGridView1.Rows[dataGridView1.RowCount - 1].Cells[8].Value = curNode.student.needHousing;
+                    AddRow(curNode);
                 }
                 curNode = curNode.next;
             }
@@ -141,15 +125,7 @@ namespace Lab2
             Node curNode = ml_List.redDiploma;
             while (curNode != null)
             {
-                dataGridView1.Rows.Add();
-                dataGridView1.Rows[dataGridView1.RowCount - 1].Cells[1].Value = curNode.student.id;
-                dataGridView1.Rows[dataGridView1.RowCount - 1].Cells[2].Value = curNode.student.lastName;
-                dataGridView1.Rows[dataGridView1.RowCount - 1].Cells[3].Value = curNode.student.examFirst;
-                dataGridView1.Rows[dataGridView1.RowCount - 1].Cells[4].Value = curNode.student.examSecond;
-                dataGridView1.Rows[dataGridView1.RowCount - 1].Cells[5].Value = curNode.student.examThird;
-                dataGridView1.Rows[dataGridView1.RowCount - 1].Cells[6].Value = curNode.student.redDiploma;
-                dataGridView1.Rows[dataGridView1.RowCount - 1].Cells[7].Value = curNode.student.city;
-                dataGridView1.Rows[dataGridView1.RowCount - 1].Cells[8].Value = curNode.student.needHousing;
+                AddRow(curNode);
                 curNode = curNode.Diploma;
             }
         }
@@ -162,15 +138,7 @@ namespace Lab2
             {
                 if (curNode.student.city != "Орёл")
                 {
-                    dataGridView1.Rows.Add();
-                    dataGridView1.Rows[dataGridView1.RowCount - 1].Cells[1].Value = curNode.student.id;
-                    dataGridView1.Rows[dataGridView1.RowCount - 1].Cells[2].Value = curNode.student.lastName;
-                    dataGridView1.Rows[dataGridView1.RowCount - 1].Cells[3].Value = curNode.student.examFirst;
-                    dataGridView1.Rows[dataGridView1.RowCount - 1].Cells[4].Value = curNode.student.examSecond;
-                    dataGridView1.Rows[dataGridView1.RowCount - 1].Cells[5].Value = curNode.student.examThird;
-                    dataGridView1.Rows[dataGridView1.RowCount - 1].Cells[6].Value = curNode.student.redDiploma;
-                    dataGridView1.Rows[dataGridView1.RowCount - 1].Cells[7].Value = curNode.student.city;
-                    dataGridView1.Rows[dataGridView1.RowCount - 1].Cells[8].Value = curNode.student.needHousing;
+                    AddRow(curNode);
                 }
                 curNode = curNode.next;
             }
@@ -182,17 +150,22 @@ namespace Lab2
             Node curNode = ml_List.needHousing;
             while (curNode != null)
             {
-                dataGridView1.Rows.Add();
-                dataGridView1.Rows[dataGridView1.RowCount - 1].Cells[1].Value = curNode.student.id;
-                dataGridView1.Rows[dataGridView1.RowCount - 1].Cells[2].Value = curNode.student.lastName;
-                dataGridView1.Rows[dataGridView1.RowCount - 1].Cells[3].Value = curNode.student.examFirst;
-                dataGridView1.Rows[dataGridView1.RowCount - 1].Cells[4].Value = curNode.student.examSecond;
-                dataGridView1.Rows[dataGridView1.RowCount - 1].Cells[5].Value = curNode.student.examThird;
-                dataGridView1.Rows[dataGridView1.RowCount - 1].Cells[6].Value = curNode.student.redDiploma;
-                dataGridView1.Rows[dataGridView1.RowCount - 1].Cells[7].Value = curNode.student.city;
-                dataGridView1.Rows[dataGridView1.RowCount - 1].Cells[8].Value = curNode.student.needHousing;
+                AddRow(curNode);
                 curNode = curNode.Housing;
             }
+        }
+
+        private void AddRow(Node curNode)
+        {
+            dataGridView1.Rows.Add();
+            dataGridView1.Rows[dataGridView1.RowCount - 1].Cells[1].Value = curNode.student.id;
+            dataGridView1.Rows[dataGridView1.RowCount - 1].Cells[2].Value = curNode.student.lastName;
+            dataGridView1.Rows[dataGridView1.RowCount - 1].Cells[3].Value = curNode.student.examFirst;
+            dataGridView1.Rows[dataGridView1.RowCount - 1].Cells[4].Value = curNode.student.examSecond;
+            dataGridView1.Rows[dataGridView1.RowCount - 1].Cells[5].Value = curNode.student.examThird;
+            dataGridView1.Rows[dataGridView1.RowCount - 1].Cells[6].Value = curNode.student.redDiploma;
+            dataGridView1.Rows[dataGridView1.RowCount - 1].Cells[7].Value = curNode.student.city;
+            dataGridView1.Rows[dataGridView1.RowCount - 1].Cells[8].Value = curNode.student.needHousing;
         }
     }
 }
