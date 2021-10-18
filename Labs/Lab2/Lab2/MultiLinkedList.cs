@@ -49,45 +49,69 @@ namespace Lab2
             Node redDiploma = this.redDiploma;
             Node housing = this.housing;
             Node needHousing = this.needHousing;
-            while(currentNode.next != null)
+            if (currentNode == head&& currentNode.student.id==id)
             {
-                if(currentNode.next.student.id == id)
-                {
-                    if(currentNode.student.redDiploma)
-                    {
-                        redDiploma.Diploma = currentNode.Diploma;
-                    }
-                    else
-                    {
-                        diploma.Diploma = currentNode.Diploma;
-                    }
-                    if(currentNode.student.needHousing)
-                    {
-                        needHousing.Housing = currentNode.Housing;
-                    }
-                    else
-                    {
-                        housing.Housing = currentNode.Housing;
-                    }
-                    currentNode.next = currentNode.next.next;
-                    
-                }
+                head = currentNode.next;
                 if (redDiploma == currentNode && currentNode.student.redDiploma)
                 {
-                    redDiploma = currentNode.Diploma;
+                    this.redDiploma = currentNode.Diploma;
                 }
                 else if (diploma == currentNode && !currentNode.student.redDiploma)
                 {
-                    diploma = currentNode.Diploma;
+                    this.diploma = currentNode.Diploma;
                 }
                 if (needHousing == currentNode && currentNode.student.needHousing)
                 {
-                    needHousing = currentNode.Housing;
+                    this.needHousing = currentNode.Housing;
                 }
-                else if (housing == currentNode)
+                else if (housing == currentNode && !currentNode.student.needHousing)
                 {
-                    housing = currentNode.Housing;
+                    this.housing = currentNode.Housing;
                 }
+                return;
+            }
+
+            while (currentNode.next != null)
+            {
+                if (redDiploma == currentNode && currentNode.student.redDiploma)
+                {
+                    redDiploma = currentNode;
+                }
+                else if (diploma == currentNode && !currentNode.student.redDiploma)
+                {
+                    diploma = currentNode;
+                }
+                if (needHousing == currentNode && currentNode.student.needHousing)
+                {
+                    needHousing = currentNode;
+                }
+                else if (housing == currentNode && !currentNode.student.needHousing)
+                {
+                    housing = currentNode;
+                }
+                if (currentNode.next.student.id == id)
+                {
+                    if(currentNode.next.student.redDiploma)
+                    {
+                        redDiploma.Diploma = currentNode.next.Diploma;
+                    }
+                    else
+                    {
+                        diploma.Diploma = currentNode.next.Diploma;
+                    }
+                    if(currentNode.next.student.needHousing)
+                    {
+                        needHousing.Housing = currentNode.next.Housing;
+                    }
+                    else
+                    {
+                        housing.Housing = currentNode.next.Housing;
+                    }
+                    currentNode.next = currentNode.next.next;
+                    return;
+                }
+               
+
                 currentNode = currentNode.next;
             }
         }
