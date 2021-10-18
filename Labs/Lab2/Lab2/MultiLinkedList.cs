@@ -8,11 +8,11 @@ namespace Lab2
 {
     class MultiLinkedList
     {
-        Node head { get; set; }
-        Node redDiploma { get; set; }
-        Node diploma { get; set; }
-        Node needHousing { get; set; }
-        Node housing { get; set; }
+        public Node head { get; set; }
+        public Node redDiploma { get; set; }
+        public Node diploma { get; set; }
+        public Node needHousing { get; set; }
+        public Node housing { get; set; }
         public void Insert(Student student)
         {
             Node node = new Node(student);
