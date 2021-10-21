@@ -69,6 +69,7 @@ namespace Lab3
         void PaintDynamic(PaintEventArgs e)
         {
             DrawX(e);
+            DrawHide(e);
         }
 
 
@@ -85,6 +86,21 @@ namespace Lab3
             }
             e.Graphics.DrawLine(new Pen(colors.Edge, 1), new Point(x.X + x.Width / 4, x.Y + x.Height / 4), new Point(x.X + x.Width * 3 / 4, x.Y + x.Height * 3 / 4));
             e.Graphics.DrawLine(new Pen(colors.Edge, 1), new Point(x.X + x.Width * 3 / 4, x.Y + x.Height / 4), new Point(x.X + x.Width / 4, x.Y + x.Height * 3 / 4));
+        }
+
+
+        void DrawHide(PaintEventArgs e)
+        {
+            Rectangle x = rects.Hide;
+            if (MouseInsideRect(x))
+            {
+                e.Graphics.FillRectangle(new SolidBrush(colors.Select), x);
+            }
+            else
+            {
+                e.Graphics.FillRectangle(new SolidBrush(colors.Background), x);
+            }
+            e.Graphics.DrawLine(new Pen(colors.Edge, 1), new Point(x.X + x.Width / 4, x.Y + x.Height * 3 / 4), new Point(x.X + x.Width * 3 / 4, x.Y + x.Height * 3 / 4));
         }
 
 
@@ -133,13 +149,14 @@ namespace Lab3
 
         private void Form1_Shown(object sender, EventArgs e)
         {
+            rects = new Rects();
             Applyrects();
             ResetMouseCoords();
             colors.ApplyColorScheme(Colors.ColorScheme.Default);
             pictureBox1.Refresh();
         }
 
-        Rects rects = new Rects();
+        Rects rects;
         void Applyrects()
         {
             pictureBox1.Location = new Point(rects.PictureBox1.X, rects.PictureBox1.Y);
@@ -147,8 +164,31 @@ namespace Lab3
             pictureBox1.Height = rects.PictureBox1.Height;
         }
 
+        void MoveWindowStart()
+        {
+            if (Math.Abs(mouseCoords.X - rects.PictureBox1.X) < 10 || Math.Abs(mouseCoords.X - (rects.PictureBox1.X + rects.PictureBox1.Width)) < 10 || Math.Abs(mouseCoords.Y - rects.PictureBox1.Y) < 10 || Math.Abs(mouseCoords.Y - (rects.PictureBox1.Y + rects.PictureBox1.Height)) < 10)
+            {
+                movingWindow = true;
+            }
+        }
+
+        void MoveWindowFinish()
+        {
+            movingWindow = false;
+        }
+
+        bool movingWindow;
+        void MoveWindow(MouseEventArgs e)
+        {
+            if (movingWindow && e.Button == MouseButtons.Left)
+            {
+                this.Location = new Point(this.Location.X+e.X-mouseDownCoords.X, this.Location.Y + e.Y - mouseDownCoords.Y);
+            }
+        }
+
         private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
         {
+            MoveWindow(e);
             SetMouseCoords(e);
             pictureBox1.Refresh();
         }
