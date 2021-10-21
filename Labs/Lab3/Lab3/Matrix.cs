@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Lab3
+﻿namespace Lab3
 {
     class Matrix
     {
@@ -12,12 +6,12 @@ namespace Lab3
 
         bool SearchVertexName(string name)
         {
-            if(NodeFirst!=null)
+            if (NodeFirst != null)
             {
                 Vertex currentNode = NodeFirst;
-                while(currentNode!=null)
+                while (currentNode != null)
                 {
-                    if (currentNode.Name==name)
+                    if (currentNode.Name == name)
                     {
                         return true;
                     }
@@ -44,17 +38,15 @@ namespace Lab3
 
         public void SetDirection(string from, string to)
         {
-            Vertex fromV = SearchVertex(from);
-            Vertex toV = SearchVertex(to);
-            if (fromV != null||toV!=null)
-            {
-                SetDirection(fromV, toV);
-            }
+            SetDirection(SearchVertex(from), SearchVertex(to));
         }
 
-        public void SetDirection(Vertex from,Vertex to)
+        public void SetDirection(Vertex from, Vertex to)
         {
-            from.AddDirection(to);
+            if (from != null || to != null)
+            {
+                from.AddDirection(to);
+            }
         }
 
         public void AddVertext(string newVertex)
@@ -62,7 +54,7 @@ namespace Lab3
             if (NodeFirst != null)
             {
                 Vertex currentVertex = NodeFirst;
-                while(currentVertex.Next!=null)
+                while (currentVertex.Next != null)
                 {
                     currentVertex = currentVertex.Next;
                 }
@@ -70,24 +62,44 @@ namespace Lab3
             }
         }
 
-        public void RemoveNotInitial()
+        public void Remove(string nameVertex)
+        {
+            Remove(SearchVertex(nameVertex));
+        }
+        public void Remove(Vertex vertex)
         {
             if (NodeFirst != null)
             {
                 Vertex currentVertex = NodeFirst;
-                if(NodeFirst.Next==null)
+                if(NodeFirst==vertex)
                 {
                     NodeFirst = null;
                 }
                 while (currentVertex.Next != null)
                 {
-                    if (!currentVertex.Next.initial)
+                    if (currentVertex.Next==vertex)
                     {
                         currentVertex.Next = currentVertex.Next.Next;
                     }
                     currentVertex = currentVertex.Next;
                 }
             }
+        }
+
+        public bool FindEdge(string from, string to)
+        {
+            Vertex fromV = SearchVertex(from);
+            Vertex toV = SearchVertex(to);
+            return FindEdge(SearchVertex(from), SearchVertex(to));
+        }
+
+        public bool FindEdge(Vertex from, Vertex to)
+        {
+            if (from != null && to != null)
+            {
+                return from.FindDirection(to);
+            }
+            return false;
         }
 
         public Matrix(string[] vertexes)
@@ -101,13 +113,11 @@ namespace Lab3
                     {
                         NodeFirst = new Vertex(vertexes[i]);
                         currentVertex = NodeFirst;
-                        currentVertex.initial = true;
                     }
                     else
                     {
                         currentVertex.Next = new Vertex(vertexes[i]);
                         currentVertex = currentVertex.Next;
-                        currentVertex.initial = true;
                     }
                 }
             }
