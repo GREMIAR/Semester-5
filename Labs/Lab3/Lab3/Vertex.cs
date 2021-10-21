@@ -1,21 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace Lab3
 {
     class Vertex
     {
-        List<Vertex> direction;
+        List<Vertex> directions;
         public string Name { get; set; }
         public Vertex Next { get; set; }
-
-        public bool initial {get ;set;}
         public void AddDirection(Vertex vertex)
         {
-            direction.Add(vertex);
+            directions.Add(vertex);
+        }
+
+        public bool FindDirection(Vertex vertex)
+        {
+            foreach (Vertex direction in directions)
+            {
+                if(direction==vertex)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         public Vertex(string name)
