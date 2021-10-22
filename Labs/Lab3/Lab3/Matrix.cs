@@ -78,7 +78,7 @@
 
         public void SetDirection(Vertex from, Vertex to)
         {
-            if (from != null || to != null)
+            if (from != null && to != null)
             {
                 from.AddDirection(to);
             }

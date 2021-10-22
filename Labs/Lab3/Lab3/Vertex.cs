@@ -26,6 +26,7 @@ namespace Lab3
 
         public Vertex(string name)
         {
+            directions = new List<Vertex>();
             Name = name; 
         }
     }

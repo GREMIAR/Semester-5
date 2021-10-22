@@ -16,6 +16,7 @@ namespace Lab3
             InitializeComponent();
             if (str.Length>0)
             {
+                ReadExcel(str[0]);
                 //dataTable = ReadExcelFile.ReadExcel(str[0].Substring(0, str[0].LastIndexOf('.')), str[0].Substring(str[0].LastIndexOf('.')));
                 DataTableIsFilled = true;
                 RandomizeVertices();
@@ -29,7 +30,7 @@ namespace Lab3
             for (int i=1;i< fullFile.Length;i++)
             {
                 string vertex = fullFile[i].Split(' ')[0];
-                for (int f=1;f<matrix.Size();f++)
+                for (int f=1;f<=matrix.Size();f++)
                 {
                     if (fullFile[i].Split(' ')[f]=="1")
                     {
@@ -48,18 +49,15 @@ namespace Lab3
         void OpenViaDialog()
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "|*.xlsx;*.xls";
+            openFileDialog.Filter = "|*.txt";
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
-                string filename = openFileDialog.FileName.Substring(0, openFileDialog.FileName.LastIndexOf('.'));
-                string ext = openFileDialog.FileName.Substring(openFileDialog.FileName.LastIndexOf('.'));
-                //dataTable = ReadExcelFile.ReadExcel(filename, ext);
+                ReadExcel(openFileDialog.FileName);
             }
             DataTableIsFilled = true;
             RandomizeVertices();
         }
 
-        // Чтоб занести в матрицу Matrix, надо передать массив строк (названий) вершин. Потом соединить вершины с помощью SetDirection(string from, string to)
         void RandomizeVertices()
         {
             for (int i = 0; i < dataTable.Rows.Count; i++)
