@@ -13,13 +13,19 @@ namespace Lab3
         public string BtnOpen { get; private set; }
         public string BtnRandomizeGraph { get; private set; }
         public string DeleteVertex { get; private set; }
+        public string BtnAddVertex { get; private set; }
+        public string NewVertexName { get; private set; }
+        public string NewVertexPaths { get; private set; }
 
 
-        private void SetStrings(string btnOpen, string btnRandomizeGraph, string deleteVertex)
+        private void SetStrings(string btnOpen, string btnRandomizeGraph, string deleteVertex, string btnAddVertex, string newVertexName, string newVertexPaths)
         {
             this.BtnOpen = btnOpen;
             this.BtnRandomizeGraph = btnRandomizeGraph;
             this.DeleteVertex = deleteVertex;
+            this.BtnAddVertex = btnAddVertex;
+            this.NewVertexName = newVertexName;
+            this.NewVertexPaths = newVertexPaths;
         }
 
         public void ApplyLanguage(Language lang)
@@ -27,11 +33,11 @@ namespace Lab3
             this.Lang = lang;
             if (Lang == Language.Russian)
             {
-                SetStrings("Открыть", "Случайное расположение", "Удалить");
+                SetStrings("Открыть", "Случайное расположение", "Удалить", "Добавить", "<Имя>", "<Путь1,Путь2>");
             }
             else if (Lang == Language.English)
             {
-                SetStrings("Open", "Randomize", "Remove");
+                SetStrings("Open", "Randomize", "Remove", "Add", "<Name>", "<Path1,Path2>");
             }
         }
     }

@@ -46,6 +46,12 @@ namespace Lab3
             DrawText(e, strings.BtnRandomizeGraph, colors.Text, rects.RandomizeGraph);
         }
 
+        void DrawAddVertex(PaintEventArgs e)
+        {
+            DrawBtn(e, rects.AddVertex, true);
+            DrawText(e, strings.BtnAddVertex, colors.Text, rects.AddVertex);
+        }
+
         void DrawVertex(PaintEventArgs e, Vertex vertex)
         {
             if (MouseInsideRect(new Rectangle(vertex.Coor.X - rects.VertexArea.Width/2, vertex.Coor.Y - rects.VertexArea.Height/2, rects.VertexArea.Width, rects.VertexArea.Height)))

@@ -46,5 +46,27 @@ namespace Lab3
                 e.Graphics.DrawString(line[i], new Font("Microsoft Sans Serif", 14), new SolidBrush(color), new Point((int)(areaCenter.X - stringSize.Width / 2), y));
             }
         }
+
+
+
+        void DrawTextBox(PaintEventArgs e, Rectangle x, bool available)
+        {
+            if (available)
+            {
+                if (MouseInsideRect(x))
+                {
+                    e.Graphics.FillRectangle(new SolidBrush(colors.Select), x);
+                }
+                else
+                {
+                    e.Graphics.FillRectangle(new SolidBrush(colors.Background), x);
+                }
+            }
+            else
+            {
+                e.Graphics.FillRectangle(new SolidBrush(colors.Unavailable), x);
+            }
+            e.Graphics.DrawLine(new Pen(colors.Text), new Point(x.X + x.Width / 7, x.Y + rects.MenuBar.Height), new Point(x.X + x.Width * 6 / 7));
+        }
     }
 }

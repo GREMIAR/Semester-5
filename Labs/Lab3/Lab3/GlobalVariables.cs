@@ -10,7 +10,7 @@ namespace Lab3
 {
     public partial class Form1
     {
-        DataTable dataTable;
+        Matrix matrix;
         Colors colors;
         Strings strings;
         Rects rects;
@@ -19,7 +19,7 @@ namespace Lab3
         bool movingWindow { get; set; }
         bool MouseIsDown { get; set; }
         Point mouseDownCoords { get; set; }
-
+        Dictionary<string, string> userInput;
 
         void SetStartValues()
         {
@@ -33,6 +33,7 @@ namespace Lab3
             strings = new Strings();
             rects = new Rects();
             rnd = new Random();
+            userInput = new Dictionary<string, string>();
         }
 
         void SetSecondStartValues()
@@ -41,6 +42,7 @@ namespace Lab3
             ResetMouseCoords();
             colors.ApplyColorScheme(Colors.ColorScheme.Default);
             strings.ApplyLanguage(Strings.Language.Russian);
+            SetUserInput();
         }
     }
 }

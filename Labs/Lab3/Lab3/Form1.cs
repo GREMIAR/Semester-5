@@ -10,7 +10,6 @@ namespace Lab3
 {
     public partial class Form1 : Form
     {
-        Matrix matrix;
         public Form1(string[] str)
         {
             InitializeComponent();
@@ -58,11 +57,14 @@ namespace Lab3
 
         void RandomizeVertices()
         {
-            Vertex vertex = matrix.NodeFirst;
-            while(vertex != null)
+            if (matrix != null)
             {
-                vertex.Coor = new Point(rnd.Next(rects.GraphArea.X, rects.GraphArea.X + rects.GraphArea.Width), rnd.Next(rects.GraphArea.Y, rects.GraphArea.Y + rects.GraphArea.Height));
-                vertex = vertex.Next;
+                Vertex vertex = matrix.NodeFirst;
+                while(vertex != null)
+                {
+                    vertex.Coor = new Point(rnd.Next(rects.GraphArea.X, rects.GraphArea.X + rects.GraphArea.Width), rnd.Next(rects.GraphArea.Y, rects.GraphArea.Y + rects.GraphArea.Height));
+                    vertex = vertex.Next;
+                }
             }
         }
     }

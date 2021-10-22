@@ -84,10 +84,7 @@ namespace Lab3
         {
             if (MouseInsideRect(rects.RandomizeGraph))
             {
-                if (matrix!=null)
-                {
-                    RandomizeVertices();
-                }
+                RandomizeVertices();
             }
         }
 
@@ -100,7 +97,7 @@ namespace Lab3
                     Vertex currentVertex = matrix.NodeFirst;
                     while(currentVertex != null)
                     {
-                        if (MouseInsideRect(new Rectangle(currentVertex.Coor.X - rects.VertexArea.Width / 2, currentVertex.Coor.Y - rects.VertexArea.Height / 2, rects.VertexArea.Width, rects.VertexArea.Height)))
+                        if (Control.ModifierKeys == Keys.None && MouseInsideRect(new Rectangle(currentVertex.Coor.X - rects.VertexArea.Width / 2, currentVertex.Coor.Y - rects.VertexArea.Height / 2, rects.VertexArea.Width, rects.VertexArea.Height)))
                         {
                             matrix.Remove(currentVertex);
                         }
@@ -112,10 +109,24 @@ namespace Lab3
 
         void Menu_click()
         {
-            X_click();
-            Hide_click();
-            Open_click();
-            RandomizeGraph_click();
+            if (MouseInsideRect(new Rectangle(0,0, pictureBox1.Width, rects.X.Height)))
+            { 
+                X_click();
+                Hide_click();
+                Open_click();
+                RandomizeGraph_click();
+                AddVertex_click();
+            }
+        }
+
+        void AddVertex_click()
+        {
+           if (MouseInsideRect(rects.AddVertex))
+            {
+                AddVertex form = new AddVertex();
+                form.Show();
+                if (true) { }
+            }
         }
 
     }
