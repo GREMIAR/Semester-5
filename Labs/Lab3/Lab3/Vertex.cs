@@ -25,6 +25,13 @@ namespace Lab3
             }
             return false;
         }
+
+        public Vertex[] GetDirection()
+        {
+            return directions.ToArray();
+        }
+
+
         public Vertex(string name)
         {
             directions = new List<Vertex>();

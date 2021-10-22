@@ -58,27 +58,22 @@ namespace Lab3
 
         void DrawGraph(PaintEventArgs e)
         {
-            // edges first
-
-            Vertex vertex = matrix.NodeFirst;
-            while(vertex != null)
+            Vertex currentVertex = matrix.NodeFirst;
+            while(currentVertex != null)
             {
-                vertex.FindDirection
-                vertex = vertex.Next;
+                foreach(Vertex vertex in currentVertex.GetDirection())
+                {
+                    //линия
+                }
+                currentVertex = currentVertex.Next;
+            }
+            currentVertex = matrix.NodeFirst;
+            while (currentVertex != null)
+            {
+                DrawVertex(e, currentVertex.Coor);
+                currentVertex = currentVertex.Next;
             }
 
-
-
-            for (int column = 0; column < matrix.Size(); column++)
-            {
-                vertex.FindDirection
-            }
-
-            //then vertices
-            for (int i = 0; i < vertices.Count; i++)
-            {
-                DrawVertex(e, vertices[i]);
-            }
         }
 
     }
