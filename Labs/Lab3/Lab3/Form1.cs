@@ -4,19 +4,38 @@ using System.Data;
 using System.Data.OleDb;
 using System.Drawing;
 using System;
+using System.Linq;
 
 namespace Lab3
 {
     public partial class Form1 : Form
     {
+        Matrix matrix;
         public Form1(string[] str)
         {
             InitializeComponent();
             if (str.Length>0)
             {
-                dataTable = ReadExcelFile.ReadExcel(str[0].Substring(0, str[0].LastIndexOf('.')), str[0].Substring(str[0].LastIndexOf('.')));
+                //dataTable = ReadExcelFile.ReadExcel(str[0].Substring(0, str[0].LastIndexOf('.')), str[0].Substring(str[0].LastIndexOf('.')));
                 DataTableIsFilled = true;
                 RandomizeVertices();
+            }
+        }
+
+        public void ReadExcel(string fileName)
+        {
+            string[] fullFile = File.ReadAllLines(fileName);
+            matrix = new Matrix(fullFile[0].Split(' ').Skip(1).ToArray());
+            for (int i=1;i< fullFile.Length;i++)
+            {
+                string vertex = fullFile[i].Split(' ')[0];
+                for (int f=1;f<matrix.Size();f++)
+                {
+                    if (fullFile[i].Split(' ')[f]=="1")
+                    {
+                        matrix.SetDirection(vertex,matrix.GetVertex(f));
+                    }
+                }
             }
         }
 
@@ -34,7 +53,7 @@ namespace Lab3
             {
                 string filename = openFileDialog.FileName.Substring(0, openFileDialog.FileName.LastIndexOf('.'));
                 string ext = openFileDialog.FileName.Substring(openFileDialog.FileName.LastIndexOf('.'));
-                dataTable = ReadExcelFile.ReadExcel(filename, ext);
+                //dataTable = ReadExcelFile.ReadExcel(filename, ext);
             }
             DataTableIsFilled = true;
             RandomizeVertices();

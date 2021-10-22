@@ -3,7 +3,6 @@
     class Matrix
     {
         public Vertex NodeFirst { get; set; }
-
         bool SearchVertexName(string name)
         {
             if (NodeFirst != null)
@@ -15,9 +14,44 @@
                     {
                         return true;
                     }
+                    currentNode = currentNode.Next;
                 }
             }
             return false;
+        }
+
+        public int Size()
+        {
+            int quantity=0;
+            if (NodeFirst != null)
+            {
+                Vertex currentNode = NodeFirst;
+                while (currentNode != null)
+                {
+                    quantity++;
+                    currentNode = currentNode.Next;
+                }
+            }
+            return quantity;
+        }
+
+        public string GetVertex(int number)
+        {
+            if (NodeFirst != null)
+            {
+                Vertex currentNode = NodeFirst;
+                int idx = 1;
+                while (currentNode != null)
+                {
+                    if (number == idx)
+                    {
+                        return currentNode.Name;
+                    }
+                    idx++;
+                    currentNode = currentNode.Next;
+                }
+            }
+            return null;
         }
 
         Vertex SearchVertex(string name)
@@ -31,6 +65,7 @@
                     {
                         return currentNode;
                     }
+                    currentNode = currentNode.Next;
                 }
             }
             return null;
