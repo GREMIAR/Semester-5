@@ -9,8 +9,7 @@ namespace Lab3
 {
     public partial class Form1
     {
-        private bool MouseIsDown { get; set; }
-        private Point mouseDownCoords { get; set; }
+        
 
         private void pictureBox1_MouseUp(object sender, MouseEventArgs e)
         {
@@ -34,10 +33,23 @@ namespace Lab3
             }
         }
 
+        private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
+        {
+            MoveWindow(e);
+            SetMouseCoords(e);
+            pictureBox1.Refresh();
+        }
+
+        private void pictureBox1_MouseLeave(object sender, EventArgs e)
+        {
+            ResetMouseCoords();
+            pictureBox1.Refresh();
+        }
+
 
         void Hide_click()
         {
-            if (MouseInsideRect(rects.Hide))
+            if (MouseInsideRect(rects.Minimize))
             {
                 this.WindowState = FormWindowState.Minimized;
             }

@@ -19,14 +19,14 @@ namespace Lab3
         public Color Select { get; private set; }
 
 
-        private void SetColors(Color backgroundColor, Color frameColor, Color edgeColor, Color vertexColor, Color textColor, Color select)
+        private void SetColors(Color background, Color frame, Color edge, Color vertex, Color text, Color select)
         {
-            this.Background = backgroundColor;
-            this.Frame = frameColor;
-            this.Edge = edgeColor;
-            this.Vertex = vertexColor;
-            this.Text = textColor;
-            this.Select = textColor;
+            this.Background = background;
+            this.Frame = frame;
+            this.Edge = edge;
+            this.Vertex = vertex;
+            this.Text = text;
+            this.Select = select;
         }
 
         public void ApplyColorScheme(ColorScheme theme)
@@ -34,7 +34,7 @@ namespace Lab3
             this.Theme = theme;
             if (Theme == ColorScheme.Default)
             {
-                SetColors(Color.Black, Color.Gray, Color.White, Color.White, Color.Coral, Color.DarkGray);
+                SetColors(Color.Black, Color.Gray, Color.White, Color.White, Color.Coral, Color.FromArgb(55, 55, 55));
             }
         }
     }
