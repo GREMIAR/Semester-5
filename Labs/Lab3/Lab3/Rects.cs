@@ -25,14 +25,14 @@ namespace Lab3
         public Rects()
         {
             PictureBox1 = new Rectangle(0, 0, 1000, 650);
-            MenuBar = new Rectangle(0, 0, PictureBox1.Width, 35);
-            X = new Rectangle(PictureBox1.Width - 50, 0, 50, 35);
-            Minimize = new Rectangle(PictureBox1.Width - X.Width - 50, 0, 50, MenuBar.Height);
-            Open = new Rectangle(0, 0, 150, MenuBar.Height);
-            RandomizeGraph = new Rectangle(Open.Width, 0, 300, MenuBar.Height);
-            AddVertex = new Rectangle(RandomizeGraph.X + RandomizeGraph.Width, 0, 150, MenuBar.Height);
-            NewVertexName = new Rectangle(RandomizeGraph.X + RandomizeGraph.Width, 0, 150, MenuBar.Height);
-            GraphArea = new Rectangle(0, MenuBar.Height, PictureBox1.Width, PictureBox1.Height - MenuBar.Height);
+            MenuBar = new Rectangle(PictureBox1.X, PictureBox1.Y, PictureBox1.Width, 35);
+            X = new Rectangle(MenuBar.Width - 50, MenuBar.Y, 50, 35);
+            Minimize = new Rectangle(MenuBar.Width - X.Width - 50, MenuBar.Y, 50, MenuBar.Height);
+            Open = new Rectangle(MenuBar.X, MenuBar.Y, 150, MenuBar.Height);
+            RandomizeGraph = new Rectangle(Open.Width, MenuBar.Y, 150, MenuBar.Height);
+            AddVertex = new Rectangle(RandomizeGraph.X + RandomizeGraph.Width, MenuBar.Y, 150, MenuBar.Height);
+            NewVertexName = new Rectangle(AddVertex.X + AddVertex.Width, MenuBar.Y, 150, MenuBar.Height);
+            GraphArea = new Rectangle(PictureBox1.X, MenuBar.Height, PictureBox1.Width, PictureBox1.Height - MenuBar.Height);
             Vertex = new Rectangle(0, 0, 10, 10);
             VertexArea = new Rectangle(0, 0, 30, 30);
         }

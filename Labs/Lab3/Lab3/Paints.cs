@@ -29,6 +29,7 @@ namespace Lab3
             DrawOpen(e);
             DrawRandomizeGraph(e);
             DrawAddVertex(e);
+            DrawNewVertexName(e);
         }
 
         void PaintStaticAfter(PaintEventArgs e)

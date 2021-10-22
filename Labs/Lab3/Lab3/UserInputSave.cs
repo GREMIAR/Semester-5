@@ -12,8 +12,8 @@ namespace Lab3
     {
         void SetUserInput()
         {
-            userInput.Add("new vertex name", strings.NewVertexName);
-            userInput.Add("new vertex path", strings.NewVertexPaths);
+            userInput.Add(strings.NewVertexName, strings.NewVertexName);
+            userInput.Add(strings.NewVertexPaths, strings.NewVertexPaths);
         }
     }
 }

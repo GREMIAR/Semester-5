@@ -123,9 +123,7 @@ namespace Lab3
         {
            if (MouseInsideRect(rects.AddVertex))
             {
-                AddVertex form = new AddVertex();
-                form.Show();
-                if (true) { }
+                // werfgthymj
             }
         }
 

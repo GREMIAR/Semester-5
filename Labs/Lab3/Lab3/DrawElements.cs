@@ -52,6 +52,14 @@ namespace Lab3
             DrawText(e, strings.BtnAddVertex, colors.Text, rects.AddVertex);
         }
 
+        void DrawNewVertexName(PaintEventArgs e)
+        {
+            DrawTextBox(e, rects.NewVertexName, true);
+            string text;
+            userInput.TryGetValue(strings.NewVertexName, out text);
+            DrawTextInTextBox(e, text, colors.Text, rects.NewVertexName);
+        }
+
         void DrawVertex(PaintEventArgs e, Vertex vertex)
         {
             if (MouseInsideRect(new Rectangle(vertex.Coor.X - rects.VertexArea.Width/2, vertex.Coor.Y - rects.VertexArea.Height/2, rects.VertexArea.Width, rects.VertexArea.Height)))

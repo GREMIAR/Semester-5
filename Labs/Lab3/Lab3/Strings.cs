@@ -33,7 +33,7 @@ namespace Lab3
             this.Lang = lang;
             if (Lang == Language.Russian)
             {
-                SetStrings("Открыть", "Случайное расположение", "Удалить", "Добавить", "<Имя>", "<Путь1,Путь2>");
+                SetStrings("Открыть", "Случайно", "Удалить", "Добавить", "<Имя>mmmmmmmmmmmmmmmmmmmmfssg", "<Путь1,Путь2>");
             }
             else if (Lang == Language.English)
             {

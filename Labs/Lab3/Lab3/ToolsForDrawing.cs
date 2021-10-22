@@ -47,7 +47,77 @@ namespace Lab3
             }
         }
 
+        void DrawTextInTextBox(PaintEventArgs e, string text, Color color, Rectangle area)
+        {
+            bool fitsCompletely = true;
+            if (MouseInsideRect(area))
+            {
+                text.Replace("\r", "");
+                text = text.Split('\n')[0];
 
+                int fits = CharsFitInRect(e, text, area, false);
+                if (fits > 0)
+                {
+                    fitsCompletely = !(fits < text.Length);
+                    if (!fitsCompletely)
+                    {
+                        text = text.Substring(fits + 1, text.Length - fits - 1);
+                    }
+                }
+            }
+            else
+            {
+                text.Replace("\r", "");
+                text = text.Split('\n')[0];
+
+                int fits = CharsFitInRect(e, text, area, true);
+                if (fits>0)
+                {
+                    fitsCompletely = !(fits < text.Length);
+                    text = text.Substring(0, fits);
+                }
+            }
+            if (!fitsCompletely)
+            {
+                text += "...";
+            }
+            SizeF stringSize = e.Graphics.MeasureString(text, new Font("Microsoft Sans Serif", 14));
+            e.Graphics.DrawString(text, new Font("Microsoft Sans Serif", 14), new SolidBrush(color), new Point(area.X + area.Width / 7, area.Height / 2 - (int)stringSize.Height / 2));
+        }
+
+        int CharsFitInRect(PaintEventArgs e, string text, Rectangle rect, bool startFromZero)
+        {
+            SizeF stringSize = e.Graphics.MeasureString(text, new Font("Microsoft Sans Serif", 14));
+            if (stringSize.Width <= rect.Width * 5 / 7)
+            {
+                return text.Length;
+            }
+            if (startFromZero)
+            {
+                for (int i = 0; i < text.Length; i++)
+                {
+                    string newText = text.Substring(0, i) + "...";
+                    stringSize = e.Graphics.MeasureString(newText, new Font("Microsoft Sans Serif", 14));
+                    if (stringSize.Width > rect.Width * 5 / 7)
+                    {
+                        return i;
+                    }
+                }
+            }
+            else
+            {
+                for (int i = text.Length; i >= 0; i--)
+                {
+                    string newText = text.Substring(i, text.Length - i) + "...";
+                    stringSize = e.Graphics.MeasureString(newText, new Font("Microsoft Sans Serif", 14));
+                    if (stringSize.Width > rect.Width * 5 / 7)
+                    {
+                        return i;
+                    }
+                }
+            }
+                return -2;
+        }
 
         void DrawTextBox(PaintEventArgs e, Rectangle x, bool available)
         {
@@ -66,7 +136,7 @@ namespace Lab3
             {
                 e.Graphics.FillRectangle(new SolidBrush(colors.Unavailable), x);
             }
-            e.Graphics.DrawLine(new Pen(colors.Text), new Point(x.X + x.Width / 7, x.Y + rects.MenuBar.Height), new Point(x.X + x.Width * 6 / 7));
+            e.Graphics.DrawLine(new Pen(colors.Text), new Point(x.X + x.Width / 7, x.Y + rects.MenuBar.Height * 6 / 7), new Point(x.X + x.Width * 6 / 7, x.Y + rects.MenuBar.Height * 6 / 7));
         }
     }
 }
