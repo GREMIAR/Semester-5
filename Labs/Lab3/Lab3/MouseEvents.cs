@@ -51,10 +51,8 @@ namespace Lab3
 
         void BtnClicks()
         {
-            X_click();
-            Hide_click();
-            Open_click();
-            RandomizeGraph_click();
+            Menu_click();
+            Graph_click();
         }
 
         void Hide_click()
@@ -86,11 +84,38 @@ namespace Lab3
         {
             if (MouseInsideRect(rects.RandomizeGraph))
             {
-                if (DataTableIsFilled)
+                if (matrix!=null)
                 {
                     RandomizeVertices();
                 }
             }
+        }
+
+        void Graph_click()
+        {
+            if (MouseInsideRect(rects.GraphArea))
+            {
+                if (matrix != null)
+                {
+                    Vertex currentVertex = matrix.NodeFirst;
+                    while(currentVertex != null)
+                    {
+                        if (MouseInsideRect(new Rectangle(currentVertex.Coor.X - rects.VertexArea.Width / 2, currentVertex.Coor.Y - rects.VertexArea.Height / 2, rects.VertexArea.Width, rects.VertexArea.Height)))
+                        {
+                            matrix.Remove(currentVertex);
+                        }
+                        currentVertex = currentVertex.Next;
+                    }
+                }
+            }
+        }
+
+        void Menu_click()
+        {
+            X_click();
+            Hide_click();
+            Open_click();
+            RandomizeGraph_click();
         }
 
     }

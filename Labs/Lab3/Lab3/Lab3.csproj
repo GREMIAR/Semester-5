@@ -50,6 +50,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AddVertex.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AddVertex.Designer.cs">
+      <DependentUpon>AddVertex.cs</DependentUpon>
+    </Compile>
     <Compile Include="Colors.cs" />
     <Compile Include="DrawElements.cs">
       <SubType>Form</SubType>
@@ -81,6 +87,9 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Vertex.cs" />
+    <EmbeddedResource Include="AddVertex.resx">
+      <DependentUpon>AddVertex.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>

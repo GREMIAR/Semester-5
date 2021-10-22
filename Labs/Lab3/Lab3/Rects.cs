@@ -16,6 +16,7 @@ namespace Lab3
         public Rectangle RandomizeGraph { get; set; }
         public Rectangle GraphArea { get; set; }
         public Rectangle Vertex { get; set; }
+        public Rectangle VertexArea { get; set; }
 
         public Rects()
         {
@@ -26,6 +27,7 @@ namespace Lab3
             RandomizeGraph = new Rectangle(Open.Width, 0, 300, X.Height);
             GraphArea = new Rectangle(0, X.Height, PictureBox1.Width, PictureBox1.Height - X.Height);
             Vertex = new Rectangle(0, 0, 10, 10);
+            VertexArea = new Rectangle(0, 0, 30, 30);
         }
     }
 }

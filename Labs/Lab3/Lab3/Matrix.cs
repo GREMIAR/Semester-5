@@ -114,10 +114,24 @@
                 {
                     if (currentVertex.Next==vertex)
                     {
+                        Vertex vrtx = NodeFirst;
+                        while (vrtx != null)
+                        {
+                            foreach (Vertex vertexToRemove in vrtx.GetDirection())
+                            {
+                                if (vertexToRemove == currentVertex.Next)
+                                {
+                                    vrtx.RemoveDirection(vertexToRemove);
+                                }
+                            }
+                            vrtx = vrtx.Next;
+                        }
                         currentVertex.Next = currentVertex.Next.Next;
+                        return;
                     }
                     currentVertex = currentVertex.Next;
                 }
+                
             }
         }
 

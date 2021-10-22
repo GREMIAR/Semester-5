@@ -17,8 +17,6 @@ namespace Lab3
             if (str.Length>0)
             {
                 ReadExcel(str[0]);
-                //dataTable = ReadExcelFile.ReadExcel(str[0].Substring(0, str[0].LastIndexOf('.')), str[0].Substring(str[0].LastIndexOf('.')));
-                DataTableIsFilled = true;
                 RandomizeVertices();
             }
         }
@@ -55,7 +53,6 @@ namespace Lab3
             {
                 ReadExcel(openFileDialog.FileName);
             }
-            DataTableIsFilled = true;
             RandomizeVertices();
         }
 

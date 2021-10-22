@@ -26,6 +26,11 @@ namespace Lab3
             return false;
         }
 
+        public void RemoveDirection(Vertex vertex)
+        {
+            directions.Remove(vertex);
+        }
+
         public Vertex[] GetDirection()
         {
             return directions.ToArray();

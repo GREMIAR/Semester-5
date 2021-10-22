@@ -23,11 +23,11 @@ namespace Lab3
 
         void PaintDynamic(PaintEventArgs e)
         {
+            DrawGraph(e);
             DrawX(e);
             DrawMinimize(e);
             DrawOpen(e);
             DrawRandomizeGraph(e);
-            DrawGraph(e);
         }
 
         void PaintStaticAfter(PaintEventArgs e)

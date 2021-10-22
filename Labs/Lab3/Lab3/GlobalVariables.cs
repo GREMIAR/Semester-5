@@ -19,7 +19,6 @@ namespace Lab3
         bool movingWindow { get; set; }
         bool MouseIsDown { get; set; }
         Point mouseDownCoords { get; set; }
-        bool DataTableIsFilled { get; set; }
 
 
         void SetStartValues()
