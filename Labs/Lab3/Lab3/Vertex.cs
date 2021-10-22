@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Drawing;
 
 namespace Lab3
 {
@@ -7,6 +8,7 @@ namespace Lab3
         List<Vertex> directions;
         public string Name { get; set; }
         public Vertex Next { get; set; }
+        public Point Coor { get; set; }
         public void AddDirection(Vertex vertex)
         {
             directions.Add(vertex);
@@ -23,7 +25,6 @@ namespace Lab3
             }
             return false;
         }
-
         public Vertex(string name)
         {
             directions = new List<Vertex>();
