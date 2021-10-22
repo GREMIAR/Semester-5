@@ -32,7 +32,9 @@ namespace Lab3
             openFileDialog.Filter = "|*.xlsx;*.xls";
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
-                dataTable = ReadExcelFile.ReadExcel(openFileDialog.FileName.Substring(0, openFileDialog.FileName.LastIndexOf('.')), openFileDialog.FileName.Substring(openFileDialog.FileName.LastIndexOf('.')));
+                string filename = openFileDialog.FileName.Substring(0, openFileDialog.FileName.LastIndexOf('.'));
+                string ext = openFileDialog.FileName.Substring(openFileDialog.FileName.LastIndexOf('.'));
+                dataTable = ReadExcelFile.ReadExcel(filename, ext);
             }
             DataTableIsFilled = true;
             RandomizeVertices();

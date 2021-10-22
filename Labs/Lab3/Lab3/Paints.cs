@@ -19,7 +19,6 @@ namespace Lab3
         void PaintStaticBefore(PaintEventArgs e)
         {
             DrawBackground(e);
-            DrawGraph(e);
         }
 
         void PaintDynamic(PaintEventArgs e)
@@ -28,6 +27,7 @@ namespace Lab3
             DrawMinimize(e);
             DrawOpen(e);
             DrawRandomizeGraph(e);
+            DrawGraph(e);
         }
 
         void PaintStaticAfter(PaintEventArgs e)

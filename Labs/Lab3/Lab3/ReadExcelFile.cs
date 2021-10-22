@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.OleDb;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,7 +13,7 @@ namespace Lab3
     {
         public static DataTable ReadExcel(string fileName, string fileExt)
         {
-            string conn = string.Empty;
+            string conn = string.Empty; // эта ерунда не работает
             DataTable dtexcel = new DataTable();
             if (fileExt.CompareTo(".xls") == 0)
                 conn = @"provider=Microsoft.Jet.OLEDB.4.0;Data Source=" + fileName + ";Extended Properties='Excel 8.0;HRD=Yes;IMEX=1';"; //for below excel 2007  

@@ -46,9 +46,9 @@ namespace Lab3
 
         }
 
-        void DrawVertex(PaintEventArgs e)
+        void DrawVertex(PaintEventArgs e, Point location)
         {
-            e.Graphics.FillEllipse(new SolidBrush(colors.Vertex), rects.Vertex);
+            e.Graphics.FillEllipse(new SolidBrush(colors.Vertex), location.X, location.Y, rects.Vertex.Width, rects.Vertex.Height);
         }
 
         void DrawEdge(PaintEventArgs e)
@@ -58,7 +58,14 @@ namespace Lab3
 
         void DrawGraph(PaintEventArgs e)
         {
-            // vertices must be randomized
+            // edges first
+
+
+            //then vertices
+            for (int i = 0; i < vertices.Count; i++)
+            {
+                DrawVertex(e, vertices[i]);
+            }
         }
 
     }
