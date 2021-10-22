@@ -28,7 +28,7 @@ namespace Lab3
             return false;
         }
 
-        void Applyrects()
+        void SetLocAndSizeOfPB()
         {
             pictureBox1.Location = new Point(rects.PictureBox1.X, rects.PictureBox1.Y);
             pictureBox1.Width = rects.PictureBox1.Width;

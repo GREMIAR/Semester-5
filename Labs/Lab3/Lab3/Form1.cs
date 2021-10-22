@@ -11,7 +11,6 @@ namespace Lab3
     {
         public Form1(string[] str)
         {
-            DataTable dataTable;
             InitializeComponent();
             /*if (str.Length>0)
             {
@@ -34,10 +33,7 @@ namespace Lab3
 
         private void Form1_Shown(object sender, EventArgs e)
         {
-            rects = new Rects();
-            Applyrects();
-            ResetMouseCoords();
-            colors.ApplyColorScheme(Colors.ColorScheme.Default);
+            SetStartValues();
             pictureBox1.Refresh();
         }
     }

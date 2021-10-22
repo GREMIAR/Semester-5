@@ -19,7 +19,7 @@ namespace Lab3
             PictureBox1 = new Rectangle(0, 0, 1000, 650);
             X = new Rectangle(PictureBox1.Width - 50, 0, 50, 35);
             Minimize = new Rectangle(PictureBox1.Width - 100, 0, 50, 35);
-            Open = new Rectangle(0, 0, 200, 35);
+            Open = new Rectangle(0, 0, 150, 35);
             
         }
     }

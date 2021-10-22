@@ -23,9 +23,7 @@ namespace Lab3
 
         void DrawText(PaintEventArgs e, string text, Color color, Rectangle area)
         {
-            e.Graphics.DrawRectangle(new Pen(color), area);
             Point areaCenter = new Point(area.X + area.Width / 2, area.Y + area.Height / 2);
-
             text.Replace("\r", "");
             string[] line = text.Split('\n');
             int lineHeight = 25;
@@ -38,7 +36,6 @@ namespace Lab3
                 {
                     y -= lineHeight / 2;
                 }
-
                 e.Graphics.DrawString(line[i], new Font("Microsoft Sans Serif", 14), new SolidBrush(color), new Point((int)(areaCenter.X - stringSize.Width / 2), y));
             }
         }

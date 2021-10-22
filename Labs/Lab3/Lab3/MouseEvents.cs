@@ -28,10 +28,11 @@ namespace Lab3
                 MouseIsDown = true;
                 mouseDownCoords = e.Location;
                 MoveWindowStart();
-                X_click();
-                Hide_click();
+                BtnClicks();
             }
         }
+
+
 
         private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
         {
@@ -46,6 +47,13 @@ namespace Lab3
             pictureBox1.Refresh();
         }
 
+
+        void BtnClicks()
+        {
+            X_click();
+            Hide_click();
+            Open_click();
+        }
 
         void Hide_click()
         {
@@ -63,6 +71,19 @@ namespace Lab3
             }
         }
 
+
+        void Open_click()
+        {
+            if (MouseInsideRect(rects.Open))
+            {
+                OpenFileDialog openFileDialog = new OpenFileDialog();
+                openFileDialog.Filter = "|*.xlsx;.xls";
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    dataTable = ReadExcelFile.ReadExcel(openFileDialog.FileName.Substring(0, openFileDialog.FileName.LastIndexOf('.')), openFileDialog.FileName.Substring(openFileDialog.FileName.LastIndexOf('.')));
+                }
+            }
+        }
 
     }
 }

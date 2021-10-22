@@ -43,7 +43,7 @@ namespace Lab3
         void DrawOpen(PaintEventArgs e)
         {
             DrawBtn(e, rects.Open);
-            DrawText(e, "Открыть", colors.Text, new Rectangle(50, 100, 500, 300));
+            DrawText(e, strings.BtnOpen, colors.Text, rects.Open);
         }
 
     }

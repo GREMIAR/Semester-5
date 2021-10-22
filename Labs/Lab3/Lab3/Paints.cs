@@ -19,7 +19,6 @@ namespace Lab3
         void PaintStaticBefore(PaintEventArgs e)
         {
             DrawBackground(e);
-
         }
 
         void PaintDynamic(PaintEventArgs e)
