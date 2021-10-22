@@ -29,10 +29,11 @@ namespace Lab3
             matrix = new Matrix(fullFile[0].Split(' ').Skip(1).ToArray());
             for (int i=1;i< fullFile.Length;i++)
             {
-                string vertex = fullFile[i].Split(' ')[0];
+                string[] line = fullFile[i].Split(' ');
+                string vertex = line[0];
                 for (int f=1;f<=matrix.Size();f++)
                 {
-                    if (fullFile[i].Split(' ')[f]=="1")
+                    if (line[f]=="1")
                     {
                         matrix.SetDirection(vertex,matrix.GetVertex(f));
                     }
