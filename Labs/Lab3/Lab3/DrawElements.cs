@@ -11,7 +11,7 @@ namespace Lab3
     {
         void DrawMinimize(PaintEventArgs e)
         {
-            DrawBtn(e, rects.Minimize);
+            DrawBtn(e, rects.Minimize, true);
             e.Graphics.DrawLine(new Pen(colors.Edge, 1), new Point(rects.Minimize.X + rects.Minimize.Width / 4, rects.Minimize.Y + rects.Minimize.Height * 3 / 4), new Point(rects.Minimize.X + rects.Minimize.Width * 3 / 4, rects.Minimize.Y + rects.Minimize.Height * 3 / 4));
         }
 
@@ -27,23 +27,38 @@ namespace Lab3
 
         void DrawX(PaintEventArgs e)
         {
+            DrawBtn(e, rects.X, true);
             Rectangle x = rects.X;
-            if (MouseInsideRect(x))
-            {
-                e.Graphics.FillRectangle(new SolidBrush(colors.Select), x);
-            }
-            else
-            {
-                e.Graphics.FillRectangle(new SolidBrush(colors.Background), x);
-            }
             e.Graphics.DrawLine(new Pen(colors.Edge, 1), new Point(x.X + x.Width / 4, x.Y + x.Height / 4), new Point(x.X + x.Width * 3 / 4, x.Y + x.Height * 3 / 4));
             e.Graphics.DrawLine(new Pen(colors.Edge, 1), new Point(x.X + x.Width * 3 / 4, x.Y + x.Height / 4), new Point(x.X + x.Width / 4, x.Y + x.Height * 3 / 4));
         }
 
         void DrawOpen(PaintEventArgs e)
         {
-            DrawBtn(e, rects.Open);
+            DrawBtn(e, rects.Open, true);
             DrawText(e, strings.BtnOpen, colors.Text, rects.Open);
+        }
+
+        void DrawRandomizeGraph(PaintEventArgs e)
+        {
+            DrawBtn(e, rects.RandomizeGraph, DataTableIsFilled);
+            DrawText(e, strings.BtnRandomizeGraph, colors.Text, rects.RandomizeGraph);
+
+        }
+
+        void DrawVertex(PaintEventArgs e)
+        {
+            e.Graphics.FillEllipse(new SolidBrush(colors.Vertex), rects.Vertex);
+        }
+
+        void DrawEdge(PaintEventArgs e)
+        {
+
+        }
+
+        void DrawGraph(PaintEventArgs e)
+        {
+            // vertices must be randomized
         }
 
     }

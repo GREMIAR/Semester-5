@@ -17,9 +17,11 @@ namespace Lab3
         public Color Vertex { get; private set; }
         public Color Text { get; private set; }
         public Color Select { get; private set; }
+        public Color GraphArea { get; private set; }
+        public Color Unavailable { get; private set; }
 
 
-        private void SetColors(Color background, Color frame, Color edge, Color vertex, Color text, Color select)
+        private void SetColors(Color background, Color frame, Color edge, Color vertex, Color text, Color select, Color graphArea, Color unavailable)
         {
             this.Background = background;
             this.Frame = frame;
@@ -27,6 +29,8 @@ namespace Lab3
             this.Vertex = vertex;
             this.Text = text;
             this.Select = select;
+            this.GraphArea = graphArea;
+            this.Unavailable = unavailable;
         }
 
         public void ApplyColorScheme(ColorScheme theme)
@@ -34,7 +38,7 @@ namespace Lab3
             this.Theme = theme;
             if (Theme == ColorScheme.Default)
             {
-                SetColors(Color.Black, Color.Gray, Color.White, Color.White, Color.Coral, Color.FromArgb(55, 55, 55));
+                SetColors(Color.Black, Color.Gray, Color.White, Color.White, Color.Coral, Color.FromArgb(55, 55, 55), Color.Black, Color.FromArgb(25, 25, 25));
             }
         }
     }

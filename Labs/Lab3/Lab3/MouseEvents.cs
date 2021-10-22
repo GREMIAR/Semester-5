@@ -29,6 +29,7 @@ namespace Lab3
                 mouseDownCoords = e.Location;
                 MoveWindowStart();
                 BtnClicks();
+                pictureBox1.Refresh();
             }
         }
 
@@ -53,6 +54,7 @@ namespace Lab3
             X_click();
             Hide_click();
             Open_click();
+            RandomizeGraph_click();
         }
 
         void Hide_click()
@@ -76,11 +78,17 @@ namespace Lab3
         {
             if (MouseInsideRect(rects.Open))
             {
-                OpenFileDialog openFileDialog = new OpenFileDialog();
-                openFileDialog.Filter = "|*.xlsx;.xls";
-                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                OpenViaDialog();
+            }
+        }
+
+        void RandomizeGraph_click()
+        {
+            if (MouseInsideRect(rects.RandomizeGraph))
+            {
+                if (DataTableIsFilled)
                 {
-                    dataTable = ReadExcelFile.ReadExcel(openFileDialog.FileName.Substring(0, openFileDialog.FileName.LastIndexOf('.')), openFileDialog.FileName.Substring(openFileDialog.FileName.LastIndexOf('.')));
+                    RandomizeVertices();
                 }
             }
         }

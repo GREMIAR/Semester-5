@@ -9,15 +9,22 @@ namespace Lab3
 {
     public partial class Form1
     {
-        void DrawBtn(PaintEventArgs e, Rectangle x)
+        void DrawBtn(PaintEventArgs e, Rectangle x, bool available)
         {
-            if (MouseInsideRect(x))
+            if (available)
             {
-                e.Graphics.FillRectangle(new SolidBrush(colors.Select), x);
+                if (MouseInsideRect(x))
+                {
+                    e.Graphics.FillRectangle(new SolidBrush(colors.Select), x);
+                }
+                else
+                {
+                    e.Graphics.FillRectangle(new SolidBrush(colors.Background), x);
+                }
             }
             else
             {
-                e.Graphics.FillRectangle(new SolidBrush(colors.Background), x);
+                e.Graphics.FillRectangle(new SolidBrush(colors.Unavailable), x);
             }
         }
 
