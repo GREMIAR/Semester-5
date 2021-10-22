@@ -15,7 +15,6 @@ namespace Lab3
         Strings strings;
         Rects rects;
         Random rnd;
-        List<Point> vertices;
         Point mouseCoords { get; set; }
         bool movingWindow { get; set; }
         bool MouseIsDown { get; set; }
@@ -34,7 +33,6 @@ namespace Lab3
             colors = new Colors();
             strings = new Strings();
             rects = new Rects();
-            vertices = new List<Point>();
             rnd = new Random();
         }
 

@@ -25,7 +25,7 @@ namespace Lab3
             Open = new Rectangle(0, 0, 150, X.Height);
             RandomizeGraph = new Rectangle(Open.Width, 0, 300, X.Height);
             GraphArea = new Rectangle(0, X.Height, PictureBox1.Width, PictureBox1.Height - X.Height);
-            Vertex = new Rectangle(0, 0, 5, 5);
+            Vertex = new Rectangle(0, 0, 10, 10);
         }
     }
 }

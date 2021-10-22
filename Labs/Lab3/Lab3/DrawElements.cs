@@ -60,6 +60,19 @@ namespace Lab3
         {
             // edges first
 
+            Vertex vertex = matrix.NodeFirst;
+            while(vertex != null)
+            {
+                vertex.FindDirection
+                vertex = vertex.Next;
+            }
+
+
+
+            for (int column = 0; column < matrix.Size(); column++)
+            {
+                vertex.FindDirection
+            }
 
             //then vertices
             for (int i = 0; i < vertices.Count; i++)

@@ -61,9 +61,11 @@ namespace Lab3
 
         void RandomizeVertices()
         {
-            for (int i = 0; i < dataTable.Rows.Count; i++)
+            Vertex vertex = matrix.NodeFirst;
+            while(vertex != null)
             {
-                vertices.Add(new Point(rnd.Next(rects.GraphArea.X, rects.GraphArea.X + rects.GraphArea.Width), rnd.Next(rects.GraphArea.Y, rects.GraphArea.Y + rects.GraphArea.Height)));
+                vertex.Coor = new Point(rnd.Next(rects.GraphArea.X, rects.GraphArea.X + rects.GraphArea.Width), rnd.Next(rects.GraphArea.Y, rects.GraphArea.Y + rects.GraphArea.Height));
+                vertex = vertex.Next;
             }
         }
     }
