@@ -117,7 +117,20 @@
                 Vertex currentVertex = NodeFirst;
                 if(NodeFirst==vertex)
                 {
+                    currentVertex = currentVertex.Next;
+                    while (currentVertex != null)
+                    {
+                        foreach (Vertex vertexToRemove in currentVertex.GetDirection())
+                        {
+                            if (vertexToRemove == NodeFirst)
+                            {
+                                currentVertex.RemoveDirection(NodeFirst);
+                            }
+                        }
+                        currentVertex = currentVertex.Next;
+                    }
                     NodeFirst = NodeFirst.Next;
+                    return;
                 }
                 while (currentVertex.Next != null)
                 {
