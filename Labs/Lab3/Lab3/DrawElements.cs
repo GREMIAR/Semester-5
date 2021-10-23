@@ -69,13 +69,13 @@ namespace Lab3
             if (MouseInsideRect(new Rectangle(vertex.Coor.X - rects.VertexArea.Width/2, vertex.Coor.Y - rects.VertexArea.Height/2, rects.VertexArea.Width, rects.VertexArea.Height)))
             {
                 e.Graphics.FillEllipse(new SolidBrush(colors.VertexSelect), vertex.Coor.X - rects.Vertex.Width / 2, vertex.Coor.Y - rects.Vertex.Height / 2, rects.Vertex.Width, rects.Vertex.Height);
-                SizeF stringSize = e.Graphics.MeasureString(strings.DeleteVertex + " " + vertex.Name, new Font("Microsoft Sans Serif", 14));
+                SizeF stringSize = e.Graphics.MeasureString(strings.DeleteVertex + " " + vertex.Name, ourFont);
                 DrawText(e, strings.DeleteVertex + " " + vertex.Name, colors.Text, new Rectangle(mouseCoords.X - (int)stringSize.Width/2, mouseCoords.Y - (int)stringSize.Height - 5, (int)stringSize.Width, (int)stringSize.Height));
             }
             else
             {
                 e.Graphics.FillEllipse(new SolidBrush(colors.Vertex), vertex.Coor.X - rects.Vertex.Width/2, vertex.Coor.Y - rects.Vertex.Height / 2, rects.Vertex.Width, rects.Vertex.Height);
-                SizeF stringSize = e.Graphics.MeasureString(vertex.Name, new Font("Microsoft Sans Serif", 14));
+                SizeF stringSize = e.Graphics.MeasureString(vertex.Name, ourFont);
                 DrawText(e, vertex.Name, colors.Text, new Rectangle(vertex.Coor.X - (int)stringSize.Width / 2, vertex.Coor.Y - (int)stringSize.Height - 5, (int)stringSize.Width, (int)stringSize.Height));
             }
         }

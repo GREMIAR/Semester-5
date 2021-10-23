@@ -15,6 +15,7 @@ namespace Lab3
         Strings strings;
         Rects rects;
         Random rnd;
+        Font ourFont { get; set; }
         Point mouseCoords { get; set; }
         bool movingWindow { get; set; }
         bool MouseIsDown { get; set; }
@@ -29,6 +30,7 @@ namespace Lab3
 
         void SetFirstStartValues()
         {
+            ourFont = new Font("Comic Sans MS", 14);
             colors = new Colors();
             strings = new Strings();
             rects = new Rects();

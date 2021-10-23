@@ -36,14 +36,14 @@ namespace Lab3
             int lineHeight = 25;
             for (int i = 0; i < line.Length; i++)
             {
-                SizeF stringSize = e.Graphics.MeasureString(line[i], new Font("Microsoft Sans Serif", 14));
+                SizeF stringSize = e.Graphics.MeasureString(line[i], ourFont);
                 int middleLineIndex = (int)Math.Round((double)line.Length / 2, MidpointRounding.AwayFromZero);
                 int y = areaCenter.Y + (i + 1 - middleLineIndex) * lineHeight - lineHeight / 2;
                 if (line.Length % 2 == 0)
                 {
                     y -= lineHeight / 2;
                 }
-                e.Graphics.DrawString(line[i], new Font("Microsoft Sans Serif", 14), new SolidBrush(color), new Point((int)(areaCenter.X - stringSize.Width / 2), y));
+                e.Graphics.DrawString(line[i], ourFont, new SolidBrush(color), new Point((int)(areaCenter.X - stringSize.Width / 2), y));
             }
         }
 
@@ -81,13 +81,13 @@ namespace Lab3
             {
                 text += "...";
             }
-            SizeF stringSize = e.Graphics.MeasureString(text, new Font("Microsoft Sans Serif", 14));
-            e.Graphics.DrawString(text, new Font("Microsoft Sans Serif", 14), new SolidBrush(color), new Point(area.X + area.Width / 7, area.Y + area.Height / 2 - (int)stringSize.Height / 2));
+            SizeF stringSize = e.Graphics.MeasureString(text, ourFont);
+            e.Graphics.DrawString(text, ourFont, new SolidBrush(color), new Point(area.X + area.Width / 7, area.Y + area.Height / 2 - (int)stringSize.Height / 2));
         }
 
         int CharsFitInRect(PaintEventArgs e, string text, Rectangle rect, bool startFromZero)
         {
-            SizeF stringSize = e.Graphics.MeasureString(text, new Font("Microsoft Sans Serif", 14));
+            SizeF stringSize = e.Graphics.MeasureString(text, ourFont);
             if (stringSize.Width <= rect.Width * 5 / 7)
             {
                 return text.Length;
@@ -97,7 +97,7 @@ namespace Lab3
                 for (int i = 0; i < text.Length; i++)
                 {
                     string newText = text.Substring(0, i) + "...";
-                    stringSize = e.Graphics.MeasureString(newText, new Font("Microsoft Sans Serif", 14));
+                    stringSize = e.Graphics.MeasureString(newText, ourFont);
                     if (stringSize.Width > rect.Width * 5 / 7)
                     {
                         return i;
@@ -109,7 +109,7 @@ namespace Lab3
                 for (int i = text.Length; i >= 0; i--)
                 {
                     string newText = text.Substring(i, text.Length - i) + "...";
-                    stringSize = e.Graphics.MeasureString(newText, new Font("Microsoft Sans Serif", 14));
+                    stringSize = e.Graphics.MeasureString(newText, ourFont);
                     if (stringSize.Width > rect.Width * 5 / 7)
                     {
                         return i;
