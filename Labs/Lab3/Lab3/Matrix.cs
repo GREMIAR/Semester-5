@@ -117,7 +117,7 @@
                 Vertex currentVertex = NodeFirst;
                 if(NodeFirst==vertex)
                 {
-                    NodeFirst = null;
+                    NodeFirst = NodeFirst.Next;
                 }
                 while (currentVertex.Next != null)
                 {
