@@ -110,49 +110,32 @@
         {
             Remove(SearchVertex(nameVertex));
         }
+
+        void RemoveDirections(Vertex vertex, Vertex directionToRemove)
+        {
+            foreach (Vertex direction in vertex.GetDirection())
+            {
+                if (direction == directionToRemove)
+                {
+                    vertex.RemoveDirection(direction);
+                }
+            }
+        }
         public void Remove(Vertex vertexToRemove)
         {
             Vertex currentVertex = NodeFirst;
-            if (currentVertex != null)
+            while (currentVertex != null)
             {
-                if(currentVertex==vertexToRemove)
+                if (vertexToRemove == NodeFirst)
                 {
-                    while (currentVertex != null)
-                    {
-                        foreach (Vertex direction in currentVertex.GetDirection())
-                        {
-                            if (direction == vertexToRemove)
-                            {
-                                currentVertex.RemoveDirection(direction);
-                            }
-                        }
-                        currentVertex = currentVertex.Next;
-                    }
                     NodeFirst = NodeFirst.Next;
-                    return;
                 }
-                while (currentVertex.Next != null)
+                else if (currentVertex.Next == vertexToRemove)
                 {
-                    if (currentVertex.Next==vertexToRemove)
-                    {
-                        Vertex vrtx = NodeFirst;
-                        while (vrtx != null)
-                        {
-                            foreach (Vertex direction in vrtx.GetDirection())
-                            {
-                                if (direction == vertexToRemove)
-                                {
-                                    vrtx.RemoveDirection(vertexToRemove);
-                                }
-                            }
-                            vrtx = vrtx.Next;
-                        }
-                        currentVertex.Next = currentVertex.Next.Next;
-                        return;
-                    }
-                    currentVertex = currentVertex.Next;
+                    currentVertex.Next = currentVertex.Next.Next;
                 }
-                
+                this.RemoveDirections(currentVertex, vertexToRemove);
+                currentVertex = currentVertex.Next;
             }
         }
 
