@@ -121,18 +121,17 @@ namespace Lab3
 
         void AddVertex_click()
         {
-           if (MouseInsideRect(rects.AddVertex))
+            if (MouseInsideRect(rects.AddVertex))
             {
                 if (matrix == null)
                 {
                     matrix = new Matrix();
-                    // все равно сломано
                 }
                 string name = userInput[strings.NewVertexName];
                 string paths = userInput[strings.NewVertexPaths];
                 if (!matrix.SearchVertexName(name))
                 {
-                    matrix.AddVertext(name);
+                    matrix.AddVertext(name).Coor = new Point(rnd.Next(rects.GraphArea.X, rects.GraphArea.X + rects.GraphArea.Width), rnd.Next(rects.GraphArea.Y, rects.GraphArea.Y + rects.GraphArea.Height));
                 }
                 string[] pathsArr = paths.Split(',');
                 foreach(string path in pathsArr)
@@ -142,6 +141,7 @@ namespace Lab3
                         matrix.SetDirection(name, path);
                     }
                 }
+                pictureBox1.Refresh();
             }
         }
 

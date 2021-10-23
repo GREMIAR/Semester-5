@@ -84,7 +84,7 @@
             }
         }
 
-        public void AddVertext(string newVertex)
+        public Vertex AddVertext(string newVertex)
         {
             if (NodeFirst != null)
             {
@@ -93,11 +93,11 @@
                 {
                     currentVertex = currentVertex.Next;
                 }
-                currentVertex.Next = (new Vertex(newVertex));
+                return currentVertex.Next = (new Vertex(newVertex));
             }
             else
             {
-                NodeFirst = new Vertex(newVertex);
+                return NodeFirst = new Vertex(newVertex);
             }
         }
 

@@ -15,12 +15,12 @@ namespace Lab3
             InitializeComponent();
             if (str.Length>0)
             {
-                ReadExcel(str[0]);
+                ReadFile(str[0]);
                 RandomizeVertices();
             }
         }
 
-        public void ReadExcel(string fileName)
+        public void ReadFile(string fileName)
         {
             string[] fullFile = File.ReadAllLines(fileName);
             matrix = new Matrix(fullFile[0].Split(' ').Skip(1).ToArray());
@@ -50,7 +50,7 @@ namespace Lab3
             openFileDialog.Filter = "|*.txt";
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
-                ReadExcel(openFileDialog.FileName);
+                ReadFile(openFileDialog.FileName);
             }
             RandomizeVertices();
         }
