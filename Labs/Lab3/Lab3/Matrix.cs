@@ -110,21 +110,20 @@
         {
             Remove(SearchVertex(nameVertex));
         }
-        public void Remove(Vertex vertex)
+        public void Remove(Vertex vertexToRemove)
         {
-            if (NodeFirst != null)
+            Vertex currentVertex = NodeFirst;
+            if (currentVertex != null)
             {
-                Vertex currentVertex = NodeFirst;
-                if(NodeFirst==vertex)
+                if(currentVertex==vertexToRemove)
                 {
-                    currentVertex = currentVertex.Next;
                     while (currentVertex != null)
                     {
-                        foreach (Vertex vertexToRemove in currentVertex.GetDirection())
+                        foreach (Vertex direction in currentVertex.GetDirection())
                         {
-                            if (vertexToRemove == NodeFirst)
+                            if (direction == vertexToRemove)
                             {
-                                currentVertex.RemoveDirection(NodeFirst);
+                                currentVertex.RemoveDirection(direction);
                             }
                         }
                         currentVertex = currentVertex.Next;
@@ -134,14 +133,14 @@
                 }
                 while (currentVertex.Next != null)
                 {
-                    if (currentVertex.Next==vertex)
+                    if (currentVertex.Next==vertexToRemove)
                     {
                         Vertex vrtx = NodeFirst;
                         while (vrtx != null)
                         {
-                            foreach (Vertex vertexToRemove in vrtx.GetDirection())
+                            foreach (Vertex direction in vrtx.GetDirection())
                             {
-                                if (vertexToRemove == currentVertex.Next)
+                                if (direction == vertexToRemove)
                                 {
                                     vrtx.RemoveDirection(vertexToRemove);
                                 }
