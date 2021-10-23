@@ -95,6 +95,10 @@
                 }
                 currentVertex.Next = (new Vertex(newVertex));
             }
+            else
+            {
+                NodeFirst = new Vertex(newVertex);
+            }
         }
 
         public Matrix()
