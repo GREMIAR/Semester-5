@@ -32,7 +32,8 @@ namespace Lab3
             RandomizeGraph = new Rectangle(Open.Width, MenuBar.Y, 150, MenuBar.Height);
             AddVertex = new Rectangle(RandomizeGraph.X + RandomizeGraph.Width, MenuBar.Y, 150, MenuBar.Height);
             NewVertexName = new Rectangle(AddVertex.X + AddVertex.Width, MenuBar.Y, 150, MenuBar.Height);
-            GraphArea = new Rectangle(PictureBox1.X, MenuBar.Height, PictureBox1.Width, PictureBox1.Height - MenuBar.Height);
+            NewVertexPaths = new Rectangle(NewVertexName.X + NewVertexName.Width, MenuBar.Y, 150, MenuBar.Height);
+            GraphArea = new Rectangle(PictureBox1.X, MenuBar.Y + MenuBar.Height, PictureBox1.Width, PictureBox1.Height - MenuBar.Height);
             Vertex = new Rectangle(0, 0, 10, 10);
             VertexArea = new Rectangle(0, 0, 30, 30);
         }

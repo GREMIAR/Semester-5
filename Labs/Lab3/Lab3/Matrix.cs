@@ -3,7 +3,7 @@
     class Matrix
     {
         public Vertex NodeFirst { get; set; }
-        bool SearchVertexName(string name)
+        public bool SearchVertexName(string name)
         {
             if (NodeFirst != null)
             {
@@ -95,6 +95,11 @@
                 }
                 currentVertex.Next = (new Vertex(newVertex));
             }
+        }
+
+        public Matrix()
+        {
+
         }
 
         public void Remove(string nameVertex)

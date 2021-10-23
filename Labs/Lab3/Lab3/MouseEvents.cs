@@ -109,7 +109,7 @@ namespace Lab3
 
         void Menu_click()
         {
-            if (MouseInsideRect(new Rectangle(0,0, pictureBox1.Width, rects.X.Height)))
+            if (MouseInsideRect(new Rectangle(rects.MenuBar.X,rects.MenuBar.Y, rects.MenuBar.X + rects.MenuBar.Width, rects.MenuBar.Y + rects.MenuBar.Height)))
             { 
                 X_click();
                 Hide_click();
@@ -123,7 +123,25 @@ namespace Lab3
         {
            if (MouseInsideRect(rects.AddVertex))
             {
-                // werfgthymj
+                if (matrix == null)
+                {
+                    matrix = new Matrix();
+                    // все равно сломано
+                }
+                string name = userInput[strings.NewVertexName];
+                string paths = userInput[strings.NewVertexPaths];
+                if (!matrix.SearchVertexName(name))
+                {
+                    matrix.AddVertext(name);
+                }
+                string[] pathsArr = paths.Split(',');
+                foreach(string path in pathsArr)
+                {
+                    if (!matrix.FindEdge(name, path))
+                    {
+                        matrix.SetDirection(name, path);
+                    }
+                }
             }
         }
 

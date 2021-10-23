@@ -82,7 +82,7 @@ namespace Lab3
                 text += "...";
             }
             SizeF stringSize = e.Graphics.MeasureString(text, new Font("Microsoft Sans Serif", 14));
-            e.Graphics.DrawString(text, new Font("Microsoft Sans Serif", 14), new SolidBrush(color), new Point(area.X + area.Width / 7, area.Height / 2 - (int)stringSize.Height / 2));
+            e.Graphics.DrawString(text, new Font("Microsoft Sans Serif", 14), new SolidBrush(color), new Point(area.X + area.Width / 7, area.Y + area.Height / 2 - (int)stringSize.Height / 2));
         }
 
         int CharsFitInRect(PaintEventArgs e, string text, Rectangle rect, bool startFromZero)

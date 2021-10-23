@@ -15,6 +15,7 @@ namespace Lab3
             if (true)
             {
                 NewVertexName_keypress(e);
+                NewVertexPaths_keypress(e);
             }
             pictureBox1.Refresh();
         }
@@ -32,7 +33,7 @@ namespace Lab3
                         userInput[userInputKey] = str.Substring(0, str.Length - 1);
                     }
                 }
-                else if (Char.IsLetterOrDigit(e.KeyChar))
+                else if (Char.IsLetterOrDigit(e.KeyChar) || e.KeyChar == ',')
                 {
                     userInput[userInputKey] += e.KeyChar;
                 }
@@ -43,6 +44,12 @@ namespace Lab3
         void NewVertexName_keypress(KeyPressEventArgs e)
         {
             Typing(e, rects.NewVertexName, strings.NewVertexName);
+        }
+
+
+        void NewVertexPaths_keypress(KeyPressEventArgs e)
+        {
+            Typing(e, rects.NewVertexPaths, strings.NewVertexPaths);
         }
     }
 }

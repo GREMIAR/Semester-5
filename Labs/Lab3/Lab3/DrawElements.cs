@@ -55,9 +55,13 @@ namespace Lab3
         void DrawNewVertexName(PaintEventArgs e)
         {
             DrawTextBox(e, rects.NewVertexName, true);
-            string text;
-            userInput.TryGetValue(strings.NewVertexName, out text);
-            DrawTextInTextBox(e, text, colors.Text, rects.NewVertexName);
+            DrawTextInTextBox(e, userInput[strings.NewVertexName], colors.Text, rects.NewVertexName);
+        }
+
+        void DrawNewVertexPaths(PaintEventArgs e)
+        {
+            DrawTextBox(e, rects.NewVertexPaths, true);
+            DrawTextInTextBox(e, userInput[strings.NewVertexPaths], colors.Text, rects.NewVertexPaths);
         }
 
         void DrawVertex(PaintEventArgs e, Vertex vertex)
