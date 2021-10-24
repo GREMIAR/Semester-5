@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.lab5">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.Lab5">
+        <activity
+            android:name=".SurfaceViewTest"
+            android:exported="true" />
+        <activity
+            android:name=".FontTest"
+            android:exported="true" />
+        <activity
+            android:name=".BitmapTest"
+            android:exported="true" />
+        <activity
+            android:name=".ShapeTest"
+            android:exported="true" />
+        <activity
+            android:name=".RenderViewTest"
+            android:exported="true" />
+        <activity
+            android:name=".FullScreenTest"
+            android:exported="true" />
+        <activity
+            android:name=".MediaPlayerTest"
+            android:exported="true" />
+        <activity
+            android:name=".SoundPoolTest"
+            android:exported="true" />
+        <activity
+            android:name=".ExternalStorageTest"
+            android:exported="true" />
+        <activity
+            android:name=".AssetsTest"
+            android:exported="true" />
+        <activity
+            android:name=".AccelerometerTest"
+            android:exported="true" />
+        <activity
+            android:name=".KeyTest"
+            android:exported="true" />
+        <activity
+            android:name=".MultiTouchTest"
+            android:exported="true" />
+        <activity
+            android:name=".SingleTouchTest"
+            android:exported="true" />
+        <activity
+            android:name=".LifeCycleTest"
+            android:exported="true" />
+        <activity
+            android:name=".AndroidBasicsStarter"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>
