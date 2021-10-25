@@ -24,19 +24,19 @@ public class BitmapTest extends Activity {
             try {
                 AssetManager assetManager = context.getAssets();
                 InputStream inputStream =
-                        assetManager.open("bobrgb888.png");
+                        assetManager.open("Cat.png");
                 bob565 = BitmapFactory.decodeStream(inputStream);
                 inputStream.close();
                 Log.d("BitmapText",
-                        "bobrgb888.png format: " + bob565.getConfig());
-                inputStream = assetManager.open("bobargb8888.png");
+                        "Cat.png format: " + bob565.getConfig());
+                inputStream = assetManager.open("Cat.png");
                 BitmapFactory.Options options = new BitmapFactory.Options();
                 options.inPreferredConfig = Bitmap.Config.ARGB_4444;
                 bob4444 = BitmapFactory
                         .decodeStream(inputStream, null, options);
                 inputStream.close();
                 Log.d("BitmapText",
-                        "bobargb8888.png format: " + bob4444.getConfig());
+                        "Cat.png format: " + bob4444.getConfig());
             } catch (IOException e) {
                 // Ничего не делаем. На самом деле так нельзя.
             } finally {

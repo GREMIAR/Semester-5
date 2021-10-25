@@ -20,12 +20,12 @@ public class FontTest extends Activity {
             super(context);
             paint = new Paint();
             font = Typeface.createFromAsset(context.getAssets(),
-                    "font.ttf");
+                    "font.TTF");
         }
         protected void onDraw(Canvas canvas) {
-            paint.setColor(Color.YELLOW);
+            paint.setColor(Color.BLACK);
             paint.setTypeface(font);
-            paint.setTextSize(28);
+            paint.setTextSize(74);
             paint.setTextAlign(Paint.Align.CENTER);
             canvas.drawText("This is a test!", canvas.getWidth() / 2, 100,
                     paint);
