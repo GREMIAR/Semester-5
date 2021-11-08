@@ -122,12 +122,8 @@
 
 
 
-	  	</article>';
-	  		echo AddThreeComments();
-	  		echo AddThreeComments();
-	  		echo AddThreeComments();
-	  		echo AddThreeComments();
-
+	  	</article><div id="insertCommits" data-page="0"></div>';
+	  	
 	}
 	else if(isset($_POST["Add"]))
 	{
@@ -146,37 +142,4 @@
 		</article>';
 	}
 
-	function AddThreeComments()
-	{
-		Connect();
-			global $comment;
-			global $link;
-			$sql = "Select text,author FROM comment WHERE id>".$comment;
-			$result = mysqli_query($link, $sql) or die("Ошибка " . mysqli_error($link));
-			$rows = mysqli_num_rows($result);
-		if($rows === 0)
-		{
-			Close();
-			return;
-		}
-		$stringBeg = '<div class="comment"><p style="size=14px;font-weight: bold;">';
-		$stringMid = '</p><p>';
-		$stringEnd = '</p></div>';
-		$stringMain = '';
-		for($i=0;$i<=$rows-1;$i++)
-		{
-			if($i==3)
-			{
-				break;
-			}
-			$row = mysqli_fetch_row($result);
-			$stringMain .= $stringBeg;
-			$stringMain .= $row[1];
-			$stringMain .= $stringMid;
-			$stringMain .= $row[0];
-			$stringMain .= $stringEnd;
-			$comment++;
-		}
-	    return $stringMain;
-	}
 ?>

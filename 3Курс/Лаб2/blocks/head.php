@@ -33,17 +33,45 @@
 		<link type="text/css" href="style/style.css" rel="stylesheet">
 		<link  type="text/css" href="style/styleWithoutMenu.css"rel="stylesheet">';
 		echo '
-			<script type="text/javascript">
-
+		<script>
+			
+		
 			( function( $ ) {
 			    $(document).ready(function(){
+			    	if($(document).scrollHeight == $(document).offsetHeight)
+			    	{
+			    		var $target = $("#insertCommits");
+	            		var comment = parseInt($target.attr("data-page"));	
+				    	$.ajax({ 
+						url: "function/php/LoadThreeComments.php?comment="+comment,  
+						dataType: "html",
+						success: function(data){
+							comment+=3;
+							$("#insertCommits").append(data);
+							$target.attr("data-page", comment)
+						}
+						});
+			    	}
 			        $(window).scroll(function(){
-			            if($(window).scrollTop() + $(window).height() > $(document).height()) {
-						       alert("bottom!");
+
+			            if($(window).scrollTop() + $(window).height() >= $(document).height()-1) {
+			            		var $target = $("#insertCommits");
+			            		var comment = parseInt($target.attr("data-page"));	
+						    	$.ajax({ 
+								url: "function/php/LoadThreeComments.php?comment="+comment,  
+								dataType: "html",
+								success: function(data){
+									comment+=3;
+									$("#insertCommits").append(data);
+									$target.attr("data-page", comment)
+								}
+							});
 						   }
 			        });
   				});
 			} )( jQuery );
+
+
 
 		</script>';
 	}
