@@ -14,17 +14,17 @@ else if(!(isset($_SESSION["role"])))
 			<input class="login" type="text" name="lg" onBlur="" required onFocus="" placeholder="Логин" maxlength="28" minlength="6">
 			<input class="password" type="password" name="pswrd" required onBlur="" onFocus="" placeholder="Пароль" maxlength="20" minlength="6">
 			<p>';
-			if(isset($_POST["News"]))
-			{
-				echo '<input type="hidden" name="News">';
-			}
-			else if(isset($_POST["Counter"]))
+			if(isset($_POST["Counter"]))
 			{
 				echo '<input type="hidden" name="Counter">';
 			}
 			else if(isset($_POST["Download"]))
 			{
 				echo '<input type="hidden" name="Download">';
+			}
+			else
+			{
+				echo '<input type="hidden" name="News">';
 			}
 			echo '
 				<button class="sumbmit" type="sumbmit" name="next" onclick="Next();">Далее</button>

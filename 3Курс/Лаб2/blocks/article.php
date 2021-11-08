@@ -122,7 +122,7 @@
 
 
 
-	  	</article><div id="insertCommits" data-page="0"></div>';
+	  	</article><div id="insertCommits" data-page="0"><center><b><p>Комментарии</p></b></center></div>';
 	  	
 	}
 	else if(isset($_POST["Add"]))

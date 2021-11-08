@@ -443,6 +443,17 @@ footer img:hover{
 .comment{
 	background: #cccccc;
 	margin-top: 20px;
+	padding-left: 10px;
+	border: solid 5px #f99157;
+}
+
+#insertCommits
+{
+	background: #cccccc;
+	margin-top: 20px;
+	padding: 10px;
+	padding-top: 0px;
 	border: solid 5px #f99157;
 	margin-left: 245px;
+	margin-bottom: 0px;
 }

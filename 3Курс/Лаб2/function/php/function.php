@@ -81,8 +81,7 @@
 		else if(isset($_POST["exit"]))
 		{
 			session_destroy();
-			$url = strtok(GetURL(), '?');
-			header ('Location: '.$url);
+			header("Refresh:0");
 		}
 	}
 

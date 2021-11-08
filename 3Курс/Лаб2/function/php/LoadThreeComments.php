@@ -3,7 +3,7 @@ require_once 'connect.php';
 $comment = $_GET['comment'];
 Connect();
 global $link;
-$sql = "Select text,author FROM comment WHERE id>".$comment;
+$sql = "Select text,author,time FROM comment WHERE id>".$comment;
 $result = mysqli_query($link, $sql) or die("Ошибка " . mysqli_error($link));
 $rows = mysqli_num_rows($result);
 if($rows === 0)
@@ -34,6 +34,8 @@ for($i=0;$i<=$rows-1;$i++)
 	
 	$stringMain .= $stringMid;
 	$stringMain .= $row[0];
+	$stringMain .= $stringMid;
+	$stringMain .= $row[2];
 	$stringMain .= $stringEnd;
 	$comment++;
 }
