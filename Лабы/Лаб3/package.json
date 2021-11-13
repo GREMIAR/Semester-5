@@ -1,7 +1,0 @@
-{
-  "dependencies": {
-    "package_name": "^1.0.2"
-  }
-  "start": "nodemon app"
-  
-}
