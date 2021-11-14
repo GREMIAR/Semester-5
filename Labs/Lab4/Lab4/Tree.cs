@@ -26,7 +26,7 @@ namespace Lab4
 
         public void SearchInsertionPoint(Branch currentBranch,Code code)
         {
-            if (currentBranch.code<=code)
+            if (currentBranch.code>code)
             {
                 if (currentBranch.LeftChild==null)
                 {
@@ -52,36 +52,17 @@ namespace Lab4
             }
         }
 
-        public int TopDownTraversal(Branch current,int size)
-        {
-            if(current != null)
-            {
-                size++;
-                int left = TopDownTraversal(current.LeftChild,size);
-                int right = TopDownTraversal(current.RightChild,size);
-                if(left>right)
-                {
-                    return left;
-                }
-                else
-                {
-                    return right;
-                }
-            }
-            return size;
-        }
-
-        int UpwardTraversal(Branch current, List<Branch> branches)
+        public int UpwardTraversal(Branch current,ref List<Branch> branches)
         {
             if (current != null)
             {
-                int left = UpwardTraversal(current.LeftChild, branches);
-                int right = UpwardTraversal(current.RightChild, branches);
-                if (left + 1 == right)
+                int left = UpwardTraversal(current.LeftChild,ref branches);
+                int right = UpwardTraversal(current.RightChild,ref branches);
+                if (left == right+1)
                 {
                     branches.Add(current);
                 }
-                return left + right + 1;
+                return left + right;
             }
             else
             {
@@ -104,6 +85,10 @@ namespace Lab4
                         return numLeaf;
                     }
                 }
+                if (numLeaf == curLeaf)
+                {
+                    return numLeaf;
+                }
                 return MixedTraversal(current.RightChild, curLeaf,numLeaf,node);
             }
             else
@@ -112,6 +97,25 @@ namespace Lab4
             }
 
 
+        }
+
+        public int TopDownTraversal(Branch current, int size)
+        {
+            if (current != null)
+            {
+                size++;
+                int left = TopDownTraversal(current.LeftChild, size);
+                int right = TopDownTraversal(current.RightChild, size);
+                if (left > right)
+                {
+                    return left;
+                }
+                else
+                {
+                    return right;
+                }
+            }
+            return size;
         }
 
         public Branch Search(string str)
@@ -130,7 +134,7 @@ namespace Lab4
             {
                 return currentBranch;
             }
-            else if (currentBranch.code<code)
+            else if (currentBranch.code>code)
             {
                 return Search(currentBranch.LeftChild,code);
             }
@@ -161,16 +165,32 @@ namespace Lab4
                     if (forDelete == root)
                     {
                         root = forDelete.RightChild;
+                        return;
                     }
-                    forDelete = forDelete.RightChild;
+                    if(forDelete.Parent.LeftChild==forDelete)
+                    {
+                        forDelete.Parent.LeftChild = forDelete.RightChild;
+                    }
+                    else
+                    {
+                        forDelete.Parent.RightChild = forDelete.RightChild;
+                    }
                 }
                 else if (forDelete.RightChild == null)
                 {
                     if (forDelete == root)
                     {
                         root = forDelete.LeftChild;
+                        return;
                     }
-                    forDelete = forDelete.LeftChild;
+                    if (forDelete.Parent.LeftChild == forDelete)
+                    {
+                        forDelete.Parent.LeftChild = forDelete.LeftChild;
+                    }
+                    else
+                    {
+                        forDelete.Parent.RightChild = forDelete.LeftChild;
+                    }
                 }
                 else
                 {
@@ -221,7 +241,21 @@ namespace Lab4
         }
         void AddNodeToTreeView(Branch currentBranch, out TreeNode nodeInside, TreeNodeCollection node)
         {
-            nodeInside = node.Add("<" + currentBranch.code.str + ">");
+            if (currentBranch.Parent != null)
+            {
+                if (currentBranch.Parent.LeftChild == currentBranch)
+                {
+                    nodeInside = node.Add("L<" + currentBranch.code.str + ">");
+                }
+                else
+                {
+                    nodeInside = node.Add("R<" + currentBranch.code.str + ">");
+                }
+            }
+            else
+            {
+                nodeInside = node.Add("<" + currentBranch.code.str + ">");
+            }
         }
         void TransitionToChild(Branch childBranch, TreeNode nodeInside)
         {
