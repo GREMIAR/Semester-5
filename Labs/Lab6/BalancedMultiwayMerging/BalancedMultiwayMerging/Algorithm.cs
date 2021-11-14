@@ -31,18 +31,19 @@ namespace BalancedMultiwayMerging
             Directory.CreateDirectory(workPath);
             for(int i = 0; i < 2*N; i++)
             {
-                FileStream creating = File.Create(workPath + "\\f" + i.ToString());
+                FileStream creating = File.Create(workPath + "\\f" + i.ToString() + ".txt");
                 creating.Close();
             }
             for (int i = 0; i < N; i++)
             {
-                f[i] = File.Open(workPath + "\\f" + i.ToString(), FileMode.Open); // для записи
+                f[i] = File.Open(workPath + "\\f" + i.ToString() + ".txt", FileMode.Open); // для записи
             }
             int j = 0;
             int L = 0;
-            while (f0.Read(buffer, 0, buffer.Length) > 0)
+            int length;
+            while ((length = f0.Read(buffer, 0, buffer.Length)) > 0)
             {
-                f[j].Write(buffer, 0, buffer.Length);
+                f[j].Write(buffer, 0, length);
                 j++;
                 if (j >= N)
                 {
@@ -65,11 +66,11 @@ namespace BalancedMultiwayMerging
                 af = Math.Min(L, N);
                 for (int i = 0; i < af; i++)
                 {
-                    f[t[i]] = File.Open(workPath + "\\f" + (t[i]).ToString(), FileMode.Open); // для чтения
+                    f[t[i]] = File.Open(workPath + "\\f" + (t[i]).ToString() + ".txt", FileMode.Open); // для чтения
                 }
                 for (int i = N; i < 2*N; i++)
                 {
-                    f[t[i]] = File.Open(workPath + "\\f" + (t[i]).ToString(), FileMode.Open); // для записи
+                    f[t[i]] = File.Open(workPath + "\\f" + (t[i]).ToString() + ".txt", FileMode.Open); // для записи
                 }
                 List<int> ta = new List<int>();
                 for (int i = 0; i < N; i++)
@@ -96,17 +97,11 @@ namespace BalancedMultiwayMerging
                             Byte[] buffer_1 = new byte[200];
                             Byte[] buffer_2 = new byte[200];
                             f[i + 1].Read(buffer_1, 0, buffer_1.Length);
-                            f[i].Read(buffer_1, 0, buffer_2.Length);
-                            try
+                            f[i].Read(buffer_2, 0, buffer_2.Length);
+                            // вообще помойка а ведь это самое главное
+                            if (int.Parse(System.Text.Encoding.Default.GetString(buffer_1)) < int.Parse(System.Text.Encoding.Default.GetString(buffer_2)))
                             {
-                                if (int.Parse(System.Text.Encoding.Default.GetString(buffer_1)) < int.Parse(System.Text.Encoding.Default.GetString(buffer_2)))
-                                {
-                                    m = i + 1;
-                                }
-                            }
-                            catch (Exception e)
-                            {
-
+                                m = i + 1;
                             }
                         }
                         f[ta[m]].Read(buffer, 0, buffer.Length);
@@ -119,6 +114,7 @@ namespace BalancedMultiwayMerging
                         }
                         else
                         {
+                            // нет ифа если кончился отрезок, че за отрезок кек
                             ao--;
                             ta.RemoveAt(m);
                         }
@@ -141,7 +137,7 @@ namespace BalancedMultiwayMerging
             string sortedDir = filePath + "\\BalancedMultiwayMerging_SORTED";
             Directory.CreateDirectory(sortedDir);
             File.Delete(sortedDir + "\\SORTED.txt");
-            File.Copy(workPath + "\\f" + t[0].ToString(), sortedDir + "\\SORTED.txt");
+            File.Copy(workPath + "\\f" + t[0].ToString() + ".txt", sortedDir + "\\SORTED.txt");
             Clean();
         }
 
