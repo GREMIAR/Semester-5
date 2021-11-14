@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Lab4
 {
     class Tree
     {
-        Branch root { get; set; }
+        public Branch root { get; set; }
 
         public void Insert(string str)
         {
@@ -51,6 +52,68 @@ namespace Lab4
             }
         }
 
+        public int TopDownTraversal(Branch current,int size)
+        {
+            if(current != null)
+            {
+                size++;
+                int left = TopDownTraversal(current.LeftChild,size);
+                int right = TopDownTraversal(current.RightChild,size);
+                if(left>right)
+                {
+                    return left;
+                }
+                else
+                {
+                    return right;
+                }
+            }
+            return size;
+        }
+
+        int UpwardTraversal(Branch current, List<Branch> branches)
+        {
+            if (current != null)
+            {
+                int left = UpwardTraversal(current.LeftChild, branches);
+                int right = UpwardTraversal(current.RightChild, branches);
+                if (left + 1 == right)
+                {
+                    branches.Add(current);
+                }
+                return left + right + 1;
+            }
+            else
+            {
+                return 1;
+            }
+        }
+
+        public int MixedTraversal(Branch current,int curLeaf,int numLeaf, TreeNodeCollection node)
+        {
+            if(current!=null)
+            {
+                curLeaf = MixedTraversal(current.LeftChild, curLeaf,numLeaf, node);
+                if(current.IsLeaf())
+                {
+                    curLeaf++;
+                    if(numLeaf==curLeaf)
+                    {
+                        node.Clear();
+                        ShowBranch(node, root, current);
+                        return numLeaf;
+                    }
+                }
+                return MixedTraversal(current.RightChild, curLeaf,numLeaf,node);
+            }
+            else
+            {
+                return curLeaf;
+            }
+
+
+        }
+
         public Branch Search(string str)
         {
             Code code = new Code(str);
@@ -63,7 +126,7 @@ namespace Lab4
             {
                 return null;
             }
-            if(currentBranch.code == code)
+            else if(currentBranch.code == code)
             {
                 return currentBranch;
             }
@@ -77,47 +140,103 @@ namespace Lab4
             }
         }
 
-        //переделать чтобы возвращал только код, и сделать отдельные случаи.(правый\\//\\левый)
         public void Remove(string str)
         {
             Branch forDelete = Search(str);
             if(forDelete!=null)
             {
-                Branch newBranch = SearchMax(forDelete);
-                if(forDelete == root)
+                if (forDelete.IsLeaf())
                 {
-                    root = newBranch;
+                    if (forDelete == root)
+                    {
+                        root = null;
+                    }
+                    else
+                    {
+                        forDelete.Delete();
+                    }
                 }
-                if(forDelete.Parent.LeftChild == forDelete)
+                else if (forDelete.LeftChild == null)
                 {
-                    newBranch.Parent = forDelete.Parent;
-                    forDelete.code = newBranch.code;
+                    if (forDelete == root)
+                    {
+                        root = forDelete.RightChild;
+                    }
+                    forDelete = forDelete.RightChild;
+                }
+                else if (forDelete.RightChild == null)
+                {
+                    if (forDelete == root)
+                    {
+                        root = forDelete.LeftChild;
+                    }
+                    forDelete = forDelete.LeftChild;
                 }
                 else
                 {
-                    forDelete.Parent.RightChild = newBranch;
+                    Branch maxBranch = SearchMax(forDelete.LeftChild);
+                    forDelete.code = maxBranch.code;
+                    maxBranch.Delete();
                 }
             }
         }
 
         public Branch SearchMax(Branch currentBranch)
         {
-            if (currentBranch == null)
-            {
-                if (currentBranch.Parent.RightChild!=null)
-                {
-                    return currentBranch.Parent.RightChild;
-                }
-                return null;
-            }
-            else if (currentBranch.RightChild == null)
-            {
-                return currentBranch;
-            }
-            else
+
+            if(currentBranch.RightChild!=null)
             {
                 return SearchMax(currentBranch.RightChild);
             }
+            else
+            {
+                return currentBranch;
+            }
         }
+
+
+
+
+        public void ShowTree(TreeNodeCollection node)
+        {
+            ShowBranch(node, root);
+        }
+        void ShowBranch(TreeNodeCollection node, Branch currentBranch)
+        {
+            TreeNode nodeInside;
+            AddNodeToTreeView(currentBranch, out nodeInside, node);
+            TransitionToChild(currentBranch.LeftChild, nodeInside);
+            TransitionToChild(currentBranch.RightChild, nodeInside);
+        }
+        void ShowBranch(TreeNodeCollection node, Branch currentBranch, Branch foundBranch)
+        {
+            TreeNode nodeInside;
+            AddNodeToTreeView(currentBranch, out nodeInside, node);
+            if (foundBranch == currentBranch)
+            {
+                nodeInside.BackColor = System.Drawing.Color.Red;
+            }
+            TransitionToChild(currentBranch.LeftChild, nodeInside, foundBranch);
+            TransitionToChild(currentBranch.RightChild, nodeInside, foundBranch);
+        }
+        void AddNodeToTreeView(Branch currentBranch, out TreeNode nodeInside, TreeNodeCollection node)
+        {
+            nodeInside = node.Add("<" + currentBranch.code.str + ">");
+        }
+        void TransitionToChild(Branch childBranch, TreeNode nodeInside)
+        {
+            if (childBranch != null)
+            {
+                ShowBranch(nodeInside.Nodes, childBranch);
+            }
+        }
+        void TransitionToChild(Branch childBranch, TreeNode nodeInside, Branch foundBranch)
+        {
+            if (childBranch != null)
+            {
+                ShowBranch(nodeInside.Nodes, childBranch, foundBranch);
+            }
+        }
+
     }
 }

@@ -21,6 +21,19 @@ namespace Lab4
             }
             return false;
         }
+
+        public void Delete()
+        {
+            if(this.Parent.LeftChild==this)
+            {
+                Parent.LeftChild = null;
+            }
+            else
+            {
+                Parent.RightChild = null;
+            }
+        }
+
         public Branch(Code code)
         {
             this.code = code;
