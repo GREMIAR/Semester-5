@@ -25,8 +25,8 @@ namespace BalancedMultiwayMerging
         }
         public void Sort()
         {
-            FileStream f0 = File.Open(filename, FileMode.Open); // Открыть для чтения f0
-            Byte[] f0_buffer = new byte[200];
+            FileStream f0 = File.Open(filename, FileMode.Open); // для чтения
+            Byte[] buffer = new byte[200];
             FileStream[] f = new FileStream[2*N];
             Directory.CreateDirectory(workPath);
             for(int i = 0; i < 2*N; i++)
@@ -36,45 +36,113 @@ namespace BalancedMultiwayMerging
             }
             for (int i = 0; i < N; i++)
             {
-                f[i] = File.Open(workPath + "\\f" + i.ToString(), FileMode.Open); // Открыть для записи f[1]..f[N]
+                f[i] = File.Open(workPath + "\\f" + i.ToString(), FileMode.Open); // для записи
             }
-            int j = 1; // j := 1
-            int L = 0; // L := 0
-            //начальное распределение отрезков
-            while (f0.Read(f0_buffer, 0, f0_buffer.Length) > 0) // until конец f0
+            int j = 0;
+            int L = 0;
+            while (f0.Read(buffer, 0, buffer.Length) > 0)
             {
-                f0.Read(f0_buffer, 0, f0_buffer.Length); 
-                f[j].Write(f0_buffer, 0, f0_buffer.Length); // копировать отрезок из f0 в f[j]
-                j++; // переключить j на следующий выходной файл
+                f[j].Write(buffer, 0, buffer.Length);
+                j++;
+                if (j >= N)
+                {
+                    j = 0;
+                }
                 L++;
             } 
+            for (int i = 0; i < N; i++)
+            {
+                f[i].Close();
+            }
             int af;
             int[] t = new int[2 * N];
             for (int i = 0; i < 2*N; i++)
             {
-                t[i] = i; // выполнить начальную инициализацию индексной карты
+                t[i] = i;
             }
-            // слияние из f[t[1]].. f[t[N]] в f[t[N+1]].. f[t[2N]]
-            while (L != 1) // until L == 1
+            while (L != 1)
             {
-                af = Math.Min(L, N); // af := min(L, N)
-                // открыть для чтения f[t[1]].. f[t[af]] 
-                // открыть для записи f[t[N+1]].. f[t[2N]] 
-                // инициализировать ta[1].. ta[af] индексами из ta[] 
-                // L := 0
-                // j := N+1
-            }
+                af = Math.Min(L, N);
+                for (int i = 0; i < af; i++)
+                {
+                    f[t[i]] = File.Open(workPath + "\\f" + (t[i]).ToString(), FileMode.Open); // для чтения
+                }
+                for (int i = N; i < 2*N; i++)
+                {
+                    f[t[i]] = File.Open(workPath + "\\f" + (t[i]).ToString(), FileMode.Open); // для записи
+                }
+                List<int> ta = new List<int>();
+                for (int i = 0; i < N; i++)
+                {
+                    ta.Add(i);
+                }
+                for (int i = 0; i < af; i++)
+                {
+                    ta[i] = i;
+                }
+                L = 0;
+                j = N;
+                int ao;
+                while(af!=0)
+                {
+                    L++;
+                    ao = af;
+                    int m;
+                    while(ao!=0)
+                    {
+                        m = 0;
+                        for(int i = 0; i < af-1; i++)
+                        {
+                            Byte[] buffer_1 = new byte[200];
+                            Byte[] buffer_2 = new byte[200];
+                            f[i + 1].Read(buffer_1, 0, buffer_1.Length);
+                            f[i].Read(buffer_1, 0, buffer_2.Length);
+                            try
+                            {
+                                if (int.Parse(System.Text.Encoding.Default.GetString(buffer_1)) < int.Parse(System.Text.Encoding.Default.GetString(buffer_2)))
+                                {
+                                    m = i + 1;
+                                }
+                            }
+                            catch (Exception e)
+                            {
 
+                            }
+                        }
+                        f[ta[m]].Read(buffer, 0, buffer.Length);
+                        f[t[j]].Write(buffer, 0, buffer.Length);
+                        if (f[ta[m]].Read(buffer, 0, buffer.Length) == 0)
+                        {
+                            af--;
+                            ao--;
+                            ta.RemoveAt(m);
+                        }
+                        else
+                        {
+                            ao--;
+                            ta.RemoveAt(m);
+                        }
+                    }
+                    j++;
+                    if (j >= 2*N)
+                    {
+                        j = N;
+                    }
+                }
+                int[] t_new = new int[2 * N];
+                for(int i = 0; i < N; i++)
+                {
+                    t_new[i] = t[i + N];
+                    t_new[i + N] = t[i];
+                }
+                t = t_new;
+            }
             Close(f0, f);
+            string sortedDir = filePath + "\\BalancedMultiwayMerging_SORTED";
+            Directory.CreateDirectory(sortedDir);
+            File.Delete(sortedDir + "\\SORTED.txt");
+            File.Copy(workPath + "\\f" + t[0].ToString(), sortedDir + "\\SORTED.txt");
             Clean();
-        }
-
-        void f_Open(ref FileStream[] f, int[] fileIndex)
-        {
-            foreach(int i in fileIndex)
-            {
-                f[fileIndex[i]] = File.Open(workPath + "\\f" + (fileIndex[i]).ToString(), FileMode.Open);
-            }
         }
 
         void Close(FileStream f0, FileStream[] f)
