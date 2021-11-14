@@ -1,48 +1,145 @@
-﻿using System.Windows.Forms;
+﻿using System.Collections.Generic;
+using System.Windows.Forms;
 
-namespace Lab4
+namespace Lab5
 {
     class Tree
     {
         public Branch root { get; set; }
 
-        public void Insert(string str)
+        int p;
+
+        int q;
+
+        List<Cost> cost = new List<Cost>();
+
+        public void Insert(string str,int p,int q)
         {
             Code code = new Code(str);
             if(root!=null)
             {
-                SearchInsertionPoint(root, code);
+                fix(SearchInsertionPoint(root, code, p, q));
+
             }
             else
             {
-                root = new Branch(code);
+                root = new Branch(code,p,q);
             }
         }
 
-        public void SearchInsertionPoint(Branch currentBranch,Code code)
+        public void fix(Branch current)
         {
-            if (currentBranch.code<=code)
+            if(current!=null)
             {
-                if (currentBranch.LeftChild==null)
+                int o = current.Discrepancy();
+                if (current.Discrepancy() == 2)
                 {
-                    currentBranch.LeftChild = new Branch(code);
-                    currentBranch.LeftChild.Parent = currentBranch;
+                    if (current.LeftChild.Discrepancy() < 0)
+                    {
+                        RotateL(current.LeftChild);
+                    }
+                    if (current == root)
+                    {
+                        root = RotateR(current);
+                    }
+                    else
+                    {
+                        RotateR(current);
+                    }
+                    return;
+                }
+                else if (current.Discrepancy() == -2)
+                {
+                    if (current.RightChild.Discrepancy() > 0)
+                    {
+                        RotateR(current.RightChild);
+                    }
+                    if (current == root)
+                    {
+                        root = RotateL(current);
+                    }
+                    else
+                    {
+                        RotateL(current);
+                    }
+                    return;
+                }
+                fix(current.Parent);
+            }
+            else
+            {
+                return;
+            }
+        }
+
+        public Branch RotateR(Branch branch)
+        {
+            Branch newBranch = branch.LeftChild;
+            branch.LeftChild = newBranch.RightChild;
+            newBranch.RightChild = branch;
+            if (branch.Parent != null)
+            {
+                if (branch.Parent.LeftChild == branch)
+                {
+                    branch.Parent.LeftChild = newBranch;
                 }
                 else
                 {
-                    SearchInsertionPoint(currentBranch.LeftChild,code);
+                    branch.Parent.RightChild = newBranch;
+                }
+            }
+            newBranch.Parent = branch.Parent;
+            branch.Parent = newBranch;
+            return newBranch;
+        }
+
+        public Branch RotateL(Branch branch)
+        {
+            Branch newBranch = branch.RightChild;
+            branch.RightChild = newBranch.LeftChild;
+            newBranch.LeftChild = branch;
+            if(branch.Parent!=null)
+            {
+                if(branch.Parent.LeftChild==branch)
+                {
+                    branch.Parent.LeftChild = newBranch;
+                }
+                else
+                {
+                    branch.Parent.RightChild = newBranch;
+                }
+            }
+            newBranch.Parent = branch.Parent;
+            branch.Parent = newBranch;
+            return newBranch;
+        }
+
+        public Branch SearchInsertionPoint(Branch currentBranch,Code code, int p, int q)
+        {
+            if (currentBranch.code>=code)
+            {
+                if (currentBranch.LeftChild==null)
+                {
+                    currentBranch.LeftChild = new Branch(code,p,q);
+                    currentBranch.LeftChild.Parent = currentBranch;
+                    return currentBranch;
+                }
+                else
+                {
+                    return SearchInsertionPoint(currentBranch.LeftChild,code,  p,  q);
                 }
             }
             else
             {
                 if (currentBranch.RightChild == null)
                 {
-                    currentBranch.RightChild = new Branch(code);
+                    currentBranch.RightChild = new Branch(code,p,q);
                     currentBranch.RightChild.Parent = currentBranch;
+                    return currentBranch;
                 }
                 else
                 {
-                    SearchInsertionPoint(currentBranch.RightChild, code);
+                    return SearchInsertionPoint(currentBranch.RightChild, code, p, q);
                 }
             }
         }
@@ -73,6 +170,49 @@ namespace Lab4
             }
         }
 
+        public int Cost(string str)
+        {
+            List<Cost> costs = new List<Cost>();
+            costs.Add(new Cost(p, q, 0));
+            Code code = new Code(str);
+            SearchCost(root, code, ref costs);
+            int result = 0;
+            for(int i=1;i<costs.Count;i++)
+            {
+                result += costs[i].P * costs[i].Size;
+            }
+
+            for (int j = 0; j < costs.Count; j++)
+            {
+                result += costs[j].Q * (costs[j].Size-1);
+            }
+            return result;
+        }
+
+
+        public Branch SearchCost(Branch currentBranch, Code code,ref List<Cost> costs)
+        {
+            if (currentBranch == null)
+            {
+                return null;
+            }
+            else if (currentBranch.code == code)
+            {
+                costs.Add(new Cost(currentBranch.P, currentBranch.Q, currentBranch.Size()));
+                return currentBranch;
+            }
+            else if (currentBranch.code < code)
+            {
+                costs.Add(new Cost(currentBranch.P, currentBranch.Q, currentBranch.Size()));
+                return SearchCost(currentBranch.LeftChild, code, ref costs);
+            }
+            else
+            {
+                costs.Add(new Cost(currentBranch.P, currentBranch.Q, currentBranch.Size()));
+                return SearchCost(currentBranch.RightChild, code, ref costs);
+            }
+        }
+
         public void ShowTree(TreeNodeCollection node)
         {
             ShowBranch(node, root);
@@ -97,7 +237,21 @@ namespace Lab4
         }
         void AddNodeToTreeView(Branch currentBranch, out TreeNode nodeInside, TreeNodeCollection node)
         {
-            nodeInside = node.Add("<" + currentBranch.code.str + ">");
+            if(currentBranch.Parent != null)
+            {
+                if(currentBranch.Parent.LeftChild == currentBranch)
+                {
+                    nodeInside = node.Add("L<" + currentBranch.code.str + ">");
+                }
+                else
+                {
+                    nodeInside = node.Add("R<" + currentBranch.code.str + ">");
+                }
+            }
+            else
+            {
+                nodeInside = node.Add("<" + currentBranch.code.str + ">");
+            }
         }
         void TransitionToChild(Branch childBranch, TreeNode nodeInside)
         {
@@ -112,6 +266,12 @@ namespace Lab4
             {
                 ShowBranch(nodeInside.Nodes, childBranch, foundBranch);
             }
+        }
+
+        public Tree(int p,int q)
+        {
+            this.p = p;
+            this.q = q;
         }
 
     }

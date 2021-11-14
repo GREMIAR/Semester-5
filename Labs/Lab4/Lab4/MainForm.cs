@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
 
 namespace Lab4
@@ -64,9 +65,6 @@ namespace Lab4
         {
             RemoveSpecialSymbols(sender);
         }
-        void textBoxSearch_TextChanged(object sender, EventArgs e)
-        {
-        }
         void textBoxSearch_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
@@ -99,13 +97,15 @@ namespace Lab4
             TreeDrawing();
         }
 
-        void buttonRandom_Click(object sender, EventArgs e)
+        void buttonVertex_Click(object sender, EventArgs e)
         {
-            treeBox.SuspendLayout();
-            Int32.TryParse(textBoxSearch.Text, out int leaf);
-            tree.MixedTraversal(tree.root,0, leaf, treeBox.Nodes).ToString();
-            treeBox.ExpandAll();
-            treeBox.ResumeLayout();
+            textBoxSearch.Text = "";
+            List<Branch> branches = new List<Branch>();
+            tree.UpwardTraversal(tree.root, ref branches);
+            foreach (Branch branch in branches)
+            {
+                textBoxSearch.Text += branch.code.str + "; ";
+            }
         }
 
         public void TreeDrawing()
@@ -118,5 +118,20 @@ namespace Lab4
             treeBox.ExpandAll();
         }
 
+        private void buttonSize_Click(object sender, EventArgs e)
+        {
+            textBoxSearch.Text = tree.TopDownTraversal(tree.root, 0).ToString();
+        }
+
+        private void buttonLeafK_Click(object sender, EventArgs e)
+        {
+            Int32.TryParse(textBoxLeafK.Text, out int leaf);
+            int y = tree.MixedTraversal(tree.root, 0, leaf, treeBox.Nodes);
+            if (leaf != y)
+            {
+                TreeDrawing();
+            }
+            treeBox.ExpandAll();
+        }
     }
 }

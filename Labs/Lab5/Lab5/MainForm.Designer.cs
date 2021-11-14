@@ -1,5 +1,4 @@
-﻿
-namespace Lab4
+﻿namespace Lab5
 {
     partial class MainForm
     {
@@ -32,17 +31,13 @@ namespace Lab4
             this.treeBox = new System.Windows.Forms.TreeView();
             this.PanelMain = new System.Windows.Forms.TableLayoutPanel();
             this.PanelMenuItem = new System.Windows.Forms.TableLayoutPanel();
-            this.buttonClear = new System.Windows.Forms.Button();
             this.labelSearch = new System.Windows.Forms.Label();
             this.textBoxSearch = new System.Windows.Forms.TextBox();
             this.buttonAdd = new System.Windows.Forms.Button();
-            this.buttonDel = new System.Windows.Forms.Button();
-            this.textBoxDel = new System.Windows.Forms.TextBox();
             this.textBoxAdd = new System.Windows.Forms.TextBox();
-            this.buttonVertex = new System.Windows.Forms.Button();
-            this.buttonSize = new System.Windows.Forms.Button();
-            this.buttonLeafK = new System.Windows.Forms.Button();
-            this.textBoxLeafK = new System.Windows.Forms.TextBox();
+            this.buttonClear = new System.Windows.Forms.Button();
+            this.textBoxQ = new System.Windows.Forms.TextBox();
+            this.textBoxP = new System.Windows.Forms.TextBox();
             this.PanelMain.SuspendLayout();
             this.PanelMenuItem.SuspendLayout();
             this.SuspendLayout();
@@ -80,25 +75,18 @@ namespace Lab4
             this.PanelMenuItem.ColumnCount = 2;
             this.PanelMenuItem.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.PanelMenuItem.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.PanelMenuItem.Controls.Add(this.textBoxP, 0, 2);
+            this.PanelMenuItem.Controls.Add(this.textBoxQ, 1, 2);
             this.PanelMenuItem.Controls.Add(this.buttonClear, 0, 4);
             this.PanelMenuItem.Controls.Add(this.labelSearch, 0, 0);
             this.PanelMenuItem.Controls.Add(this.textBoxSearch, 0, 1);
-            this.PanelMenuItem.Controls.Add(this.buttonAdd, 1, 2);
-            this.PanelMenuItem.Controls.Add(this.buttonDel, 1, 3);
-            this.PanelMenuItem.Controls.Add(this.textBoxDel, 0, 3);
-            this.PanelMenuItem.Controls.Add(this.textBoxAdd, 0, 2);
-            this.PanelMenuItem.Controls.Add(this.buttonVertex, 0, 5);
-            this.PanelMenuItem.Controls.Add(this.buttonSize, 0, 6);
-            this.PanelMenuItem.Controls.Add(this.buttonLeafK, 1, 7);
-            this.PanelMenuItem.Controls.Add(this.textBoxLeafK, 0, 7);
+            this.PanelMenuItem.Controls.Add(this.textBoxAdd, 0, 3);
+            this.PanelMenuItem.Controls.Add(this.buttonAdd, 1, 3);
             this.PanelMenuItem.Dock = System.Windows.Forms.DockStyle.Fill;
             this.PanelMenuItem.Location = new System.Drawing.Point(311, 5);
             this.PanelMenuItem.Margin = new System.Windows.Forms.Padding(5);
             this.PanelMenuItem.Name = "PanelMenuItem";
-            this.PanelMenuItem.RowCount = 9;
-            this.PanelMenuItem.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.PanelMenuItem.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.PanelMenuItem.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.PanelMenuItem.RowCount = 6;
             this.PanelMenuItem.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.PanelMenuItem.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.PanelMenuItem.RowStyles.Add(new System.Windows.Forms.RowStyle());
@@ -107,19 +95,6 @@ namespace Lab4
             this.PanelMenuItem.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.PanelMenuItem.Size = new System.Drawing.Size(154, 234);
             this.PanelMenuItem.TabIndex = 1;
-            // 
-            // buttonClear
-            // 
-            this.buttonClear.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.PanelMenuItem.SetColumnSpan(this.buttonClear, 2);
-            this.buttonClear.Location = new System.Drawing.Point(0, 88);
-            this.buttonClear.Margin = new System.Windows.Forms.Padding(0, 2, 2, 2);
-            this.buttonClear.Name = "buttonClear";
-            this.buttonClear.Size = new System.Drawing.Size(152, 24);
-            this.buttonClear.TabIndex = 5;
-            this.buttonClear.Text = "Очистить";
-            this.buttonClear.UseVisualStyleBackColor = true;
-            this.buttonClear.Click += new System.EventHandler(this.buttonClear_Click);
             // 
             // labelSearch
             // 
@@ -131,7 +106,7 @@ namespace Lab4
             this.labelSearch.Name = "labelSearch";
             this.labelSearch.Size = new System.Drawing.Size(150, 13);
             this.labelSearch.TabIndex = 8;
-            this.labelSearch.Text = "Вывод";
+            this.labelSearch.Text = "Поиск";
             this.labelSearch.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // textBoxSearch
@@ -143,12 +118,12 @@ namespace Lab4
             this.textBoxSearch.Name = "textBoxSearch";
             this.textBoxSearch.Size = new System.Drawing.Size(154, 20);
             this.textBoxSearch.TabIndex = 0;
-            this.textBoxSearch.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBoxSearch_KeyDown);
+            this.textBoxSearch.TextChanged += new System.EventHandler(this.textBoxSearch_TextChanged);
             // 
             // buttonAdd
             // 
             this.buttonAdd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonAdd.Location = new System.Drawing.Point(79, 38);
+            this.buttonAdd.Location = new System.Drawing.Point(79, 62);
             this.buttonAdd.Margin = new System.Windows.Forms.Padding(2, 5, 2, 2);
             this.buttonAdd.Name = "buttonAdd";
             this.buttonAdd.Size = new System.Drawing.Size(73, 21);
@@ -157,86 +132,46 @@ namespace Lab4
             this.buttonAdd.UseVisualStyleBackColor = true;
             this.buttonAdd.Click += new System.EventHandler(this.buttonAdd_Click);
             // 
-            // buttonDel
-            // 
-            this.buttonDel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonDel.Location = new System.Drawing.Point(79, 63);
-            this.buttonDel.Margin = new System.Windows.Forms.Padding(2);
-            this.buttonDel.Name = "buttonDel";
-            this.buttonDel.Size = new System.Drawing.Size(73, 21);
-            this.buttonDel.TabIndex = 4;
-            this.buttonDel.Text = "Удалить";
-            this.buttonDel.UseVisualStyleBackColor = true;
-            this.buttonDel.Click += new System.EventHandler(this.buttonDel_Click);
-            // 
-            // textBoxDel
-            // 
-            this.textBoxDel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxDel.Location = new System.Drawing.Point(0, 63);
-            this.textBoxDel.Margin = new System.Windows.Forms.Padding(0);
-            this.textBoxDel.Name = "textBoxDel";
-            this.textBoxDel.Size = new System.Drawing.Size(77, 20);
-            this.textBoxDel.TabIndex = 3;
-            this.textBoxDel.TextChanged += new System.EventHandler(this.textBox_TextChanged);
-            this.textBoxDel.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBoxDel_KeyDown);
-            // 
             // textBoxAdd
             // 
             this.textBoxAdd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxAdd.Location = new System.Drawing.Point(0, 39);
+            this.textBoxAdd.Location = new System.Drawing.Point(0, 63);
             this.textBoxAdd.Margin = new System.Windows.Forms.Padding(0, 4, 0, 0);
             this.textBoxAdd.Name = "textBoxAdd";
             this.textBoxAdd.Size = new System.Drawing.Size(77, 20);
             this.textBoxAdd.TabIndex = 1;
             this.textBoxAdd.TextChanged += new System.EventHandler(this.textBox_TextChanged);
-            this.textBoxAdd.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBoxAdd_KeyDown);
             // 
-            // buttonVertex
+            // buttonClear
             // 
-            this.buttonVertex.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.PanelMenuItem.SetColumnSpan(this.buttonVertex, 2);
-            this.buttonVertex.Location = new System.Drawing.Point(0, 116);
-            this.buttonVertex.Margin = new System.Windows.Forms.Padding(0, 2, 2, 2);
-            this.buttonVertex.Name = "buttonVertex";
-            this.buttonVertex.Size = new System.Drawing.Size(152, 38);
-            this.buttonVertex.TabIndex = 6;
-            this.buttonVertex.Text = "поиск вершин различных на 1";
-            this.buttonVertex.UseVisualStyleBackColor = true;
-            this.buttonVertex.Click += new System.EventHandler(this.buttonVertex_Click);
+            this.buttonClear.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.PanelMenuItem.SetColumnSpan(this.buttonClear, 2);
+            this.buttonClear.Location = new System.Drawing.Point(0, 87);
+            this.buttonClear.Margin = new System.Windows.Forms.Padding(0, 2, 2, 2);
+            this.buttonClear.Name = "buttonClear";
+            this.buttonClear.Size = new System.Drawing.Size(152, 24);
+            this.buttonClear.TabIndex = 5;
+            this.buttonClear.Text = "Очистить";
+            this.buttonClear.UseVisualStyleBackColor = true;
+            this.buttonClear.Click += new System.EventHandler(this.buttonClear_Click);
             // 
-            // buttonSize
+            // textBoxQ
             // 
-            this.buttonSize.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.PanelMenuItem.SetColumnSpan(this.buttonSize, 2);
-            this.buttonSize.Location = new System.Drawing.Point(0, 158);
-            this.buttonSize.Margin = new System.Windows.Forms.Padding(0, 2, 2, 2);
-            this.buttonSize.Name = "buttonSize";
-            this.buttonSize.Size = new System.Drawing.Size(152, 22);
-            this.buttonSize.TabIndex = 9;
-            this.buttonSize.Text = "высота дерева";
-            this.buttonSize.UseVisualStyleBackColor = true;
-            this.buttonSize.Click += new System.EventHandler(this.buttonSize_Click);
+            this.textBoxQ.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBoxQ.Location = new System.Drawing.Point(77, 37);
+            this.textBoxQ.Margin = new System.Windows.Forms.Padding(0, 4, 0, 0);
+            this.textBoxQ.Name = "textBoxQ";
+            this.textBoxQ.Size = new System.Drawing.Size(77, 20);
+            this.textBoxQ.TabIndex = 10;
             // 
-            // buttonLeafK
+            // textBoxP
             // 
-            this.buttonLeafK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonLeafK.Location = new System.Drawing.Point(77, 184);
-            this.buttonLeafK.Margin = new System.Windows.Forms.Padding(0, 2, 2, 2);
-            this.buttonLeafK.Name = "buttonLeafK";
-            this.buttonLeafK.Size = new System.Drawing.Size(75, 44);
-            this.buttonLeafK.TabIndex = 10;
-            this.buttonLeafK.Text = "поиск k-го листа";
-            this.buttonLeafK.UseVisualStyleBackColor = true;
-            this.buttonLeafK.Click += new System.EventHandler(this.buttonLeafK_Click);
-            // 
-            // textBoxLeafK
-            // 
-            this.textBoxLeafK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxLeafK.Location = new System.Drawing.Point(0, 196);
-            this.textBoxLeafK.Margin = new System.Windows.Forms.Padding(0);
-            this.textBoxLeafK.Name = "textBoxLeafK";
-            this.textBoxLeafK.Size = new System.Drawing.Size(77, 20);
-            this.textBoxLeafK.TabIndex = 11;
+            this.textBoxP.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBoxP.Location = new System.Drawing.Point(0, 37);
+            this.textBoxP.Margin = new System.Windows.Forms.Padding(0, 4, 0, 0);
+            this.textBoxP.Name = "textBoxP";
+            this.textBoxP.Size = new System.Drawing.Size(77, 20);
+            this.textBoxP.TabIndex = 11;
             // 
             // MainForm
             // 
@@ -260,17 +195,13 @@ namespace Lab4
         private System.Windows.Forms.TreeView treeBox;
         private System.Windows.Forms.TableLayoutPanel PanelMain;
         private System.Windows.Forms.TableLayoutPanel PanelMenuItem;
-        private System.Windows.Forms.TextBox textBoxDel;
-        private System.Windows.Forms.Button buttonDel;
+        private System.Windows.Forms.TextBox textBoxSearch;
         private System.Windows.Forms.Button buttonAdd;
         private System.Windows.Forms.TextBox textBoxAdd;
         private System.Windows.Forms.Label labelSearch;
+        private System.Windows.Forms.TextBox textBoxP;
+        private System.Windows.Forms.TextBox textBoxQ;
         private System.Windows.Forms.Button buttonClear;
-        private System.Windows.Forms.Button buttonVertex;
-        private System.Windows.Forms.TextBox textBoxSearch;
-        private System.Windows.Forms.Button buttonSize;
-        private System.Windows.Forms.Button buttonLeafK;
-        private System.Windows.Forms.TextBox textBoxLeafK;
     }
 }
 
