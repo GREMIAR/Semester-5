@@ -26,7 +26,7 @@ namespace BalancedMultiwayMerging
         public void Sort()
         {
             FileStream f0 = File.Open(filename, FileMode.Open); // для чтения
-            Byte[] buffer = new byte[200];
+            Byte[] buffer = new byte[sizeof(int)];
             FileStream[] f = new FileStream[2*N];
             Directory.CreateDirectory(workPath);
             for(int i = 0; i < 2*N; i++)
@@ -67,10 +67,12 @@ namespace BalancedMultiwayMerging
                 for (int i = 0; i < af; i++)
                 {
                     f[t[i]] = File.Open(workPath + "\\f" + (t[i]).ToString() + ".txt", FileMode.Open); // для чтения
+                    f[t[i]].Seek(0, SeekOrigin.Begin);
                 }
                 for (int i = N; i < 2*N; i++)
                 {
                     f[t[i]] = File.Open(workPath + "\\f" + (t[i]).ToString() + ".txt", FileMode.Open); // для записи
+                    f[t[i]].Seek(0, SeekOrigin.Begin);
                 }
                 List<int> ta = new List<int>();
                 for (int i = 0; i < N; i++)
@@ -92,31 +94,37 @@ namespace BalancedMultiwayMerging
                     while(ao!=0)
                     {
                         m = 0;
-                        for(int i = 0; i < af-1; i++)
+                        for(int i = 0; i < ao-1; i++)
                         {
-                            Byte[] buffer_1 = new byte[200];
-                            Byte[] buffer_2 = new byte[200];
-                            f[i + 1].Read(buffer_1, 0, buffer_1.Length);
-                            f[i].Read(buffer_2, 0, buffer_2.Length);
-                            // вообще помойка а ведь это самое главное
-                            if (int.Parse(System.Text.Encoding.Default.GetString(buffer_1)) < int.Parse(System.Text.Encoding.Default.GetString(buffer_2)))
+                            Byte[] buffer1 = new byte[buffer.Length];
+                            Byte[] buffer2 = new byte[buffer.Length];
+                            f[i].Read(buffer1, 0, buffer1.Length);
+                            f[i + 1].Read(buffer2, 0, buffer2.Length);
+                            int first = int.Parse(System.Text.Encoding.Default.GetString(buffer1).Substring(0, sizeof(int)));
+                            int second = int.Parse(System.Text.Encoding.Default.GetString(buffer2).Substring(0, sizeof(int)));
+                            if (second < first)
                             {
                                 m = i + 1;
                             }
                         }
-                        f[ta[m]].Read(buffer, 0, buffer.Length);
+                        f[ta[m]].Seek((f[ta[m]].Position-buffer.Length), SeekOrigin.Begin);
+                        int readByteLength = f[ta[m]].Read(buffer, 0, buffer.Length);
                         f[t[j]].Write(buffer, 0, buffer.Length);
-                        if (f[ta[m]].Read(buffer, 0, buffer.Length) == 0)
+                        if (readByteLength == 0)
                         {
                             af--;
                             ao--;
+                            int tmp = ta[m];
                             ta.RemoveAt(m);
+                            ta.Add(tmp);
                         }
                         else
                         {
                             // нет ифа если кончился отрезок, че за отрезок кек
                             ao--;
+                            int tmp = ta[m];
                             ta.RemoveAt(m);
+                            ta.Add(tmp);
                         }
                     }
                     j++;
