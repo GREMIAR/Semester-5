@@ -94,12 +94,16 @@ namespace BalancedMultiwayMerging
                     while(ao!=0)
                     {
                         m = 0;
-                        for(int i = 0; i < ao-1; i++)
+                        for (int i = 0; i < ao-1; i++)
                         {
                             Byte[] buffer1 = new byte[buffer.Length];
                             Byte[] buffer2 = new byte[buffer.Length];
-                            f[i].Read(buffer1, 0, buffer1.Length);
-                            f[i + 1].Read(buffer2, 0, buffer2.Length);
+                            long pos1 = f[i].Position;
+                            long pos2 = f[i + 1].Position;
+                            int readByteLength1 = f[i].Read(buffer1, 0, buffer1.Length);
+                            int readByteLength2 = f[i + 1].Read(buffer2, 0, buffer2.Length);
+                            f[i].Seek(pos1, SeekOrigin.Begin);
+                            f[i+1].Seek(pos2, SeekOrigin.Begin);
                             int first = int.Parse(System.Text.Encoding.Default.GetString(buffer1).Substring(0, sizeof(int)));
                             int second = int.Parse(System.Text.Encoding.Default.GetString(buffer2).Substring(0, sizeof(int)));
                             if (second < first)
@@ -107,11 +111,15 @@ namespace BalancedMultiwayMerging
                                 m = i + 1;
                             }
                         }
-                        f[ta[m]].Seek((f[ta[m]].Position-buffer.Length), SeekOrigin.Begin);
-                        int readByteLength = f[ta[m]].Read(buffer, 0, buffer.Length);
+                        long pos = f[ta[m]].Position;
+                        f[ta[m]].Read(buffer, 0, buffer.Length);
                         f[t[j]].Write(buffer, 0, buffer.Length);
+                        // что-то с pos не так
+                        int readByteLength = f[ta[m]].Read(buffer, 0, buffer.Length);
+                        f[ta[m]].Seek(pos, SeekOrigin.Begin);
                         if (readByteLength == 0)
                         {
+                            // сюда не заходит
                             af--;
                             ao--;
                             int tmp = ta[m];
@@ -140,6 +148,7 @@ namespace BalancedMultiwayMerging
                     t_new[i + N] = t[i];
                 }
                 t = t_new;
+                Close(f0, f);
             }
             Close(f0, f);
             string sortedDir = filePath + "\\BalancedMultiwayMerging_SORTED";
