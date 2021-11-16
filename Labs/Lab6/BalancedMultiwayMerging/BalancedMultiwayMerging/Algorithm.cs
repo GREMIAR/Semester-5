@@ -29,7 +29,7 @@ namespace BalancedMultiwayMerging
             Byte[] buffer = new byte[sizeof(int)];
             FileStream[] f = new FileStream[2*N];
             Directory.CreateDirectory(workPath);
-            for(int i = 0; i < 2*N; i++)
+            for(int i = 0; i < 2 * N; i++)
             {
                 FileStream creating = File.Create(workPath + "\\f" + i.ToString() + ".txt");
                 creating.Close();
@@ -40,10 +40,10 @@ namespace BalancedMultiwayMerging
             }
             int j = 0;
             int L = 0;
-            int length;
-            while ((length = f0.Read(buffer, 0, buffer.Length)) > 0)
+            while (!EndOfFile(f0))
             {
-                f[j].Write(buffer, 0, length);
+                f0.Read(buffer, 0, buffer.Length);
+                f[j].Write(buffer, 0, buffer.Length);
                 j++;
                 if (j >= N)
                 {
@@ -98,56 +98,38 @@ namespace BalancedMultiwayMerging
                         {
                             Byte[] buffer1 = new byte[buffer.Length];
                             Byte[] buffer2 = new byte[buffer.Length];
-                            long pos1 = f[i].Position;
-                            long pos2 = f[i + 1].Position;
-                            int readByteLength1 = f[i].Read(buffer1, 0, buffer1.Length);
-                            int readByteLength2 = f[i + 1].Read(buffer2, 0, buffer2.Length);
-                            f[i].Seek(pos1, SeekOrigin.Begin);
-                            f[i+1].Seek(pos2, SeekOrigin.Begin);
-                            int first = int.Parse(System.Text.Encoding.Default.GetString(buffer1).Substring(0, sizeof(int)));
-                            int second = int.Parse(System.Text.Encoding.Default.GetString(buffer2).Substring(0, sizeof(int)));
-                            if (second < first)
+                            int readByteLength1 = ReadNoSeekModification(ref f[ta[i]], ref buffer1, 0, buffer1.Length);
+                            int readByteLength2 = ReadNoSeekModification(ref f[ta[i + 1]], ref buffer2, 0, buffer2.Length);
+                            if (readByteLength1 != 0 && readByteLength2 != 0)
                             {
-                                m = i + 1;
+                                int first = int.Parse(System.Text.Encoding.Default.GetString(buffer1).Substring(0, sizeof(int)));
+                                int second = int.Parse(System.Text.Encoding.Default.GetString(buffer2).Substring(0, sizeof(int)));
+                                if (second < first)
+                                {
+                                    m = i + 1;
+                                }
                             }
                         }
-                        long pos = f[ta[m]].Position;
                         f[ta[m]].Read(buffer, 0, buffer.Length);
                         f[t[j]].Write(buffer, 0, buffer.Length);
-                        // что-то с pos не так
-                        int readByteLength = f[ta[m]].Read(buffer, 0, buffer.Length);
-                        f[ta[m]].Seek(pos, SeekOrigin.Begin);
-                        if (readByteLength == 0)
+                        if (EndOfFile(f[ta[m]]))
                         {
-                            // сюда не заходит
-                            af--;
-                            ao--;
-                            int tmp = ta[m];
-                            ta.RemoveAt(m);
-                            ta.Add(tmp);
+                            af = ModifyAF(af);
+                            ao = ModifyAO(ao);
+                            ta = ModifyTA(ta, m);
                         }
                         else
                         {
-                            // нет ифа если кончился отрезок, че за отрезок кек
-                            ao--;
-                            int tmp = ta[m];
-                            ta.RemoveAt(m);
-                            ta.Add(tmp);
+                            if (true) // если кончился отрезок, пока что в отрезке по одной записи так что стоит true
+                            {
+                                ao = ModifyAO(ao);
+                                ta = ModifyTA(ta, m);
+                            }
                         }
                     }
-                    j++;
-                    if (j >= 2*N)
-                    {
-                        j = N;
-                    }
+                    j = NextOutputFileIndex(j, N);
                 }
-                int[] t_new = new int[2 * N];
-                for(int i = 0; i < N; i++)
-                {
-                    t_new[i] = t[i + N];
-                    t_new[i + N] = t[i];
-                }
-                t = t_new;
+                t = SwitchIndexMap(t);
                 Close(f0, f);
             }
             Close(f0, f);
@@ -156,6 +138,69 @@ namespace BalancedMultiwayMerging
             File.Delete(sortedDir + "\\SORTED.txt");
             File.Copy(workPath + "\\f" + t[0].ToString() + ".txt", sortedDir + "\\SORTED.txt");
             Clean();
+        }
+
+        bool EndOfFile(FileStream fileStream)
+        {
+            Byte[] array = new byte[1];
+            if (ReadNoSeekModification(ref fileStream, ref array, 0, array.Length) == 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        int ModifyAF(int af)
+        {
+            af--;
+            return af;
+        }
+
+        int ModifyAO(int ao)
+        {
+            ao--;
+            return ao;
+        }
+
+        List<int> ModifyTA(List<int> ta, int m)
+        {
+            int tmp = ta[m];
+            ta.RemoveAt(m);
+            ta.Add(tmp);
+            return ta;
+        }
+
+        int ReadNoSeekModification(ref FileStream fileStream, ref Byte[] array, int offset, int count)
+        {
+            long pos = fileStream.Position;
+            int readByteLength = fileStream.Read(array, 0, array.Length);
+            fileStream.Seek(pos, SeekOrigin.Begin);
+            return readByteLength;
+        }
+
+        int[] SwitchIndexMap(int[] indexMap)
+        {
+            int N = indexMap.Length/2;
+            int[] t_new = new int[2*N];
+            for (int i = 0; i < N; i++)
+            {
+                t_new[i] = indexMap[i + N];
+                t_new[i + N] = indexMap[i];
+            }
+            return t_new;
+        }
+
+        int NextOutputFileIndex(int index, int N)
+        {
+            index++;
+            if (index >= 2 * N)
+            {
+                index = N;
+            }
+            return index;
         }
 
         void Close(FileStream f0, FileStream[] f)
