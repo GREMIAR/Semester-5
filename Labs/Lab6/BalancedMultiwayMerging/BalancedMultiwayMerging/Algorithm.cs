@@ -14,6 +14,9 @@ namespace BalancedMultiwayMerging
         bool cleanRequired;
         string filePath;
         string workPath;
+        FileStream f0;
+        Byte[] buffer;
+        FileStream[] f;
 
         public Algorithm(string filename, int mergeWays, bool cleanRequired)
         {
@@ -22,24 +25,19 @@ namespace BalancedMultiwayMerging
             this.cleanRequired = cleanRequired;
             this.filePath = filename.Substring(0, filename.LastIndexOf("\\"));
             this.workPath = filePath + "\\BalancedMultiwayMerging_Files";
+            this.buffer = new byte[sizeof(int)];
+            f = new FileStream[2*N];
         }
-        public void Sort()
+
+        void InitialDistribution(ref int j, ref int L)
         {
-            FileStream f0 = File.Open(filename, FileMode.Open); // для чтения
-            Byte[] buffer = new byte[sizeof(int)];
-            FileStream[] f = new FileStream[2*N];
-            Directory.CreateDirectory(workPath);
-            for(int i = 0; i < 2 * N; i++)
-            {
-                FileStream creating = File.Create(workPath + "\\f" + i.ToString() + ".txt");
-                creating.Close();
-            }
+            f0 = File.Open(filename, FileMode.Open); // для чтения
             for (int i = 0; i < N; i++)
             {
                 f[i] = File.Open(workPath + "\\f" + i.ToString() + ".txt", FileMode.Open); // для записи
             }
-            int j = 0;
-            int L = 0;
+            j = 0;
+            L = 0;
             while (!EndOfFile(f0))
             {
                 f0.Read(buffer, 0, buffer.Length);
@@ -50,94 +48,144 @@ namespace BalancedMultiwayMerging
                     j = 0;
                 }
                 L++;
-            } 
+            }
             for (int i = 0; i < N; i++)
             {
                 f[i].Close();
             }
-            int af;
-            int[] t = new int[2 * N];
-            for (int i = 0; i < 2*N; i++)
+        }
+
+        void CreateWorkDir()
+        {
+            Directory.CreateDirectory(workPath);
+            CreateWorkFiles();
+        }
+
+        void CreateWorkFiles()
+        {
+            for (int i = 0; i < 2 * N; i++)
             {
-                t[i] = i;
+                FileStream creating = File.Create(workPath + "\\f" + i.ToString() + ".txt");
+                creating.Close();
             }
+        }
+
+        void OpenForMerge(int af, int[] t)
+        {
+            for (int i = 0; i < af; i++)
+            {
+                f[t[i]] = File.Open(workPath + "\\f" + (t[i]).ToString() + ".txt", FileMode.Open); // для чтения
+            }
+            for (int i = N; i < 2 * N; i++)
+            {
+                f[t[i]] = File.Open(workPath + "\\f" + (t[i]).ToString() + ".txt", FileMode.Open); // для записи
+            }
+        }
+
+        int FindFileWithMinSegment(int ao, List<int> ta)
+        {
+            int m = 0;
+            for (int i = 0; i < ao - 1; i++)
+            {
+                Byte[] buffer1 = new byte[buffer.Length];
+                Byte[] buffer2 = new byte[buffer.Length];
+                int readByteLength1 = ReadNoSeekModification(ref f[ta[i]], ref buffer1, 0, buffer1.Length);
+                int readByteLength2 = ReadNoSeekModification(ref f[ta[i + 1]], ref buffer2, 0, buffer2.Length);
+                if (readByteLength1 != 0 && readByteLength2 != 0)
+                {
+                    int first = int.Parse(System.Text.Encoding.Default.GetString(buffer1).Substring(0, sizeof(int)));
+                    int second = int.Parse(System.Text.Encoding.Default.GetString(buffer2).Substring(0, sizeof(int)));
+                    if (second < first)
+                    {
+                        m = i + 1;
+                    }
+                }
+            }
+            return m;
+        }
+
+        List<int> InitializeActiveFileIndexArray(int af)
+        {
+            List<int> ta = new List<int>();
+            for (int i = 0; i < af; i++)
+            {
+                ta.Add(i);
+            }
+            return ta;
+        }
+
+        public void Sort()
+        {
+            CreateWorkDir();
+            int L = 0, j = 0;
+            InitialDistribution(ref j, ref L);
+            int[] t = InitializeIndexMap();
+
             while (L != 1)
             {
-                af = Math.Min(L, N);
-                for (int i = 0; i < af; i++)
-                {
-                    f[t[i]] = File.Open(workPath + "\\f" + (t[i]).ToString() + ".txt", FileMode.Open); // для чтения
-                    f[t[i]].Seek(0, SeekOrigin.Begin);
-                }
-                for (int i = N; i < 2*N; i++)
-                {
-                    f[t[i]] = File.Open(workPath + "\\f" + (t[i]).ToString() + ".txt", FileMode.Open); // для записи
-                    f[t[i]].Seek(0, SeekOrigin.Begin);
-                }
-                List<int> ta = new List<int>();
-                for (int i = 0; i < N; i++)
-                {
-                    ta.Add(i);
-                }
-                for (int i = 0; i < af; i++)
-                {
-                    ta[i] = i;
-                }
+                int af = Math.Min(L, N);
+                OpenForMerge(af, t);
+                List<int> ta = InitializeActiveFileIndexArray(af);
                 L = 0;
                 j = N;
-                int ao;
                 while(af!=0)
                 {
                     L++;
-                    ao = af;
+                    int ao = af;
                     int m;
                     while(ao!=0)
                     {
-                        m = 0;
-                        for (int i = 0; i < ao-1; i++)
-                        {
-                            Byte[] buffer1 = new byte[buffer.Length];
-                            Byte[] buffer2 = new byte[buffer.Length];
-                            int readByteLength1 = ReadNoSeekModification(ref f[ta[i]], ref buffer1, 0, buffer1.Length);
-                            int readByteLength2 = ReadNoSeekModification(ref f[ta[i + 1]], ref buffer2, 0, buffer2.Length);
-                            if (readByteLength1 != 0 && readByteLength2 != 0)
-                            {
-                                int first = int.Parse(System.Text.Encoding.Default.GetString(buffer1).Substring(0, sizeof(int)));
-                                int second = int.Parse(System.Text.Encoding.Default.GetString(buffer2).Substring(0, sizeof(int)));
-                                if (second < first)
-                                {
-                                    m = i + 1;
-                                }
-                            }
-                        }
+                        m = FindFileWithMinSegment(ao, ta);
                         f[ta[m]].Read(buffer, 0, buffer.Length);
                         f[t[j]].Write(buffer, 0, buffer.Length);
                         if (EndOfFile(f[ta[m]]))
                         {
-                            af = ModifyAF(af);
-                            ao = ModifyAO(ao);
-                            ta = ModifyTA(ta, m);
+                            FinishFile(ref af, ref ao, ref ta, m);
                         }
-                        else
+                        else //if (SegmentFinished)
                         {
-                            if (true) // если кончился отрезок, пока что в отрезке по одной записи так что стоит true
-                            {
-                                ao = ModifyAO(ao);
-                                ta = ModifyTA(ta, m);
-                            }
+                            FinishSegment(ref ao, ref ta, m);
                         }
                     }
-                    j = NextOutputFileIndex(j, N);
+                    j = NextOutputFileIndex(j);
                 }
                 t = SwitchIndexMap(t);
                 Close(f0, f);
             }
+            Finish(t);
+        }
+
+        void FinishFile(ref int af, ref int ao, ref List<int> ta, int m)
+        {
+            af = ModifyAF(af);
+            ao = ModifyAO(ao);
+            ta = ModifyTA(ta, m);
+        }
+
+        void FinishSegment(ref int ao, ref List<int> ta, int m)
+        {
+            ao = ModifyAO(ao);
+            ta = ModifyTA(ta, m);
+        }
+
+        void Finish(int[] t)
+        {
             Close(f0, f);
             string sortedDir = filePath + "\\BalancedMultiwayMerging_SORTED";
             Directory.CreateDirectory(sortedDir);
             File.Delete(sortedDir + "\\SORTED.txt");
             File.Copy(workPath + "\\f" + t[0].ToString() + ".txt", sortedDir + "\\SORTED.txt");
             Clean();
+        }
+
+        int[] InitializeIndexMap()
+        {
+            int[] t = new int[2 * N];
+            for (int i = 0; i < 2 * N; i++)
+            {
+                t[i] = i;
+            }
+            return t;
         }
 
         bool EndOfFile(FileStream fileStream)
@@ -193,7 +241,7 @@ namespace BalancedMultiwayMerging
             return t_new;
         }
 
-        int NextOutputFileIndex(int index, int N)
+        int NextOutputFileIndex(int index)
         {
             index++;
             if (index >= 2 * N)
