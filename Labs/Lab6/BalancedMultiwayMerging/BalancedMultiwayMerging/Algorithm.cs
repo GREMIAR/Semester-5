@@ -114,6 +114,8 @@ namespace BalancedMultiwayMerging
             int segmentCount = InitialDistribution();
             int[] indexMap = InitializeIndexMap();
 
+
+            // бесконечный цикл, т.к. конечный файл делится на отрезки по 4 байта, хотя должен состоять из одного отрезка длиной, равной сумме длин отрезков исходного файла.
             while (segmentCount != 1)
             {
                 int activeFilesCount = Math.Min(segmentCount, mergeWaysCount);
