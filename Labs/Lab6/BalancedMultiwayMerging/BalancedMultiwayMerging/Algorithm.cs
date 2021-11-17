@@ -10,49 +10,43 @@ namespace BalancedMultiwayMerging
     class Algorithm
     {
         string filename;
-        int N;
+        int mergeWaysCount;
         bool cleanRequired;
         string filePath;
         string workPath;
-        FileStream f0;
+        FileStream originalFile;
         Byte[] buffer;
-        FileStream[] f;
+        FileStream[] workFile;
 
-        public Algorithm(string filename, int mergeWays, bool cleanRequired)
+        public Algorithm(string filename, int mergeWaysCount, bool cleanRequired)
         {
             this.filename = filename;
-            this.N = mergeWays;
+            this.mergeWaysCount = mergeWaysCount;
             this.cleanRequired = cleanRequired;
             this.filePath = filename.Substring(0, filename.LastIndexOf("\\"));
             this.workPath = filePath + "\\BalancedMultiwayMerging_Files";
             this.buffer = new byte[sizeof(int)];
-            f = new FileStream[2*N];
+            workFile = new FileStream[2*this.mergeWaysCount];
         }
 
-        void InitialDistribution(ref int j, ref int L)
+        int InitialDistribution()
         {
-            f0 = File.Open(filename, FileMode.Open); // для чтения
-            for (int i = 0; i < N; i++)
+            originalFile = File.Open(filename, FileMode.Open); // для чтения
+            for (int i = 0; i < mergeWaysCount; i++)
             {
-                f[i] = File.Open(workPath + "\\f" + i.ToString() + ".txt", FileMode.Open); // для записи
+                workFile[i] = File.Open(workPath + "\\workFile" + i.ToString() + ".txt", FileMode.Open); // для записи
             }
-            j = 0;
-            L = 0;
-            while (!EndOfFile(f0))
+            int nextOutputFileIndex = 0;
+            int segmentCount = 0;
+            while (!EndOfFile(originalFile))
             {
-                f0.Read(buffer, 0, buffer.Length);
-                f[j].Write(buffer, 0, buffer.Length);
-                j++;
-                if (j >= N)
-                {
-                    j = 0;
-                }
-                L++;
+                originalFile.Read(buffer, 0, buffer.Length);
+                workFile[nextOutputFileIndex].Write(buffer, 0, buffer.Length);
+                nextOutputFileIndex = NextOutputFileIndex1N(nextOutputFileIndex);
+                segmentCount++;
             }
-            for (int i = 0; i < N; i++)
-            {
-                f[i].Close();
-            }
+            Close();
+            return segmentCount;
         }
 
         void CreateWorkDir()
@@ -63,51 +57,51 @@ namespace BalancedMultiwayMerging
 
         void CreateWorkFiles()
         {
-            for (int i = 0; i < 2 * N; i++)
+            for (int i = 0; i < 2 * mergeWaysCount; i++)
             {
-                FileStream creating = File.Create(workPath + "\\f" + i.ToString() + ".txt");
+                FileStream creating = File.Create(workPath + "\\workFile" + i.ToString() + ".txt");
                 creating.Close();
             }
         }
 
-        void OpenForMerge(int af, int[] t)
+        void OpenForMerge(int activeFilesCount, int[] indexMap)
         {
-            for (int i = 0; i < af; i++)
+            for (int i = 0; i < activeFilesCount; i++)
             {
-                f[t[i]] = File.Open(workPath + "\\f" + (t[i]).ToString() + ".txt", FileMode.Open); // для чтения
+                workFile[indexMap[i]] = File.Open(workPath + "\\workFile" + (indexMap[i]).ToString() + ".txt", FileMode.Open); // для чтения
             }
-            for (int i = N; i < 2 * N; i++)
+            for (int i = mergeWaysCount; i < 2 * mergeWaysCount; i++)
             {
-                f[t[i]] = File.Open(workPath + "\\f" + (t[i]).ToString() + ".txt", FileMode.Open); // для записи
+                workFile[indexMap[i]] = File.Open(workPath + "\\workFile" + (indexMap[i]).ToString() + ".txt", FileMode.Open); // для записи
             }
         }
 
-        int FindFileWithMinSegment(int ao, List<int> ta)
+        int FindFileWithMinSegment(int activeFilesWithActiveSegmentsCount, List<int> ta)
         {
-            int m = 0;
-            for (int i = 0; i < ao - 1; i++)
+            int IndexOfAFileWithMinSegment = 0;
+            for (int i = 0; i < activeFilesWithActiveSegmentsCount - 1; i++)
             {
                 Byte[] buffer1 = new byte[buffer.Length];
                 Byte[] buffer2 = new byte[buffer.Length];
-                int readByteLength1 = ReadNoSeekModification(ref f[ta[i]], ref buffer1, 0, buffer1.Length);
-                int readByteLength2 = ReadNoSeekModification(ref f[ta[i + 1]], ref buffer2, 0, buffer2.Length);
+                int readByteLength1 = ReadNoSeekModification(ref workFile[ta[i]], ref buffer1, 0, buffer1.Length);
+                int readByteLength2 = ReadNoSeekModification(ref workFile[ta[i + 1]], ref buffer2, 0, buffer2.Length);
                 if (readByteLength1 != 0 && readByteLength2 != 0)
                 {
                     int first = int.Parse(System.Text.Encoding.Default.GetString(buffer1).Substring(0, sizeof(int)));
                     int second = int.Parse(System.Text.Encoding.Default.GetString(buffer2).Substring(0, sizeof(int)));
                     if (second < first)
                     {
-                        m = i + 1;
+                        IndexOfAFileWithMinSegment = i + 1;
                     }
                 }
             }
-            return m;
+            return IndexOfAFileWithMinSegment;
         }
 
-        List<int> InitializeActiveFileIndexArray(int af)
+        List<int> InitializeActiveFileIndexArray(int activeFilesCount)
         {
             List<int> ta = new List<int>();
-            for (int i = 0; i < af; i++)
+            for (int i = 0; i < activeFilesCount; i++)
             {
                 ta.Add(i);
             }
@@ -117,75 +111,78 @@ namespace BalancedMultiwayMerging
         public void Sort()
         {
             CreateWorkDir();
-            int L = 0, j = 0;
-            InitialDistribution(ref j, ref L);
-            int[] t = InitializeIndexMap();
+            int segmentCount = InitialDistribution();
+            int[] indexMap = InitializeIndexMap();
 
-            while (L != 1)
+            while (segmentCount != 1)
             {
-                int af = Math.Min(L, N);
-                OpenForMerge(af, t);
-                List<int> ta = InitializeActiveFileIndexArray(af);
-                L = 0;
-                j = N;
-                while(af!=0)
+                int activeFilesCount = Math.Min(segmentCount, mergeWaysCount);
+                OpenForMerge(activeFilesCount, indexMap);
+                List<int> ta = InitializeActiveFileIndexArray(activeFilesCount);
+                segmentCount = 0;
+                int nextOutputFileIndex = mergeWaysCount;
+                while(activeFilesCount!=0)
                 {
-                    L++;
-                    int ao = af;
-                    int m;
-                    while(ao!=0)
-                    {
-                        m = FindFileWithMinSegment(ao, ta);
-                        f[ta[m]].Read(buffer, 0, buffer.Length);
-                        f[t[j]].Write(buffer, 0, buffer.Length);
-                        if (EndOfFile(f[ta[m]]))
-                        {
-                            FinishFile(ref af, ref ao, ref ta, m);
-                        }
-                        else //if (SegmentFinished)
-                        {
-                            FinishSegment(ref ao, ref ta, m);
-                        }
-                    }
-                    j = NextOutputFileIndex(j);
+                    segmentCount++;
+                    MergeFirstActiveSegments(ref activeFilesCount, ref ta, indexMap, nextOutputFileIndex);
+                    nextOutputFileIndex = NextOutputFileIndex2N(nextOutputFileIndex);
                 }
-                t = SwitchIndexMap(t);
-                Close(f0, f);
+                indexMap = SwitchIndexMap(indexMap);
+                Close();
             }
-            Finish(t);
+            Finish(indexMap);
         }
 
-        void FinishFile(ref int af, ref int ao, ref List<int> ta, int m)
+        void MergeFirstActiveSegments(ref int activeFilesCount, ref List<int> ta, int[] indexMap, int nextOutputFileIndex)
         {
-            af = ModifyAF(af);
-            ao = ModifyAO(ao);
-            ta = ModifyTA(ta, m);
+            int activeFilesWithActiveSegmentsCount = activeFilesCount;
+            while (activeFilesWithActiveSegmentsCount != 0)
+            {
+                int IndexOfAFileWithMinSegment = FindFileWithMinSegment(activeFilesWithActiveSegmentsCount, ta);
+                workFile[ta[IndexOfAFileWithMinSegment]].Read(buffer, 0, buffer.Length);
+                workFile[indexMap[nextOutputFileIndex]].Write(buffer, 0, buffer.Length);
+                if (EndOfFile(workFile[ta[IndexOfAFileWithMinSegment]]))
+                {
+                    FinishFile(ref activeFilesCount, ref activeFilesWithActiveSegmentsCount, ref ta, IndexOfAFileWithMinSegment);
+                }
+                else //if (SegmentFinished)
+                {
+                    FinishSegment(ref activeFilesWithActiveSegmentsCount, ref ta, IndexOfAFileWithMinSegment);
+                }
+            }
         }
 
-        void FinishSegment(ref int ao, ref List<int> ta, int m)
+        void FinishFile(ref int activeFilesCount, ref int activeFilesWithActiveSegmentsCount, ref List<int> ta, int IndexOfAFileWithMinSegment)
         {
-            ao = ModifyAO(ao);
-            ta = ModifyTA(ta, m);
+            activeFilesCount = ModifyAF(activeFilesCount);
+            activeFilesWithActiveSegmentsCount = ModifyAO(activeFilesWithActiveSegmentsCount);
+            ta = ModifyTA(ta, IndexOfAFileWithMinSegment);
         }
 
-        void Finish(int[] t)
+        void FinishSegment(ref int activeFilesWithActiveSegmentsCount, ref List<int> ta, int IndexOfAFileWithMinSegment)
         {
-            Close(f0, f);
+            activeFilesWithActiveSegmentsCount = ModifyAO(activeFilesWithActiveSegmentsCount);
+            ta = ModifyTA(ta, IndexOfAFileWithMinSegment);
+        }
+
+        void Finish(int[] indexMap)
+        {
+            Close();
             string sortedDir = filePath + "\\BalancedMultiwayMerging_SORTED";
             Directory.CreateDirectory(sortedDir);
             File.Delete(sortedDir + "\\SORTED.txt");
-            File.Copy(workPath + "\\f" + t[0].ToString() + ".txt", sortedDir + "\\SORTED.txt");
+            File.Copy(workPath + "\\workFile" + indexMap[0].ToString() + ".txt", sortedDir + "\\SORTED.txt");
             Clean();
         }
 
         int[] InitializeIndexMap()
         {
-            int[] t = new int[2 * N];
-            for (int i = 0; i < 2 * N; i++)
+            int[] indexMap = new int[2 * mergeWaysCount];
+            for (int i = 0; i < 2 * mergeWaysCount; i++)
             {
-                t[i] = i;
+                indexMap[i] = i;
             }
-            return t;
+            return indexMap;
         }
 
         bool EndOfFile(FileStream fileStream)
@@ -201,22 +198,22 @@ namespace BalancedMultiwayMerging
             }
         }
 
-        int ModifyAF(int af)
+        int ModifyAF(int activeFilesCount)
         {
-            af--;
-            return af;
+            activeFilesCount--;
+            return activeFilesCount;
         }
 
-        int ModifyAO(int ao)
+        int ModifyAO(int activeFilesWithActiveSegmentsCount)
         {
-            ao--;
-            return ao;
+            activeFilesWithActiveSegmentsCount--;
+            return activeFilesWithActiveSegmentsCount;
         }
 
-        List<int> ModifyTA(List<int> ta, int m)
+        List<int> ModifyTA(List<int> ta, int IndexOfAFileWithMinSegment)
         {
-            int tmp = ta[m];
-            ta.RemoveAt(m);
+            int tmp = ta[IndexOfAFileWithMinSegment];
+            ta.RemoveAt(IndexOfAFileWithMinSegment);
             ta.Add(tmp);
             return ta;
         }
@@ -231,32 +228,48 @@ namespace BalancedMultiwayMerging
 
         int[] SwitchIndexMap(int[] indexMap)
         {
-            int N = indexMap.Length/2;
-            int[] t_new = new int[2*N];
-            for (int i = 0; i < N; i++)
+            int mergeWaysCount = indexMap.Length/2;
+            int[] newIndexMap = new int[2*mergeWaysCount];
+            for (int i = 0; i < mergeWaysCount; i++)
             {
-                t_new[i] = indexMap[i + N];
-                t_new[i + N] = indexMap[i];
+                newIndexMap[i] = indexMap[i + mergeWaysCount];
+                newIndexMap[i + mergeWaysCount] = indexMap[i];
             }
-            return t_new;
+            return newIndexMap;
         }
 
-        int NextOutputFileIndex(int index)
+        int NextOutputFileIndex1N(int index)
         {
             index++;
-            if (index >= 2 * N)
+            if (index >= mergeWaysCount)
             {
-                index = N;
+                index = 0;
             }
             return index;
         }
 
-        void Close(FileStream f0, FileStream[] f)
+        int NextOutputFileIndex2N(int index)
         {
-            f0.Close();
-            foreach(FileStream file in f)
+            index++;
+            if (index >= 2 * mergeWaysCount)
             {
-                file.Close();
+                index = mergeWaysCount;
+            }
+            return index;
+        }
+
+        void Close()
+        {
+            if (originalFile != null)
+            {
+                originalFile.Close();
+            }
+            for(int i = 0; i < workFile.Length; i++)
+            {
+                if (workFile[i] != null)
+                {
+                    workFile[i].Close();
+                }
             }
         }
 
