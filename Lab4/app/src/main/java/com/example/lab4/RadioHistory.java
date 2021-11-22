@@ -27,7 +27,7 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.HashMap;
 
-public class CheckInternetConnection extends AsyncTask<String, Integer, Void> {
+public class RadioHistory extends AsyncTask<String, Integer, Void> {
 
     int idx=0;
     Context context;
@@ -74,7 +74,7 @@ public class CheckInternetConnection extends AsyncTask<String, Integer, Void> {
         return result.toString();
     }
 
-    public CheckInternetConnection(Context c, TableLayout tableLayout)
+    public RadioHistory(Context c, TableLayout tableLayout)
     {
         context = c;
         this.tableLayout=tableLayout;

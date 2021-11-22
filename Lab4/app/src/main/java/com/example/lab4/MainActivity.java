@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         TableLayout tableLayout = (TableLayout) findViewById(R.id.table);
-        CheckInternetConnection connection = new CheckInternetConnection(this,tableLayout);
+        RadioHistory connection = new RadioHistory(this,tableLayout);
         connection.execute();
     }
 }
