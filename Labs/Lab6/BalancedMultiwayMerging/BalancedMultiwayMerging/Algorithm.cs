@@ -17,6 +17,7 @@ namespace BalancedMultiwayMerging
         FileStream originalFile;
         Byte[] buffer;
         FileStream[] workFile;
+        readonly Byte[] separator = Encoding.UTF8.GetBytes("/");
 
         public Algorithm(string filename, int mergeWaysCount, bool cleanRequired)
         {
@@ -42,6 +43,7 @@ namespace BalancedMultiwayMerging
             {
                 originalFile.Read(buffer, 0, buffer.Length);
                 workFile[nextOutputFileIndex].Write(buffer, 0, buffer.Length);
+                workFile[nextOutputFileIndex].Write(separator, 0, separator.Length);
                 nextOutputFileIndex = NextOutputFileIndex1N(nextOutputFileIndex);
                 segmentCount++;
             }
@@ -68,11 +70,13 @@ namespace BalancedMultiwayMerging
         {
             for (int i = 0; i < activeFilesCount; i++)
             {
-                workFile[indexMap[i]] = File.Open(workPath + "\\workFile" + (indexMap[i]).ToString() + ".txt", FileMode.Open); // для чтения
+                workFile[indexMap[i]] = File.Open(workPath + "\\workFile" + (indexMap[i]).ToString() + ".txt", FileMode.Open);
             }
             for (int i = mergeWaysCount; i < 2 * mergeWaysCount; i++)
             {
-                workFile[indexMap[i]] = File.Open(workPath + "\\workFile" + (indexMap[i]).ToString() + ".txt", FileMode.Open); // для записи
+                FileStream creating = File.Create(workPath + "\\workFile" + (indexMap[i]).ToString() + ".txt");
+                creating.Close();
+                workFile[indexMap[i]] = File.Open(workPath + "\\workFile" + (indexMap[i]).ToString() + ".txt", FileMode.Open);
             }
         }
 
@@ -98,12 +102,12 @@ namespace BalancedMultiwayMerging
             return IndexOfAFileWithMinSegment;
         }
 
-        List<int> InitializeActiveFileIndexArray(int activeFilesCount)
+        List<int> InitializeActiveFileIndexArray(int activeFilesCount, int[] indexMap)
         {
             List<int> filesWithActiveSegmentsIndex = new List<int>();
             for (int i = 0; i < activeFilesCount; i++)
             {
-                filesWithActiveSegmentsIndex.Add(i);
+                filesWithActiveSegmentsIndex.Add(indexMap[i]);
             }
             return filesWithActiveSegmentsIndex;
         }
@@ -115,12 +119,11 @@ namespace BalancedMultiwayMerging
             int[] indexMap = InitializeIndexMap();
 
 
-            // бесконечный цикл, т.к. конечный файл делится на отрезки по 4 байта, хотя должен состоять из одного отрезка длиной, равной сумме длин отрезков исходного файла.
             while (segmentCount != 1)
             {
                 int activeFilesCount = Math.Min(segmentCount, mergeWaysCount);
                 OpenForMerge(activeFilesCount, indexMap);
-                List<int> filesWithActiveSegmentsIndex = InitializeActiveFileIndexArray(activeFilesCount);
+                List<int> filesWithActiveSegmentsIndex = InitializeActiveFileIndexArray(activeFilesCount, indexMap);
                 segmentCount = 0;
                 int nextOutputFileIndex = mergeWaysCount;
                 while(activeFilesCount!=0)
@@ -147,9 +150,9 @@ namespace BalancedMultiwayMerging
                 {
                     FinishFile(ref activeFilesCount, ref activeFilesWithActiveSegmentsCount, ref filesWithActiveSegmentsIndex, IndexOfAFileWithMinSegment);
                 }
-                else //if (SegmentFinished)
+                else if (EndOfSegment(workFile[filesWithActiveSegmentsIndex[IndexOfAFileWithMinSegment]]))
                 {
-                    FinishSegment(ref activeFilesWithActiveSegmentsCount, ref filesWithActiveSegmentsIndex, IndexOfAFileWithMinSegment);
+                    FinishSegment(ref activeFilesWithActiveSegmentsCount, ref filesWithActiveSegmentsIndex, IndexOfAFileWithMinSegment, indexMap, nextOutputFileIndex);
                 }
             }
         }
@@ -158,13 +161,15 @@ namespace BalancedMultiwayMerging
         {
             activeFilesCount = ModifyAF(activeFilesCount);
             activeFilesWithActiveSegmentsCount = ModifyAO(activeFilesWithActiveSegmentsCount);
-            filesWithActiveSegmentsIndex = ModifyTA(filesWithActiveSegmentsIndex, IndexOfAFileWithMinSegment);
+            filesWithActiveSegmentsIndex = ModifyTA(filesWithActiveSegmentsIndex, IndexOfAFileWithMinSegment, mergeWaysCount - 1);
         }
 
-        void FinishSegment(ref int activeFilesWithActiveSegmentsCount, ref List<int> filesWithActiveSegmentsIndex, int IndexOfAFileWithMinSegment)
+        void FinishSegment(ref int activeFilesWithActiveSegmentsCount, ref List<int> filesWithActiveSegmentsIndex, int IndexOfAFileWithMinSegment, int[] indexMap, int nextOutputFileIndex)
         {
+            workFile[filesWithActiveSegmentsIndex[IndexOfAFileWithMinSegment]].Read(new byte[separator.Length], 0, separator.Length);
+            workFile[indexMap[nextOutputFileIndex]].Write(separator, 0, separator.Length);
             activeFilesWithActiveSegmentsCount = ModifyAO(activeFilesWithActiveSegmentsCount);
-            filesWithActiveSegmentsIndex = ModifyTA(filesWithActiveSegmentsIndex, IndexOfAFileWithMinSegment);
+            filesWithActiveSegmentsIndex = ModifyTA(filesWithActiveSegmentsIndex, IndexOfAFileWithMinSegment, activeFilesWithActiveSegmentsCount);
         }
 
         void Finish(int[] indexMap)
@@ -186,6 +191,21 @@ namespace BalancedMultiwayMerging
             }
             return indexMap;
         }
+
+        bool EndOfSegment(FileStream fileStream)
+        {
+            Byte[] array = new byte[separator.Length];
+            ReadNoSeekModification(ref fileStream, ref array, 0, array.Length);
+            if (array[0] == separator[0])
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
 
         bool EndOfFile(FileStream fileStream)
         {
@@ -212,11 +232,11 @@ namespace BalancedMultiwayMerging
             return activeFilesWithActiveSegmentsCount;
         }
 
-        List<int> ModifyTA(List<int> filesWithActiveSegmentsIndex, int IndexOfAFileWithMinSegment)
+        List<int> ModifyTA(List<int> filesWithActiveSegmentsIndex, int IndexOfAFileWithMinSegment, int insertPos)
         {
             int tmp = filesWithActiveSegmentsIndex[IndexOfAFileWithMinSegment];
             filesWithActiveSegmentsIndex.RemoveAt(IndexOfAFileWithMinSegment);
-            filesWithActiveSegmentsIndex.Add(tmp);
+            filesWithActiveSegmentsIndex.Insert(insertPos, tmp);
             return filesWithActiveSegmentsIndex;
         }
 

@@ -65,6 +65,8 @@ namespace BalancedMultiwayMerging
             // checkBox_Clean
             // 
             this.checkBox_Clean.AutoSize = true;
+            this.checkBox_Clean.Checked = true;
+            this.checkBox_Clean.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkBox_Clean.Location = new System.Drawing.Point(12, 69);
             this.checkBox_Clean.Name = "checkBox_Clean";
             this.checkBox_Clean.Size = new System.Drawing.Size(515, 17);
