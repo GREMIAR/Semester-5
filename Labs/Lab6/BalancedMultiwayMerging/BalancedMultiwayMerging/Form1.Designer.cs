@@ -79,7 +79,7 @@ namespace BalancedMultiwayMerging
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1464, 877);
+            this.ClientSize = new System.Drawing.Size(570, 147);
             this.Controls.Add(this.checkBox_Clean);
             this.Controls.Add(this.label_mergeWays);
             this.Controls.Add(this.textBox_mergeWaysCount);
