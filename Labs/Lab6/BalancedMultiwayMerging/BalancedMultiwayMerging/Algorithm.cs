@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using System.Windows.Forms;
 
 namespace BalancedMultiwayMerging
 {
@@ -28,25 +29,32 @@ namespace BalancedMultiwayMerging
             workFile = new FileStream[2*this.mergeWaysCount];
         }
 
-        int InitialDistribution()
+        bool InitialDistribution(out int segmentCount)
         {
+            segmentCount = 0;
             originalFile = File.Open(filename, FileMode.Open); // для чтения
-            for (int i = 0; i < mergeWaysCount; i++)
+            if(originalFile.Length>0)
             {
-                workFile[i] = File.Open(workPath + "\\workFile" + i.ToString() + ".txt", FileMode.Open); // для записи
+                for (int i = 0; i < mergeWaysCount; i++)
+                {
+                    workFile[i] = File.Open(workPath + "\\workFile" + i.ToString() + ".txt", FileMode.Open); // для записи
+                }
+                int nextOFIndex = 0;
+                while (!EndOfFile(originalFile))
+                {
+                    originalFile.Read(buffer, 0, buffer.Length);
+                    workFile[nextOFIndex].Write(buffer, 0, buffer.Length);
+                    workFile[nextOFIndex].Write(separator, 0, separator.Length);
+                    nextOFIndex = nextOFIndex1N(nextOFIndex);
+                    segmentCount++;
+                }
+                Close();
+                return true;
             }
-            int nextOFIndex = 0;
-            int segmentCount = 0;
-            while (!EndOfFile(originalFile))
+            else
             {
-                originalFile.Read(buffer, 0, buffer.Length);
-                workFile[nextOFIndex].Write(buffer, 0, buffer.Length);
-                workFile[nextOFIndex].Write(separator, 0, separator.Length);
-                nextOFIndex = nextOFIndex1N(nextOFIndex);
-                segmentCount++;
+                return false;
             }
-            Close();
-            return segmentCount;
         }
 
         void CreateWorkDir()
@@ -80,12 +88,12 @@ namespace BalancedMultiwayMerging
 
         int FindMin(int AFWASCount, List<int> FWASIndexList)
         {
-            int min = FWASIndexList[0];
+            int min = 0;
             for (int i = 0; i < AFWASCount - 1; i++)
             {
                 Byte[] buffer1 = new byte[buffer.Length];
                 Byte[] buffer2 = new byte[buffer.Length];
-                int readByteLength1 = SafeRead(ref workFile[min], ref buffer1, 0, buffer1.Length);
+                int readByteLength1 = SafeRead(ref workFile[FWASIndexList[min]], ref buffer1, 0, buffer1.Length);
                 int readByteLength2 = SafeRead(ref workFile[FWASIndexList[i + 1]], ref buffer2, 0, buffer2.Length);
                 if (readByteLength1 != 0 && readByteLength2 != 0)
                 {
@@ -113,27 +121,32 @@ namespace BalancedMultiwayMerging
         public void Sort()
         {
             CreateWorkDir();
-            int segmentCount = InitialDistribution();
-            int[] indexMap = InitializeIndexMap();
-
-
-            while (segmentCount != 1)
+            if(InitialDistribution(out int segmentCount))
             {
-                int AFCount = Math.Min(segmentCount, mergeWaysCount);
-                OpenForMerge(AFCount, indexMap);
-                List<int> FWASIndexList = InitializeAFWASIndexList(AFCount, indexMap);
-                segmentCount = 0;
-                int nextOFIndex = mergeWaysCount;
-                while(AFCount!=0)
+                int[] indexMap = InitializeIndexMap();
+                while (segmentCount != 1)
                 {
-                    segmentCount++;
-                    Merge(ref AFCount, ref FWASIndexList, indexMap, nextOFIndex);
-                    nextOFIndex = nextOFIndex2N(nextOFIndex);
+                    int AFCount = Math.Min(segmentCount, mergeWaysCount);
+                    OpenForMerge(AFCount, indexMap);
+                    List<int> FWASIndexList = InitializeAFWASIndexList(mergeWaysCount, indexMap);
+                    segmentCount = 0;
+                    int nextOFIndex = mergeWaysCount;
+                    while(AFCount!=0)
+                    {
+                        segmentCount++;
+                        Merge(ref AFCount, ref FWASIndexList, indexMap, nextOFIndex);
+                        nextOFIndex = nextOFIndex2N(nextOFIndex);
+                    }
+                    indexMap = SwitchIndexMap(indexMap);
+                    Close();
                 }
-                indexMap = SwitchIndexMap(indexMap);
-                Close();
+                Finish(indexMap);
             }
-            Finish(indexMap);
+            else
+            {
+                Clean();
+                MessageBox.Show("Файл пустой");
+            }
         }
 
         void Merge(ref int AFCount, ref List<int> FWASIndexList, int[] indexMap, int nextOFIndex)
@@ -153,6 +166,7 @@ namespace BalancedMultiwayMerging
                     FinishSegment(ref AFWASCount, ref FWASIndexList, min, indexMap, nextOFIndex);
                 }
             }
+            workFile[indexMap[nextOFIndex]].Write(separator, 0, separator.Length);
         }
 
         void FinishFile(ref int AFCount, ref int AFWASCount, ref List<int> FWASIndexList, int min)
@@ -165,7 +179,7 @@ namespace BalancedMultiwayMerging
         void FinishSegment(ref int AFWASCount, ref List<int> FWASIndexList, int min, int[] indexMap, int nextOFIndex)
         {
             workFile[FWASIndexList[min]].Read(new byte[separator.Length], 0, separator.Length);
-            //workFile[indexMap[nextOFIndex]].Write(separator, 0, separator.Length);
+            // workFile[indexMap[nextOFIndex]].Write(separator, 0, separator.Length);
             AFWASCount = ModifyAO(AFWASCount);
             FWASIndexList = ModifyTA(FWASIndexList, min, AFWASCount);
         }
@@ -175,8 +189,13 @@ namespace BalancedMultiwayMerging
             Close();
             string sortedDir = filePath + "\\BalancedMultiwayMerging_SORTED";
             Directory.CreateDirectory(sortedDir);
-            File.Delete(sortedDir + "\\SORTED.txt");
-            File.Copy(workPath + "\\workFile" + indexMap[0].ToString() + ".txt", sortedDir + "\\SORTED.txt");
+            FileStream file = File.Open(workPath + "\\workFile" + indexMap[0].ToString() + ".txt", FileMode.Open);
+            if(file.Length>0)
+            {
+                file.SetLength(file.Length-1);
+            }
+            file.Close();
+            File.Copy(workPath + "\\workFile" + indexMap[0].ToString() + ".txt", sortedDir + "\\SORTED.txt",true);
             Clean();
         }
 
