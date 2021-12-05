@@ -9,18 +9,30 @@ namespace Lab5
         public MainForm()
         {
             InitializeComponent();
-            tree = new Tree(0,900);
-            tree.Insert("1",100,500);
-            tree.Insert("3", 350 , 600);
-            tree.Insert("5", 700, 120);
-            tree.Insert("7", 280 , 40);
-            tree.Insert("9", 50, 50);
-            tree.Insert("11", 300, 140);
-            tree.Insert("13", 200, 230);
-            tree.Insert("15", 150, 60);
-            tree.Insert("17", 30, 300);
-            tree.Insert("19", 400 , 110);
-            TreeDrawing();
+            tree = new Tree(0,0);
+            int count = 1000000;
+            for(int i=1;i< count+1; i++)
+            {
+                tree.Insert(i.ToString(),0,0);
+            }
+            int countBranch = 0, s = 0;
+            for (int i = 1; i < count+1; i++)
+            {
+                tree.Search(tree.root,new Code(i.ToString()),ref countBranch, ref s);
+            }
+            this.Text = countBranch + " " + s;
+                //tree = new Tree(0,900);
+                /*tree.Insert("1",100,500);
+                tree.Insert("3", 350 , 600);
+                tree.Insert("5", 700, 120);
+                tree.Insert("7", 280 , 40);
+                tree.Insert("9", 50, 50);
+                tree.Insert("11", 300, 140);
+                tree.Insert("13", 200, 230);
+                tree.Insert("15", 150, 60);
+                tree.Insert("17", 30, 300);
+                tree.Insert("19", 400 , 110);*/
+                //TreeDrawing();
         }
         void buttonAdd_Click(object sender, EventArgs e)
         {

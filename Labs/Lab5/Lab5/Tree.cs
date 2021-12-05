@@ -152,22 +152,45 @@ namespace Lab5
 
         public Branch Search(Branch currentBranch, Code code)
         {
-            if(currentBranch == null)
+            if(currentBranch != null)
             {
-                return null;
+                if(currentBranch.code == code)
+                {
+                    return currentBranch;
+                }
+                else if (currentBranch.code<code)
+                {
+                    return Search(currentBranch.LeftChild,code);
+                }
+                else
+                {
+                    return Search(currentBranch.RightChild, code);
+                }
             }
-            else if(currentBranch.code == code)
+            return null;
+        }
+        public Branch Search(Branch currentBranch, Code code, ref int count, ref int s)
+        {
+            if (currentBranch != null)
             {
-                return currentBranch;
+                count++;
+                s++;
+                if (currentBranch.code == code)
+                {
+                    return currentBranch;
+                }
+                else if (currentBranch.code < code)
+                {
+                    s+=1;
+                    return Search(currentBranch.LeftChild, code,ref count,ref s);
+                }
+                else
+                {
+                    s+=1;
+                    return Search(currentBranch.RightChild, code, ref count, ref s);
+                }
             }
-            else if (currentBranch.code<code)
-            {
-                return Search(currentBranch.LeftChild,code);
-            }
-            else
-            {
-                return Search(currentBranch.RightChild, code);
-            }
+            return null;
         }
 
         public int Cost(string str)
