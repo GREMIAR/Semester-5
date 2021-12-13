@@ -90,11 +90,9 @@ namespace Lab5
             }
         }
 
-        public Branch(Code code,int p,int q)
+        public Branch(Code code)
         {
             this.code = code;
-            P = p;
-            Q = q;
         }
 
         public Branch(string code, int p, int q)

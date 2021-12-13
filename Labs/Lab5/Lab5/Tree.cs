@@ -13,17 +13,17 @@ namespace Lab5
 
         List<Cost> cost = new List<Cost>();
 
-        public void Insert(string str,int p,int q)
+        public void Insert(string str)
         {
             Code code = new Code(str);
             if(root!=null)
             {
-                fix(SearchInsertionPoint(root, code, p, q));
+                fix(SearchInsertionPoint(root, code));
 
             }
             else
             {
-                root = new Branch(code,p,q);
+                root = new Branch(code);
             }
         }
 
@@ -114,32 +114,32 @@ namespace Lab5
             return newBranch;
         }
 
-        public Branch SearchInsertionPoint(Branch currentBranch,Code code, int p, int q)
+        public Branch SearchInsertionPoint(Branch currentBranch,Code code)
         {
             if (currentBranch.code>=code)
             {
                 if (currentBranch.LeftChild==null)
                 {
-                    currentBranch.LeftChild = new Branch(code,p,q);
+                    currentBranch.LeftChild = new Branch(code);
                     currentBranch.LeftChild.Parent = currentBranch;
                     return currentBranch;
                 }
                 else
                 {
-                    return SearchInsertionPoint(currentBranch.LeftChild,code,  p,  q);
+                    return SearchInsertionPoint(currentBranch.LeftChild,code);
                 }
             }
             else
             {
                 if (currentBranch.RightChild == null)
                 {
-                    currentBranch.RightChild = new Branch(code,p,q);
+                    currentBranch.RightChild = new Branch(code);
                     currentBranch.RightChild.Parent = currentBranch;
                     return currentBranch;
                 }
                 else
                 {
-                    return SearchInsertionPoint(currentBranch.RightChild, code, p, q);
+                    return SearchInsertionPoint(currentBranch.RightChild, code);
                 }
             }
         }
@@ -179,7 +179,7 @@ namespace Lab5
                 {
                     return currentBranch;
                 }
-                else if (currentBranch.code < code)
+                else if (currentBranch.code > code)
                 {
                     s+=1;
                     return Search(currentBranch.LeftChild, code,ref count,ref s);
@@ -295,6 +295,11 @@ namespace Lab5
         {
             this.p = p;
             this.q = q;
+        }
+
+        public Tree()
+        {
+
         }
 
     }

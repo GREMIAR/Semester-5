@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Diagnostics;
+using System.IO;
 using System.Windows.Forms;
 
 namespace Lab5
@@ -9,36 +11,75 @@ namespace Lab5
         public MainForm()
         {
             InitializeComponent();
-            tree = new Tree(0,0);
-            int count = 1000000;
-            for(int i=1;i< count+1; i++)
+            tree = new Tree();
+            timeTest();
+            //sizeTest();
+            //TreeDrawing();
+        }
+
+        void timeTest()
+        {
+            Stopwatch stopwatch = new Stopwatch();
+            for (int f = 1; f < 4000; f++)
             {
-                tree.Insert(i.ToString(),0,0);
+                test(f);
+                stopwatch.Start();
+                testSearch(f);
+                stopwatch.Stop();
+                tree = new Tree();
+                File.AppendAllText("time.txt", stopwatch.Elapsed.TotalMilliseconds * 1000000 + Environment.NewLine);
+                stopwatch.Reset();
             }
+        }
+
+        void sizeTest()
+        {
+            int r = 0;
+            for (int f = 1; f < 4000; f++)
+            {
+                test(f);
+                r += testSearchS(f);
+                tree = new Tree();
+                File.AppendAllText("size.txt", r + Environment.NewLine);
+                r = 0;
+            }
+        }
+
+        void testSearch(int count)
+        {
+            for (int i = 1; i < count + 1; i++)
+            {
+                tree.Search(i.ToString());
+            }
+        }
+
+        int testSearchS(int count)
+        {
             int countBranch = 0, s = 0;
-            for (int i = 1; i < count+1; i++)
+            for (int i = 1; i < count + 1; i++)
             {
-                tree.Search(tree.root,new Code(i.ToString()),ref countBranch, ref s);
+                tree.Search(tree.root,new Code(i.ToString()), ref countBranch, ref s);
             }
-            this.Text = countBranch + " " + s;
-                //tree = new Tree(0,900);
-                /*tree.Insert("1",100,500);
-                tree.Insert("3", 350 , 600);
-                tree.Insert("5", 700, 120);
-                tree.Insert("7", 280 , 40);
-                tree.Insert("9", 50, 50);
-                tree.Insert("11", 300, 140);
-                tree.Insert("13", 200, 230);
-                tree.Insert("15", 150, 60);
-                tree.Insert("17", 30, 300);
-                tree.Insert("19", 400 , 110);*/
-                //TreeDrawing();
+            return countBranch;
+        }
+
+        void test(int count)
+        {
+            for (int i = 1; i < count + 1; i++)
+            {
+                tree.Insert(i.ToString());
+            }
+            /*int countBranch = 0, s = 0;
+            for (int i = 1; i < count + 1; i++)
+            {
+                tree.Search(tree.root, new Code(i.ToString()), ref countBranch, ref s);
+            }*/
         }
         void buttonAdd_Click(object sender, EventArgs e)
         {
             if (textBoxAdd.Text != "")
             {
-                tree.Insert(textBoxAdd.Text, 1, 1);
+                tree.Insert(textBoxAdd.Text);
             }
             TreeDrawing();
         }
