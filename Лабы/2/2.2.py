@@ -1,50 +1,10 @@
 import math as m
 
-L = [['R','r','M','T','T','E'],[1,2,5],[1,23],[5,5,5],[1,1,1],[2,2,2],[1]]#[3,3],[1,1,1],[2,4],[1,1,1],[1,1,1],[1]]
-
-
-idx = 1
+L = [['R','r','M','T','T','E'],[1,2,5],[1,23],[5,5,5],[1,1,1],[2,2,2],[1]]
 
 PrintMenuItem = lambda letter,menuItem: print("«" + letter + "» - " + menuItem)
 
 PrintMenu = lambda: [print("\n\nМеню:\n"), PrintMenuItem("R","Площадь прямоугольника"),PrintMenuItem("T","Площадь треугольника"),PrintMenuItem("M","Площадь многоугольника"),PrintMenuItem("E","Выход из программы")]
-
-Input = lambda str="": input ("Ввод"+str+": ")
-
-def InputInt(str=""):
-	while True:
-		try:
-			return int(Input(str))
-		except :
-			print("Что-то пошло не так, повторите пожалуйста")
-
-def MenuItem(Li):
-	print("Пункт: "+Li)
-	global idx
-	if(Li[0] == "E"):
-		raise SystemExit
-	elif(Li[0] == "R"):
-		print(L[idx][1])
-		print(L[idx][0])
-		RectangleArea(L[idx][0],L[idx][1])
-		idx+=1
-	elif(Li[0] == "T"):
-		first = L[idx][0]
-		second = L[idx][1]
-		third = L[idx][2]
-		p = P(first,second,third)
-		s = St(first,second,third,p)
-		TriangleArea(first,second,third,p,s)
-		idx+=1
-	elif(Li[0] == "M"):
-		a = L[idx][0]
-		n = L[idx][1]
-		s = Sp(a,n)
-		PolygonArea(a,n,s)
-		idx+=1
-	else:
-		print("Нет такого пукнта")
-		idx+=1
 
 RectangleArea = lambda height,width:print(height,"x",width," = ", height*width) 
 
@@ -60,7 +20,20 @@ Sp = lambda a,n: n*m.pow(a,2)/(4*(m.tan(m.radians(180/n))))
 
 PolygonArea = lambda a,n,s: [print("("+str(n)+"*"+str(a) + "^(2))"+"/(4*tg(180/"+str(n)+")) = " + str(s))]
 
-while True:
-	PrintMenu()
-	fdsfsd = list(map(MenuItem,L[0]))
+Area = {
+   'R' : (lambda sides:print(sides[0],"x",sides[1]," = ", sides[0]*sides[1])) ,
+   'E' : (lambda: os._exit),
+   'T' : (lambda sides: TriangleArea(sides[0], sides[1], sides[2],P(sides[0], sides[1], sides[2]),St(sides[0], sides[1], sides[2],P(sides[0], sides[1], sides[2])))),
+   'M' : (lambda data: PolygonArea(data[0],data[1],Sp(data[0],data[1])))
+    }
 
+def MenuItem(im,li):
+	print("\nПункт: "+im)
+	try:
+		Area[im](li)
+	except:
+		print("Нет такого пукнта")
+
+PrintMenu()
+for index, item in enumerate(L[0]):
+	MenuItem(L[0][index],L[index+1])
