@@ -1,0 +1,14 @@
+1. Создать rects (где и размер)
+в Rects.cs
+
+2. Создать strings (текст на кнопке)
+в Strings.cs
+
+3. Создать Draw... для отрисовки
+в DrawElements
+
+4. Добавить Draw... в PaintDynamic
+в Paints.cs
+
+5. Создать _click с MouseInsideRect(тот самый из rects) (закинуть либо в Graph_click() либо в Menu_click() по смыслу)
+в MouseEvents.cs
