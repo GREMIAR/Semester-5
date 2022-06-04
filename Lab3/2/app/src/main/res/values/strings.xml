@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Lab311</string>
+    <string name="nameBt1">Кнопка1</string>
+    <string name="nameBt2">Кнопка2</string>
+    <string name="nameBt3">Кнопка3</string>
+    <string name="nameBt4">Кнопка4</string>
+</resources>
